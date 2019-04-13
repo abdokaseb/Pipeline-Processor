@@ -13,10 +13,14 @@ vcom Utils/Utils.vhd
 vcom Utils/FullAdder.vhd
 vcom Utils/NBitAdder.vhd
 vcom Utils/CounterUpDown.vhd
+vcom Utils/ALU.vhd
 vcom Utils/GenenralPurposeRegFile.vhd
-
 
 
 # others files
 vcom ControlUnit.vhd
 vcom DecodeStage.vhd -2008
+vcom ForwardUnit.vhd
+vcom FlagsUnit.vhd
+vcom MemorySelectionUnit.vhd
+vcom ExecuteStage.vhd
