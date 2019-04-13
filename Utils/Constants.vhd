@@ -8,13 +8,40 @@ package constants is
 
 --/First instruction
 constant IFIDInstruction1S : integer := 0;
+
+constant IFIDShiftAmount1S : integer := 0;
+constant IFIDShiftAmount1E : integer := 4;
+constant IFIDRscr1S : integer :=5;
+constant IFIDRscr1E : integer :=7;
+constant IFIDRdst1S : integer :=8;
+constant IFIDRdst1E : integer :=10;
+constant IFIDInstructionOpCode1S : integer :=11;
+constant IFIDInstructionOpCode1E : integer :=13;
+constant IFIDInstructionType1S : integer :=14; 
+constant IFIDInstructionType1E : integer :=15; 
+
 constant IFIDInstruction1E : integer := 15;
 --/Second instruction
 constant IFIDInstruction2S : integer := 16;
+
+constant IFIDShiftAmount2S : integer := 16;
+constant IFIDShiftAmount2E : integer := 20;
+constant IFIDRscr2S : integer :=21;
+constant IFIDRscr2E : integer :=23;
+constant IFIDRdst2S : integer :=24;
+constant IFIDRdst2E : integer :=26;
+constant IFIDInstructionOpCode2S : integer :=27;
+constant IFIDInstructionOpCode2E : integer :=29;
+constant IFIDInstructionType2S : integer :=30; 
+constant IFIDInstructionType2E : integer :=31; 
+
 constant IFIDInstruction2E : integer := 31;
 --/Both instructions
 constant IFIDPCS : integer := 32;
 constant IFIDPCE : integer := 63;
+
+constant IFIDLength : integer := 64;
+
 
 --ID/EX buffer
 
@@ -50,8 +77,8 @@ constant IDEXInc1E : integer := 65;
 --/Second instruction
 constant IDEXInc2S : integer := 66;
 
-constant IDEXRdstr2ValueS : integer := 66;
-constant IDEXRdstr2ValueE : integer := 81;
+constant IDEXRdst2ValueS : integer := 66;
+constant IDEXRdst2ValueE : integer := 81;
 constant IDEXRsrc2ValueS : integer := 82;
 constant IDEXRsrc2ValueE : integer := 97;
 constant IDEXRsrc2S : integer := 98;

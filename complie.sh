@@ -18,4 +18,5 @@ vcom Utils/GenenralPurposeRegFile.vhd
 
 
 # others files
-vcom Utils/.vhd
+vcom ControlUnit.vhd
+vcom DecodeStage.vhd -2008
