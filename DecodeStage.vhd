@@ -47,5 +47,7 @@ BEGIN
         WBdst2 => MEMWBbuffer(EXMEMRdst2E downto EXMEMRdst2S)
     );
 
+    IDEXBuffer(IDEXPCE downto IDEXPCS) <= IFIDbuffer(IFIDPCE downto IFIDPCS);
+
 
 END ARCHITECTURE;

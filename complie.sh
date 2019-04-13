@@ -18,9 +18,13 @@ vcom Utils/GenenralPurposeRegFile.vhd
 
 
 # others files
+vcom FetchStage.vhd
 vcom ControlUnit.vhd
 vcom DecodeStage.vhd -2008
 vcom ForwardUnit.vhd
 vcom FlagsUnit.vhd
 vcom MemorySelectionUnit.vhd
 vcom ExecuteStage.vhd
+vcom MemoryStage.vhd
+vcom PCControlUnit.vhd
+vcom PipelineSystem.vhd
