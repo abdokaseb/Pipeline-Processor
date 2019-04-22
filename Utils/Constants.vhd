@@ -48,7 +48,7 @@ constant IFIDLength : integer := 64;
 --/First instruction
 constant IDEXInc1S : integer := 0;
 
-constant IDEXRdst1ValueS : integer := 0;
+constant IDEXRdst1ValueS : integer := 0;        -- will be used in forwardunit 
 constant IDEXRdst1ValueE : integer := 15;
 constant IDEXRsrc1ValueS : integer := 16;
 constant IDEXRsrc1ValueE : integer := 31;
