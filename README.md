@@ -22,4 +22,5 @@
  * i have change SHL Rsrc, Imm to SHL Rdst, Imm
  
  * Rdst in our op code is the first register (the first part after opcode ) 
+ * all numbers in teacher assistant test files assumed to be hex 
   
