@@ -59,7 +59,7 @@ constant IDEXRdst1E  : integer := 37;
 constant IDEXMR1 : integer := 38;
 constant IDEXMW1 : integer := 39;
 constant IDEXWB1 : integer := 40;
-constant IDEXWriteTwoWords1 : integer := 41;
+constant IDEXWriteTwoWords1 : integer := 41; -- won't be used ??!!
 constant IDEXStackOperation1 : integer := 42;
 constant IDEXShiftAmount1S : integer := 43;
 constant IDEXShiftAmount1E : integer := 47;
@@ -69,6 +69,7 @@ constant IDEXOut1 : integer := 52;
 constant IDEXBranchOrNot1 : integer := 53;
 constant IDEXDSB1S : integer := 54;
 constant IDEXDSB1E : integer := 55;
+constant IDEXIsALUOper1 : integer := 56;
 
 -- I'll leave 10 bits for additional features :D if you use it please down the number
 constant IDEXInc1E : integer := 65;
@@ -88,7 +89,7 @@ constant IDEXRdst2E : integer := 103;
 constant IDEXMR2 : integer := 104;
 constant IDEXMW2 : integer := 105;
 constant IDEXWB2 : integer := 106;
-constant IDEXWriteTwowords2  : integer := 107;
+constant IDEXWriteTwowords2  : integer := 107;  -- won't be used ??!!
 constant IDEXStackOperation2 : integer := 108;
 constant IDEXShiftAmount2S : integer := 109;
 constant IDEXShiftAmount2E : integer := 113;
@@ -98,6 +99,8 @@ constant IDEXOut2 : integer := 118;
 constant IDEXBranchOrNot2 : integer := 119;
 constant IDEXDSB2S : integer := 120;
 constant IDEXDSB2E : integer := 121;
+constant IDEXIsALUOper2 : integer := 122;
+
 
 -- I'll leave 10 bits for additional features :D if you use it please down the number
 constant IDEXInc2E : integer := 131;
@@ -142,8 +145,8 @@ constant EXMEMRsrcValFRWS : integer := 46;
 constant EXMEMRsrcValFRWE : integer := 61;
 constant EXMEMRdstValFRWS : integer := 62;
 constant EXMEMRdstValFRWE : integer := 77;
-constant EXMEMAddressS: integer := 78;
-constant EXMEMAddressE: integer := 97;
+--constant EXMEMAddressS: integer := 78; -- won't be used
+--constant EXMEMAddressE: integer := 97; -- won't be used
 constant EXMEMMW : integer := 98;
 constant EXMEMMR : integer := 99;
 constant EXMEMWriteTwowordsS : integer := 100;
@@ -151,8 +154,10 @@ constant EXMEMDSBS : integer := 101;
 constant EXMEMDSBE : integer := 102;
 constant EXMEMPCS  : integer := 103;
 constant EXMEMPCE  : integer := 134;
+constant EXMEMFLAGSS : integer := 135;
+constant EXMEMFLAGSE : integer := 137;
 
-constant EXMEMLength : integer := 135;
+constant EXMEMLength : integer := 138;
 
 
 
@@ -183,9 +188,10 @@ constant MEMWBRdst2E : integer := 42;
 constant MEMWBInc2E : integer := 45;
 
 --/Both instructions
--- no cosntants
+constant MEMWBFLAGSS : integer := 46;
+constant MEMWBFLAGSE : integer := 48;
 
-constant MEMWBLength : integer := 46;
+constant MEMWBLength : integer := 49;
 
 
 
@@ -266,6 +272,11 @@ constant OpCodeCALL: std_logic_vector(2 downto 0) :=  "101";
 constant OpCodeRET: std_logic_vector(2 downto 0) :=  "110";
 constant OpCodeRTI: std_logic_vector(2 downto 0) :=  "111";
 
+-- Op code for DSB
+constant OpCodeCALLDSB: std_logic_vector(1 downto 0) :=  OpCodeCALL(1 downto 0);
+constant OpCodeRETDSB: std_logic_vector(1 downto 0) :=  OpCodeRET(1 downto 0);
+constant OpCodeRTIDSB: std_logic_vector(1 downto 0) :=  OpCodeRTI(1 downto 0);
+
 
 --flags 
 constant flagsCount: integer :=3;
@@ -273,5 +284,11 @@ constant cFlag: integer :=0;
 constant zFlag: integer :=1;
 constant nFlag: integer :=2;
 
+--VCC and GND
+constant VCC : STD_LOGIC := '1';
+constant GND : STD_LOGIC := '0';
+
+
 end constants;
  
+

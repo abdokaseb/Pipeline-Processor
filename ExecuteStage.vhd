@@ -10,7 +10,7 @@ ENTITY ExecuteStage IS
             IDEXBuffer: in STD_LOGIC_VECTOR(IDEXLength DOWNTO 0);
             EXMEMBuffer: in STD_LOGIC_VECTOR(EXMEMLength DOWNTO 0);
             MEMWBBuffer: in STD_LOGIC_VECTOR(MEMWBLength DOWNTO 0);
-			clk, rst: in STD_LOGIC;
+            clk, rst: in STD_LOGIC;
             EXMEMbufferOut: out STD_LOGIC_VECTOR(EXMEMLength DOWNTO 0)
 		);
 
@@ -22,21 +22,12 @@ END ENTITY ExecuteStage;
 ARCHITECTURE ExecuteStageArch of ExecuteStage is
 
     Signal ALUsrc1,ALUdst1,ALUsrc2,ALUdst2: std_logic_vector(wordSize-1 downto 0);
-    Signal FlagsToALU1,FlagsFromALU1,FlagsToALU2,FlagsFromALU2: STD_LOGIC_VECTOR(flagsCount-1 DOWNTO 0);
+    SIGNAL FlagsToALU1,FlagsToALU2,FlagsFromALU1,FlagsFromALU2 : STD_LOGIC_VECTOR(flagsCount-1 DOWNTO 0);
 BEGIN
 
     ForwardUnitEnt: entity work.ForwardUnit port map(IDEXBuffer,EXMEMBuffer,MEMWBBuffer,ALUsrc1,ALUdst1,ALUsrc2,ALUdst2);
 
-    MemorySelectionUnitEnt: entity work.MemorySelectionUnit port map(IDEXBuffer,EXMEMbufferOut);
-    
-    FlagsUnitEnt: entity work.FlagsUnit port map(
-        FlagsIn1 => FlagsFromALU1,
-        FlagsIn2 => FlagsFromALU2,
-        ALUOperation1 => IDEXBuffer(IDEXOperationCode1E downto IDEXOperationCode1S),
-        ALUOperation2 => IDEXBuffer(IDEXOperationCode2E downto IDEXOperationCode2S),
-        FlagsOut1 => FlagsToALU1,
-        FlagsOut2 => FlagsToALU2
-    );
+    --MemorySelectionUnitEnt: entity work.MemorySelectionUnit port map(IDEXBuffer,EXMEMbufferOut);
 
 
     ALU1Ent : entity work.alu port map(
@@ -58,6 +49,22 @@ BEGIN
         flagIn => FlagsToALU2,
         flagOut => FlagsFromALU2
     );
+
+    ---------------------------------- FLAGS CIRCUIT -----------------------------
+    FlagsUnitEnt: entity work.FlagsUnit port map(
+        FlagsFromALU1 => FlagsFromALU1,
+        FlagsFromALU2 => FlagsFromALU2,
+        FlagsFromMem => MEMWBBuffer(MEMWBFLAGSE downto MEMWBFLAGSS),
+        ExMemDSB => EXMEMBuffer(EXMEMDSBE downto EXMEMDSBS),
+        IsALUOper1 => IDEXBuffer(IDEXIsALUOper1),
+        IsALUOper2 => IDEXBuffer(IDEXIsALUOper2),
+        FlagsToALU1 => FlagsToALU1,
+        FlagsToALU2 => FlagsToALU2,
+        clk=>clk,
+        rst=>rst,
+        Buff2Flush =>'0' ------------------- TO BE CHANGED
+    );
+
 
     EXMEMbufferOut(EXMEMWB1) <= IDEXBuffer(IDEXWB1);
     EXMEMbufferOut(EXMEMWB2) <= IDEXBuffer(IDEXWB2);

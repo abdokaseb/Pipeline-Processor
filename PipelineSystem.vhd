@@ -24,9 +24,9 @@ ARCHITECTURE PipelineSystemArch of PipelineSystem is
     signal EXMEMbufferD,EXMEMbufferQ: STD_LOGIC_VECTOR(EXMEMLength DOWNTO 0);
     signal MEMWBbufferD, MEMWBbufferQ: STD_LOGIC_VECTOR(MEMWBLength DOWNTO 0);
 
-    signal PCReg :STD_LOGIC_VECTOR(PCSize-1 DOWNTO 0);
+    signal PCReg,MemOut : STD_LOGIC_VECTOR(PCSize-1 DOWNTO 0);  -- direct output from memory used for pop flags or pop pc
     signal IFIDen, IFIDrst, IDEXen, IDEXrst, EXMEMen, EXMEMrst, MEMWBen, MEMWBrst: STD_LOGIC;
-
+    signal FlagsToMem : STD_LOGIC_VECTOR(flagCount-1 DOWNTO 0);  
 BEGIN
 
     PCControlUnitEnt: entity work.PCControlUnit generic map(PCSize) port map(
@@ -67,6 +67,7 @@ BEGIN
         EXMEMbuffer => EXMEMbufferQ,
         clk => clk,
         rst => rst,
+        MemOut => MemOut,
         MEMWBbuffer => MEMWBbufferD
     );
 
