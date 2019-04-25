@@ -2,3 +2,4 @@
 transcript
 vsim.wlf
 .history/*
+*.mem
