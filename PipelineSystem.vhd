@@ -6,11 +6,13 @@ use work.constants.all;
 
 ENTITY PipelineSystem IS
     Generic(PCSize: integer :=PCLength;
-            wordsize: integer :=32;
+            wordsize: integer :=16;
             addressSize: integer :=5
     );
 	PORT(
-			clk, rst: in STD_LOGIC
+            clk, rst: in STD_LOGIC;
+            INPort: in STD_LOGIC_VECTOR(wordsize-1 DOWNTO 0);
+            OutPort: out STD_LOGIC_VECTOR(wordsize-1 DOWNTO 0)
 		);
 
 END ENTITY PipelineSystem;
@@ -35,6 +37,16 @@ ARCHITECTURE PipelineSystemArch of PipelineSystem is
     Signal pcIncrementControl : STD_LOGIC_VECTOR(1 downto 0);
 BEGIN
 
+    IFIDen <= '1';
+    IFIDrst <= '0' or rst;
+    IDEXen <= '1';
+    IDEXrst <= '0' or rst;
+    EXMEMen <= '1';
+    EXMEMrst <= '0' or rst;
+    MEMWBen <= '1';
+    MEMWBrst <= '0' or rst;
+
+
     PCControlUnitEnt: entity work.PCControlUnit generic map(PCSize) port map(
         clk => clk,
         reset =>rst,
@@ -56,7 +68,9 @@ BEGIN
 
     DecodeStageEnt: entity work.DecodeStage port map(
         IFIDbuffer => IFIDBufferQ,
+        beforeIFIDbuffer => IFIDBufferD,
         MEMWBbuffer => MEMWBbufferQ,
+        INPort => INPort,
         clk => clk,
         rst => rst,
         IDEXBuffer => IDEXBufferD,

@@ -28,7 +28,7 @@ BEGIN
         clk => clk,
         we => '0',
         twoWords => '1',
-        address => PCReg(addressBits - 1 DOWNTO 0),
+        address => PCReg(RAMaddressBits - 1 DOWNTO 0),
         datain1 => dummyDatain,
         datain2 => dummyDatain,
         dataout1 => IFIDBuffer(IFIDInstruction1E downto IFIDInstruction1S),

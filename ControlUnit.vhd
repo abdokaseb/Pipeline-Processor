@@ -8,7 +8,8 @@ ENTITY ControlUnit IS
 	PORT(
 			Instruction1,Instruction2: in STD_LOGIC_VECTOR(IFIDInstruction1E DOWNTO 0);
 			IDEXBuffer: out STD_LOGIC_VECTOR(IDEXLength DOWNTO 0);
-			AddedToPc: out STD_LOGIC_VECTOR(1 downto 0)
+			AddedToPc: out STD_LOGIC_VECTOR(1 downto 0);
+			isIN1, isIN2, isLDM1, isLDM2: out STD_LOGIC
 		);
 
 END ENTITY ControlUnit;
@@ -26,13 +27,13 @@ BEGIN
 	InstructionConvert1Ent: entity work.InstructionConvert port map(
 		Instruction1,
 		MR1, MW1, WB1, StackOperation1, OutOp1, BranchOrNot1, IsALUOper1,
-		OperationCode1
+		OperationCode1, isIN1, isLDM1
 	);
 
 	InstructionConvert2Ent: entity work.InstructionConvert port map(
 		Instruction2,
 		MR2, MW2, WB2, StackOperation2, OutOp2, BranchOrNot2, IsALUOper2,
-		OperationCode2
+		OperationCode2, isIN2, isLDM2
 	);
 
 	IDEXBuffer(IDEXStackOperation1) <= StackOperation1;

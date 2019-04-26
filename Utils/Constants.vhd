@@ -39,9 +39,9 @@ constant IFIDInstruction2E : integer := 31;
 --/Both instructions
 constant IFIDPCS : integer := 32;
 constant IFIDPCE : integer := 63;
-constant IFIDISINT : integer := 64;
+-- constant IFIDISINT : integer := 64;
 
-constant IFIDLength : integer := 65;
+constant IFIDLength : integer := 63;
 
 
 --ID/EX buffer
@@ -112,7 +112,7 @@ constant IDEXPCE  : integer := 163;
 constant IDEXisReset : integer := 164;
 constant IDEXISINT : integer := 165;
 
-constant IDEXLength : integer := 166;
+constant IDEXLength : integer := 165;
 
 
 
@@ -162,7 +162,7 @@ constant EXMEMISINT : integer := 138;
 constant EXMEMWHICINSTR : integer := 139; -- this till which instruction access memory the upper or the lower
 constant EXMEMStackOperation : integer := 140; 
 
-constant EXMEMLength : integer := 141;
+constant EXMEMLength : integer := 140;
 
 
 
@@ -195,7 +195,7 @@ constant MEMWBInc2E : integer := 45;
 --/Both instructions
 -- no common data
 
-constant MEMWBLength : integer := 46;
+constant MEMWBLength : integer := 45;
 
 
 

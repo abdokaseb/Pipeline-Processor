@@ -8,7 +8,8 @@ ENTITY InstructionConvert IS
 	PORT(
 			Instruction: in STD_LOGIC_VECTOR(IFIDInstruction1E DOWNTO IFIDInstruction1S);
             MR, MW, WB, StackOperation, OutOp, BranchOrNot, IsALUOper : out STD_LOGIC;
-            OperationCode : out STD_LOGIC_VECTOR(3 downto 0)
+            OperationCode : out STD_LOGIC_VECTOR(3 downto 0);
+            isIN, isLDM: out STD_LOGIC
 		);
 
 END ENTITY InstructionConvert;
@@ -34,6 +35,12 @@ BEGIN
                 or (typePartFromIns = MemoryInstruction and instructPartFromIns = OpCodeLDM)
                 else instructPartFromIns;
 
+    isIN <= '1' when (typePartFromIns = oneOperandInstruction and instructPartFromIns = OpCodeIN)
+            else '0';
+
+    isLDM <= '1' when (typePartFromIns = MemoryInstruction and instructPartFromIns = OpCodeLDM)
+            else '0';
+            
     MR <= '1' when (instructPart = OpCodePOP and typePart = MemoryInstruction)
                 or (instructPart =  OpCodeSTD and typePart = MemoryInstruction)
                 or (instructPart =  OpCodeRET and typePart = branchInstruction)
