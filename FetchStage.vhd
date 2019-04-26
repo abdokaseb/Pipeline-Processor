@@ -7,7 +7,7 @@ use work.constants.all;
 ENTITY FetchStage IS
     Generic(addressBits: integer := 5;
             wordSize: integer :=16;
-            PCSize: integer :=32);
+            PCSize: integer :=PCLength);
 	PORT(
             PCReg: in STD_LOGIC_VECTOR(PCSize-1 DOWNTO 0);
 			clk: in STD_LOGIC;

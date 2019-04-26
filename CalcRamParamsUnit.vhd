@@ -24,10 +24,10 @@ END ENTITY CalcRamParamsUnit;
 
 ARCHITECTURE CalcRamParamsUnitArch OF CalcRamParamsUnit IS
       SIGNAL DSB : STD_LOGIC_VECTOR (1 DOWNTO 0);
-      SIGNAL PC : STD_LOGIC_VECTOR (31 DOWNTO 0);
+      SIGNAL PC : STD_LOGIC_VECTOR (PCLength-1 DOWNTO 0);
       SIGNAL FLAGS,FlagsLatch : STD_LOGIC_VECTOR (flagsCount-1 DOWNTO 0);
       SIGNAL isStackOper,isINT,MR,MW: STD_LOGIC;
-      SIGNAL SPRegOut,SPRegIn,tmpPC : STD_LOGIC_VECTOR(31 DOWNTO 0);
+      SIGNAL SPRegOut,SPRegIn,tmpPC : STD_LOGIC_VECTOR(PCLength-1 DOWNTO 0);
       SIGNAL RsrcVal,RdstVal : STD_LOGIC_VECTOR(15 DOWNTO 0);
       
       -------------- State Machines -----------
@@ -46,7 +46,7 @@ BEGIN
       MW <= EXMEMbuffer(EXMEMMW);
       MR <= EXMEMbuffer(EXMEMMR);
 
-      STACKPINTERREG : ENTITY work.SP generic map(32) port map(SPRegIn,VCC,clk,rst,SPRegOut);
+      STACKPINTERREG : ENTITY work.SP generic map(SPLength) port map(SPRegIn,VCC,clk,rst,SPRegOut);
 
       PROCESS (RsrcVal, RdstVal, DSB, PC, FLAGS, MW, MR, isINT, INTstate, RTIstate)
       BEGIN

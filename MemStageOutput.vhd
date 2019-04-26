@@ -11,7 +11,7 @@ ENTITY MemStageOutput IS
 		dataFromMem1 , dataFromMem2 : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
 		MR,PCWBPOPLD,FLAGSWBPOP : IN STD_LOGIC;
 		FlagsOut : out  STD_LOGIC_VECTOR(flagsCount-1 DOWNTO 0);
-		PCout : out  STD_LOGIC_VECTOR(31 DOWNTO 0);
+		PCout : out  STD_LOGIC_VECTOR(PCLength-1 DOWNTO 0);
 		FlagsWBout,PCWBout : out  STD_LOGIC;
 		MEMWBbuffer: OUT STD_LOGIC_VECTOR(MEMWBLength DOWNTO 0)
 	);

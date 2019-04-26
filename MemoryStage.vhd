@@ -11,7 +11,7 @@ ENTITY MemoryStage IS
 			clk, rst: in STD_LOGIC;
 			MEMWBbuffer: out STD_LOGIC_VECTOR(MEMWBLength DOWNTO 0);
 			FlagsOut : out  STD_LOGIC_VECTOR(flagsCount-1 DOWNTO 0);
-			PCout : out  STD_LOGIC_VECTOR(31 DOWNTO 0);
+			PCout : out  STD_LOGIC_VECTOR(PCLength-1 DOWNTO 0);
 			FlagsWBout,PCWBout : out  STD_LOGIC
 		);
 

@@ -1,30 +1,38 @@
 # Utils files
-vcom Utils/Constants.vhd
-vcom Utils/Types.vhd -2008
-vcom Utils/Reg.vhd
-vcom Utils/Mux2.vhd
-vcom Utils/Mux4.vhd
-vcom Utils/Mux.vhd -2008
-vcom Utils/Decoder.vhd
-vcom Utils/Ram.vhd
-vcom Utils/ShiftRegister.vhd
-vcom Utils/Tristate.vhd
-vcom Utils/Utils.vhd
-vcom Utils/FullAdder.vhd
-vcom Utils/NBitAdder.vhd
-vcom Utils/CounterUpDown.vhd
-vcom Utils/ALU.vhd
-vcom Utils/GenenralPurposeRegFile.vhd
-
+# I use  | grep Error to show only if there is error or no, Every thing else will not be shown
+vcom Utils/Constants.vhd | grep Error
+vcom Utils/Types.vhd -2008 | grep Error
+vcom Utils/Reg.vhd | grep Error
+vcom Utils/Mux2.vhd | grep Error
+vcom Utils/Mux4.vhd | grep Error
+vcom Utils/Mux.vhd -2008 | grep Error
+vcom Utils/Decoder.vhd | grep Error
+vcom Utils/Ram.vhd | grep Error
+vcom Utils/ShiftRegister.vhd | grep Error
+vcom Utils/Tristate.vhd | grep Error
+vcom Utils/Utils.vhd | grep Error
+vcom Utils/FullAdder.vhd | grep Error
+vcom Utils/NBitAdder.vhd | grep Error
+vcom Utils/CounterUpDown.vhd | grep Error
+vcom Utils/ALU.vhd | grep Error
+vcom Utils/GenenralPurposeRegFile.vhd | grep Error
+vcom Utils/SP.vhd   | grep Error
 
 # others files
-vcom FetchStage.vhd
-vcom ControlUnit.vhd
-vcom DecodeStage.vhd -2008
-vcom ForwardUnit.vhd
-vcom FlagsUnit.vhd
-vcom MemorySelectionUnit.vhd
-vcom ExecuteStage.vhd
-vcom MemoryStage.vhd
-vcom PCControlUnit.vhd
-vcom PipelineSystem.vhd
+vcom FetchStage.vhd | grep Error
+
+vcom InstructionConvert.vhd | grep Error
+vcom ControlUnit.vhd | grep Error
+vcom DecodeStage.vhd -2008 | grep Error
+
+vcom ForwardUnit.vhd | grep Error
+vcom FlagsUnit.vhd | grep Error
+vcom CalcRamParamsUnit.vhd | grep Error
+vcom MemorySelectionUnit.vhd | grep Error
+vcom ExecuteStage.vhd | grep Error
+
+vcom MemStageOutput.vhd | grep Error
+vcom MemoryStage.vhd | grep Error
+
+vcom PCControlUnit.vhd | grep Error
+vcom PipelineSystem.vhd | grep Error
