@@ -30,7 +30,7 @@ PCReg <= PCcurrent;
 process (clk)
     begin
         if (reset ='1') then 
-            PCcurrent<=(others =>'0');         ----  malhash lazma 5ales -----
+            PCcurrent<=(x"00000010");         ----  assume no reset logic  (so i hardcoded the address of the programms in test cases)---
         elsif (clk'EVENT AND clk='1') then 
                 if (MemPcEnable ='1') then 
                     PCcurrent<=MemPc;
