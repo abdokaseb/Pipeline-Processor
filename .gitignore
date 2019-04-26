@@ -2,4 +2,9 @@
 transcript
 vsim.wlf
 .history/*
-*.mem
+Assembler/testcases/Branch/mem.mem
+Assembler/testcases/Memory/mem.mem
+Assembler/testcases/OneOperand/mem.mem
+Assembler/testcases/TwoOperand/mem.mem
+
+
