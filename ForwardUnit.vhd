@@ -22,9 +22,9 @@ ARCHITECTURE ForwardUnitArch of ForwardUnit is
     -----------  selection signals the will determine which value will be forwarded
     signal IdEXRsc1,IdEXRdst1,IdEXRsc2,IdEXRdst2 : STD_LOGIC_Vector (2 downto 0);
     signal ExMemRdst1,ExMemRdst2 : STD_LOGIC_Vector (2 downto 0);
-    signal ExMemWb1,ExMemWb2 : STD_LOGIC;
+    signal ExMemWriteback1,ExMemWriteback2 : STD_LOGIC;
     signal MemWbRdst1,MemWbRdst2 : STD_LOGIC_Vector (2 downto 0);
-    signal MemWbWb1,MemWbWb2 : STD_LOGIC;       
+    signal MemWbWriteback1,MemWbWriteback2 : STD_LOGIC;       
     
     ----------     from above signal we determine the output value between the next values 
     Signal RSrc1Value,RDst1Value,RSrc2Value,RDst2Value:  STD_LOGIC_VECTOR(wordSize-1 DOWNTO 0);  ------- the originals value if there is no forwarding 
@@ -32,6 +32,34 @@ ARCHITECTURE ForwardUnitArch of ForwardUnit is
     Signal WbValue1,WbValue2:  STD_LOGIC_VECTOR(wordSize-1 DOWNTO 0);    ----- the forwarding from mem/Wb buffer
 
     -----------------------------------------------------
+    ----------- SIGNAL MAPPING From Buffers 
+
+    IdEXRsc1 <= IDEXBuffer (IDEXRsrc1E downto IDEXRsrc1S ) ;
+    IdEXRdst1 <= IDEXBuffer (IDEXRdst1E downto IDEXRdst1S ) ;
+    IdEXRsc2 <= IDEXBuffer ( IDEXRsrc2E downto IDEXRsrc2S) ;
+    IdEXRdst2 <= IDEXBuffer (IDEXRdst2E downto IDEXRdst2S ) ;
+    RSrc1Value <= IDEXBuffer (IDEXRsrc1ValueE downto IDEXRsrc1ValueS ) ;
+    RDst1Value <= IDEXBuffer (IDEXRdst1ValueE downto IDEXRdst1ValueS ) ;
+    RSrc2Value <= IDEXBuffer (IDEXRsrc2ValueE downto IDEXRsrc2ValueS ) ;
+    RDst2Value <= IDEXBuffer (IDEXRdst2ValueE downto IDEXRdst2ValueS ) ;
+
+
+    ExMemRdst1 <= EXMEMBuffer (EXMEMRdst1E downto EXMEMRdst1S ) ;
+    ExMemRdst2 <= EXMEMBuffer (EXMEMRdst2E downto EXMEMRdst2S ) ;
+    ExMemWriteback1 <= EXMEMBuffer ( EXMEMWB1 ) ;
+    ExMemWriteback2 <= EXMEMBuffer ( EXMEMWB2 ) ;
+    AluResult1 <= EXMEMBuffer (EXMEMResult1E downto EXMEMResult1S ) ;
+    AluResult2 <= EXMEMBuffer (EXMEMResult2E downto EXMEMResult2S ) ;
+
+
+    MemWbRdst1 <= MEMWBBuffer (MEMWBRdst1E downto MEMWBRdst1S ) ;
+    MemWbRdst2 <= MEMWBBuffer (MEMWBRdst2E downto MEMWBRdst2S ) ;
+    MemWbWriteback1 <= MEMWBBuffer ( MEMWBWB1 ) ;
+    MemWbWriteback2 <= MEMWBBuffer ( MEMWBWB2 ) ;
+    WbValue1 <= MEMWBBuffer (MEMWBWriteBackValue1E downto MEMWBWriteBackValue1S ) ;
+    WbValue2 <= MEMWBBuffer (MEMWBWriteBackValue2E downto MEMWBWriteBackValue2S ) ;
+
+    ----------------------------------------
 
     -- notes -----------
 
@@ -44,15 +72,15 @@ ARCHITECTURE ForwardUnitArch of ForwardUnit is
 
 BEGIN
     ----------------------------------------------------------
-    process (IdEXRsc1,ExMemRdst1,ExMemRdst2,ExMemWb1,ExMemWb2,MemWbRdst1,MemWbRdst2,MemWbWb1,MemWbWb2,AluResult2,AluResult1,WbValue2,WbValue1,RSrc1Value)
+    process (IdEXRsc1,ExMemRdst1,ExMemRdst2,ExMemWriteback1,ExMemWriteback2,MemWbRdst1,MemWbRdst2,MemWbWriteback1,MemWbWriteback2,AluResult2,AluResult1,WbValue2,WbValue1,RSrc1Value)
         begin 
-            if ((ExMemWb2='1') and (ExMemRdst2 =IdEXRsc1) ) then 
+            if ((ExMemWriteback2='1') and (ExMemRdst2 =IdEXRsc1) ) then 
                 Src1 <= AluResult2;
-            elsif ((ExMemWb1='1') and (ExMemRdst1 =IdEXRsc1) ) then 
+            elsif ((ExMemWriteback1='1') and (ExMemRdst1 =IdEXRsc1) ) then 
                 Src1 <= AluResult1;
-            elsif (MemWbWb2='1' and (MemWbRdst2 =IdEXRsc1) ) then 
+            elsif (MemWbWriteback2='1' and (MemWbRdst2 =IdEXRsc1) ) then 
                 Src1 <= WbValue2;
-            elsif (MemWbWb1='1' and (MemWbRdst1 =IdEXRsc1) ) then 
+            elsif (MemWbWriteback1='1' and (MemWbRdst1 =IdEXRsc1) ) then 
                 Src1 <= WbValue1;
             else 
                 Src1 <= RSrc1Value;
@@ -62,15 +90,15 @@ BEGIN
     ----------------------------------------------------------------------
 
     ----------------------------------------------------------
-    process (IdEXRdst1,ExMemRdst1,ExMemRdst2,ExMemWb1,ExMemWb2,MemWbRdst1,MemWbRdst2,MemWbWb1,MemWbWb2,,AluResult2,AluResult1,WbValue2,WbValue1,RDst1Value)
+    process (IdEXRdst1,ExMemRdst1,ExMemRdst2,ExMemWriteback1,ExMemWriteback2,MemWbRdst1,MemWbRdst2,MemWbWriteback1,MemWbWriteback2,,AluResult2,AluResult1,WbValue2,WbValue1,RDst1Value)
         begin 
-            if (ExMemWb2='1' and (ExMemRdst2 =IdEXRdst1) ) then 
+            if (ExMemWriteback2='1' and (ExMemRdst2 =IdEXRdst1) ) then 
                 Dst1 <= AluResult2;
-            elsif (ExMemWb1='1' and (ExMemRdst1 =IdEXRdst1) ) then 
+            elsif (ExMemWriteback1='1' and (ExMemRdst1 =IdEXRdst1) ) then 
                 Dst1 <= AluResult1;
-            elsif (MemWbWb2='1' and (MemWbRdst2 =IdEXRdst1) ) then 
+            elsif (MemWbWriteback2='1' and (MemWbRdst2 =IdEXRdst1) ) then 
                 Dst1 <= WbValue2;
-            elsif (MemWbWb1='1'and (MemWbRdst1 =IdEXRdst1) ) then 
+            elsif (MemWbWriteback1='1'and (MemWbRdst1 =IdEXRdst1) ) then 
                 Dst1 <= WbValue1;
             else 
                 Dst1 <= RDst1Value;
@@ -80,17 +108,16 @@ BEGIN
         end process;
     ----------------------------------------------------------------------
 
-
   ----------------------------------------------------------
-    process (IdEXRsc2,ExMemRdst1,ExMemRdst2,ExMemWb1,ExMemWb2,MemWbRdst1,MemWbRdst2,MemWbWb1,MemWbWb2,,AluResult2,AluResult1,WbValue2,WbValue1,RSrc2Value)
+    process (IdEXRsc2,ExMemRdst1,ExMemRdst2,ExMemWriteback1,ExMemWriteback2,MemWbRdst1,MemWbRdst2,MemWbWriteback1,MemWbWriteback2,,AluResult2,AluResult1,WbValue2,WbValue1,RSrc2Value)
         begin 
-            if (ExMemWb2='1' and (ExMemRdst2 =IdEXRsc2) ) then 
+            if (ExMemWriteback2='1' and (ExMemRdst2 =IdEXRsc2) ) then 
                 Src2 <= AluResult2;
-            elsif (ExMemWb1='1' and (ExMemRdst1 =IdEXRsc2) ) then 
+            elsif (ExMemWriteback1='1' and (ExMemRdst1 =IdEXRsc2) ) then 
                 Src2 <= AluResult1;
-            elsif (MemWbWb2='1' and (MemWbRdst2 =IdEXRsc2) ) then 
+            elsif (MemWbWriteback2='1' and (MemWbRdst2 =IdEXRsc2) ) then 
                 Src2 <= WbValue2;
-            elsif (MemWbWb1='1' and (MemWbRdst1 =IdEXRsc2) ) then 
+            elsif (MemWbWriteback1='1' and (MemWbRdst1 =IdEXRsc2) ) then 
                 Src2 <= WbValue1;
             else 
                 Src2 <= RSrc2Value;
@@ -102,15 +129,15 @@ BEGIN
 
 
     ----------------------------------------------------------
-    process (IdEXRdst2,ExMemRdst1,ExMemRdst2,ExMemWb1,ExMemWb2,MemWbRdst1,MemWbRdst2,MemWbWb1,MemWbWb2,AluResult2,AluResult1,WbValue2,WbValue1,RDst2Value)
+    process (IdEXRdst2,ExMemRdst1,ExMemRdst2,ExMemWriteback1,ExMemWriteback2,MemWbRdst1,MemWbRdst2,MemWbWriteback1,MemWbWriteback2,AluResult2,AluResult1,WbValue2,WbValue1,RDst2Value)
         begin 
-            if (ExMemWb2='1' and (ExMemRdst2 =IdEXRdst2) ) then 
+            if (ExMemWriteback2='1' and (ExMemRdst2 =IdEXRdst2) ) then 
                 Dst2 <= AluResult2;
-            elsif (ExMemWb1='1' and (ExMemRdst1 =IdEXRdst2) ) then 
+            elsif (ExMemWriteback1='1' and (ExMemRdst1 =IdEXRdst2) ) then 
                 Dst2 <= AluResult1;
-            elsif (MemWbWb2='1' and (MemWbRdst2 =IdEXRdst2) ) then 
+            elsif (MemWbWriteback2='1' and (MemWbRdst2 =IdEXRdst2) ) then 
                 Dst2 <= WbValue2;
-            elsif (MemWbWb1='1' and (MemWbRdst1 =IdEXRdst2) ) then 
+            elsif (MemWbWriteback1='1' and (MemWbRdst1 =IdEXRdst2) ) then 
                 Dst2 <= WbValue1;
             else 
                 Dst2 <= RDst2Value;  

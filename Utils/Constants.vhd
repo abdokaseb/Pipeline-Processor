@@ -169,7 +169,7 @@ constant MEMWBInc1S : integer := 0;
 constant MEMWBWriteBackValue1S : integer := 0;
 constant MEMWBWriteBackValue1E : integer := 15;
 constant MEMWBWB1 : integer := 16;
-constant MEMWBRdst1S  : integer := 16;
+constant MEMWBRdst1S  : integer := 17;
 constant MEMWBRdst1E  : integer := 19;
 
 -- I'll leave 4 bits for additional features :D if you use it please down the number
