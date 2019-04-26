@@ -7,7 +7,8 @@ use work.constants.all;
 ENTITY ControlUnit IS
 	PORT(
 			Instruction1,Instruction2: in STD_LOGIC_VECTOR(IFIDInstruction1E DOWNTO 0);
-            IDEXBuffer: out STD_LOGIC_VECTOR(IDEXLength DOWNTO 0)
+			IDEXBuffer: out STD_LOGIC_VECTOR(IDEXLength DOWNTO 0);
+			AddedToPc: out STD_LOGIC_VECTOR(1 downto 0)
 		);
 
 END ENTITY ControlUnit;
@@ -47,5 +48,7 @@ BEGIN
 	IDEXBuffer(IDEXOut2) <= OutOp2;
 	IDEXBuffer(IDEXBranchOrNot2) <= BranchOrNot2;
 	IDEXBuffer(IDEXIsALUOper2) <= IsALUOper2;
+
+	AddedToPc <= "10";
 
 END ARCHITECTURE;

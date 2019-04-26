@@ -18,14 +18,22 @@ END ENTITY InstructionConvert;
 
 ARCHITECTURE InstructionConvertArch of InstructionConvert is
 
-    signal typePart : STD_LOGIC_VECTOR(1 downto 0);
-    signal instructPart : STD_LOGIC_VECTOR(2 downto 0);
+    signal typePartFromIns, typePart : STD_LOGIC_VECTOR(1 downto 0);
+    signal instructPartFromIns, instructPart : STD_LOGIC_VECTOR(2 downto 0);
 BEGIN
 
 
 
-    typePart <= Instruction(IFIDInstructionType1E downto IFIDInstructionType1S);
-    instructPart <= Instruction(IFIDInstructionOpCode1E downto IFIDInstructionOpCode1S);
+    typePartFromIns <= Instruction(IFIDInstructionType1E downto IFIDInstructionType1S);
+    instructPartFromIns <= Instruction(IFIDInstructionOpCode1E downto IFIDInstructionOpCode1S);
+
+    typePart <= twoOperandInstruction when (typePartFromIns = oneOperandInstruction and instructPartFromIns = OpCodeIN)
+                or (typePartFromIns = MemoryInstruction and instructPartFromIns = OpCodeLDM)
+                else typePartFromIns;
+    instructPart <= OpCodeMOV when (typePartFromIns = oneOperandInstruction and instructPartFromIns = OpCodeIN)
+                or (typePartFromIns = MemoryInstruction and instructPartFromIns = OpCodeLDM)
+                else instructPartFromIns;
+
     MR <= '1' when (instructPart = OpCodePOP and typePart = MemoryInstruction)
                 or (instructPart =  OpCodeSTD and typePart = MemoryInstruction)
                 or (instructPart =  OpCodeRET and typePart = branchInstruction)
