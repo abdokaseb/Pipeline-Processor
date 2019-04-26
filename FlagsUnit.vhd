@@ -8,7 +8,7 @@ ENTITY FlagsUnit IS
 	PORT(
             FlagsFromALU1,FlagsFromALU2,FlagsFromMem : in STD_LOGIC_VECTOR(FlagsCount-1 DOWNTO 0);
             IsALUOper1,IsALUOper2 : in STD_LOGIC;
-            ExMemDSB : in STD_LOGIC_VECTOR(1 DOWNTO 0);
+            FlagsWBFromMEM : in STD_LOGIC;
             FlagsToALU1,FlagsToALU2,FlagsToMem: out STD_LOGIC_VECTOR(FlagsCount-1 DOWNTO 0);
             Buff2Flush,clk,rst :in STD_LOGIC
 		);
@@ -18,16 +18,16 @@ END ENTITY FlagsUnit;
 ----------------------------------------------------------------------
 -- FlagsUnit Architecture
 
-ARCHITECTURE FlagsUnitArch of FlagsUnit is
+ARCHITECTURE FlagsUnitArch OF FlagsUnit IS
     SIGNAL FlagsRegOut,FlagsRegIn : STD_LOGIC_VECTOR(FlagsCount-1 DOWNTO 0);
 BEGIN
     FLAGSREG : ENTITY work.Reg generic map(FlagsCount) port map(FlagsRegIn,VCC,clk,rst,FlagsRegOut);
     FlagsToMem <= FlagsRegOut; -- alus will have no effect on as int flushes instuctions any way
     PROCESS (FlagsFromALU1,FlagsFromALU2,FlagsFromMem,isALUOper1,isALUOper2)
     BEGIN
-        IF (ExMemDSB = OpCodeRTIDSB) THEN
+        IF (FlagsWBFromMEM = '1') THEN
             FlagsRegIn <= FlagsFromMem; 
-            FlagsToALU1 <= (OTHERS =>'0'); -- RTI cases flush any way
+            FlagsToALU1 <= (OTHERS =>'0'); -- RTI causes flush any way
             FlagsToALU2 <= (OTHERS =>'0');
         ELSIF (isALUOper1 = '1' AND isALUOper2 = '1' ) THEN
             FlagsToALU1 <= FlagsRegOut;

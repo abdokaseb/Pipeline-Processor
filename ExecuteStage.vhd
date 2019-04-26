@@ -10,6 +10,8 @@ ENTITY ExecuteStage IS
             IDEXBuffer: in STD_LOGIC_VECTOR(IDEXLength DOWNTO 0);
             EXMEMBuffer: in STD_LOGIC_VECTOR(EXMEMLength DOWNTO 0);
             MEMWBBuffer: in STD_LOGIC_VECTOR(MEMWBLength DOWNTO 0);
+            FlagsWBFromMEM:in STD_LOGIC;
+            FlagsFromMEM:in STD_LOGIC_VECTOR (flagsCount-1 downto 0);
             clk, rst: in STD_LOGIC;
             EXMEMbufferOut: out STD_LOGIC_VECTOR(EXMEMLength DOWNTO 0)
 		);
@@ -54,8 +56,8 @@ BEGIN
     FlagsUnitEnt: entity work.FlagsUnit port map(
         FlagsFromALU1 => FlagsFromALU1,
         FlagsFromALU2 => FlagsFromALU2,
-        FlagsFromMem => MEMWBBuffer(MEMWBFLAGSE downto MEMWBFLAGSS),
-        ExMemDSB => EXMEMBuffer(EXMEMDSBE downto EXMEMDSBS),
+        FlagsFromMem => FlagsFromMEM,
+        FlagsWBFromMEM => FlagsWBFromMEM,
         IsALUOper1 => IDEXBuffer(IDEXIsALUOper1),
         IsALUOper2 => IDEXBuffer(IDEXIsALUOper2),
         FlagsToALU1 => FlagsToALU1,
