@@ -44,7 +44,7 @@ ARCHITECTURE ForwardUnitArch of ForwardUnit is
 
 BEGIN
     ----------------------------------------------------------
-    process (IdEXRsc1,ExMemRdst1,ExMemRdst2,ExMemWb1,ExMemWb2,MemWbRdst1,MemWbRdst2,MemWbWb1,MemWbWb2)
+    process (IdEXRsc1,ExMemRdst1,ExMemRdst2,ExMemWb1,ExMemWb2,MemWbRdst1,MemWbRdst2,MemWbWb1,MemWbWb2,AluResult2,AluResult1,WbValue2,WbValue1,RSrc1Value)
         begin 
             if ((ExMemWb2='1') and (ExMemRdst2 =IdEXRsc1) ) then 
                 Src1 <= AluResult2;
@@ -62,7 +62,7 @@ BEGIN
     ----------------------------------------------------------------------
 
     ----------------------------------------------------------
-    process (IdEXRdst1,ExMemRdst1,ExMemRdst2,ExMemWb1,ExMemWb2,MemWbRdst1,MemWbRdst2,MemWbWb1,MemWbWb2)
+    process (IdEXRdst1,ExMemRdst1,ExMemRdst2,ExMemWb1,ExMemWb2,MemWbRdst1,MemWbRdst2,MemWbWb1,MemWbWb2,,AluResult2,AluResult1,WbValue2,WbValue1,RDst1Value)
         begin 
             if (ExMemWb2='1' and (ExMemRdst2 =IdEXRdst1) ) then 
                 Dst1 <= AluResult2;
@@ -82,7 +82,7 @@ BEGIN
 
 
   ----------------------------------------------------------
-    process (IdEXRsc2,ExMemRdst1,ExMemRdst2,ExMemWb1,ExMemWb2,MemWbRdst1,MemWbRdst2,MemWbWb1,MemWbWb2)
+    process (IdEXRsc2,ExMemRdst1,ExMemRdst2,ExMemWb1,ExMemWb2,MemWbRdst1,MemWbRdst2,MemWbWb1,MemWbWb2,,AluResult2,AluResult1,WbValue2,WbValue1,RSrc2Value)
         begin 
             if (ExMemWb2='1' and (ExMemRdst2 =IdEXRsc2) ) then 
                 Src2 <= AluResult2;
@@ -102,7 +102,7 @@ BEGIN
 
 
     ----------------------------------------------------------
-    process (IdEXRdst2,ExMemRdst1,ExMemRdst2,ExMemWb1,ExMemWb2,MemWbRdst1,MemWbRdst2,MemWbWb1,MemWbWb2)
+    process (IdEXRdst2,ExMemRdst1,ExMemRdst2,ExMemWb1,ExMemWb2,MemWbRdst1,MemWbRdst2,MemWbWb1,MemWbWb2,AluResult2,AluResult1,WbValue2,WbValue1,RDst2Value)
         begin 
             if (ExMemWb2='1' and (ExMemRdst2 =IdEXRdst2) ) then 
                 Dst2 <= AluResult2;

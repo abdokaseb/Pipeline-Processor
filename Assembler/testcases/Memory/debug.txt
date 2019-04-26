@@ -1,0 +1,114 @@
+------------------- preprocessing --------------
+.org 0
+10
+.org 2
+100
+.org 10
+in r2
+in r3
+in r4
+ldm r1,5
+ldm r0,201
+ldm r6,200
+push r1
+push r2
+pop r1
+pop r2
+std r2,r6
+std r1,r0
+ldd r3,r0
+ldd r4,r6
+------------------- end preprocessing  --------------
+------------------- addresses --------------
+(instruction = 10) (instruction type = hex) (address in hex = 0x0)  
+
+(instruction = 100) (instruction type = hex) (address in hex = 0x2)  
+
+(instruction = in r2) (instruction type = 1op) (address in hex = 0x10)  
+
+(instruction = in r3) (instruction type = 1op) (address in hex = 0x11)  
+
+(instruction = in r4) (instruction type = 1op) (address in hex = 0x12)  
+
+(instruction = ldm r1,5) (instruction type = 2op) (address in hex = 0x13)  
+
+(instruction = ldm r0,201) (instruction type = 2op) (address in hex = 0x15)  
+
+(instruction = ldm r6,200) (instruction type = 2op) (address in hex = 0x17)  
+
+(instruction = push r1) (instruction type = 1op) (address in hex = 0x19)  
+
+(instruction = push r2) (instruction type = 1op) (address in hex = 0x1a)  
+
+(instruction = pop r1) (instruction type = 1op) (address in hex = 0x1b)  
+
+(instruction = pop r2) (instruction type = 1op) (address in hex = 0x1c)  
+
+(instruction = std r2,r6) (instruction type = 2op) (address in hex = 0x1d)  
+
+(instruction = std r1,r0) (instruction type = 2op) (address in hex = 0x1e)  
+
+(instruction = ldd r3,r0) (instruction type = 2op) (address in hex = 0x1f)  
+
+(instruction = ldd r4,r6) (instruction type = 2op) (address in hex = 0x20)  
+
+-------------------
+10  address  0
+0000000000010000 (address in hex = 0x0)  
+
+100  address  2
+0000000100000000 (address in hex = 0x2)  
+
+in r2  address  16
+0111101000000000 (address in hex = 0x10)  
+
+in r3  address  17
+0111101100000000 (address in hex = 0x11)  
+
+in r4  address  18
+0111110000000000 (address in hex = 0x12)  
+
+ldm r1,5  address  19
+1010100100000000 (address in hex = 0x13)  
+
+
+0000000000000101 (address in hex = 0x14)  
+
+ldm r0,201  address  21
+1010100000000000 (address in hex = 0x15)  
+
+
+0000001000000001 (address in hex = 0x16)  
+
+ldm r6,200  address  23
+1010111000000000 (address in hex = 0x17)  
+
+
+0000001000000000 (address in hex = 0x18)  
+
+push r1  address  25
+1001100100000000 (address in hex = 0x19)  
+
+push r2  address  26
+1001101000000000 (address in hex = 0x1a)  
+
+pop r1  address  27
+1010000100000000 (address in hex = 0x1b)  
+
+pop r2  address  28
+1010001000000000 (address in hex = 0x1c)  
+
+std r2,r6  address  29
+1011111001000000 (address in hex = 0x1d)  
+
+std r1,r0  address  30
+1011100000100000 (address in hex = 0x1e)  
+
+ldd r3,r0  address  31
+1011000001100000 (address in hex = 0x1f)  
+
+ldd r4,r6  address  32
+1011011010000000 (address in hex = 0x20)  
+
+--------------------
+successful

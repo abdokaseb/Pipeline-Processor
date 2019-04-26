@@ -1,0 +1,219 @@
+------------------- preprocessing --------------
+.org 0
+10
+.org 2
+100
+.org 10
+in r1
+in r2
+in r3
+in r4
+push r4
+jmp r1
+inc r1
+.org 30
+and r1,r5
+jz r2
+setc
+.org 50
+jz r1
+jc r3
+not r5
+in r6
+jn r6
+inc r1
+.org 100
+clrc
+and r0,r0
+out r6
+rti
+.org 200
+setc
+pop r6
+call r6
+inc r6
+nop
+nop
+.org 300
+add r3,r6
+add r1,r2
+ret
+setc
+.org 500
+nop
+nop
+------------------- end preprocessing  --------------
+------------------- addresses --------------
+(instruction = 10) (instruction type = hex) (address in hex = 0x0)  
+
+(instruction = 100) (instruction type = hex) (address in hex = 0x2)  
+
+(instruction = in r1) (instruction type = 1op) (address in hex = 0x10)  
+
+(instruction = in r2) (instruction type = 1op) (address in hex = 0x11)  
+
+(instruction = in r3) (instruction type = 1op) (address in hex = 0x12)  
+
+(instruction = in r4) (instruction type = 1op) (address in hex = 0x13)  
+
+(instruction = push r4) (instruction type = 1op) (address in hex = 0x14)  
+
+(instruction = jmp r1) (instruction type = 1op) (address in hex = 0x15)  
+
+(instruction = inc r1) (instruction type = 1op) (address in hex = 0x16)  
+
+(instruction = and r1,r5) (instruction type = 2op) (address in hex = 0x30)  
+
+(instruction = jz r2) (instruction type = 1op) (address in hex = 0x31)  
+
+(instruction = setc) (instruction type = nop_setc_clrc_rte_rti) (address in hex = 0x32)  
+
+(instruction = jz r1) (instruction type = 1op) (address in hex = 0x50)  
+
+(instruction = jc r3) (instruction type = 1op) (address in hex = 0x51)  
+
+(instruction = not r5) (instruction type = 1op) (address in hex = 0x52)  
+
+(instruction = in r6) (instruction type = 1op) (address in hex = 0x53)  
+
+(instruction = jn r6) (instruction type = 1op) (address in hex = 0x54)  
+
+(instruction = inc r1) (instruction type = 1op) (address in hex = 0x55)  
+
+(instruction = clrc) (instruction type = nop_setc_clrc_rte_rti) (address in hex = 0x100)  
+
+(instruction = and r0,r0) (instruction type = 2op) (address in hex = 0x101)  
+
+(instruction = out r6) (instruction type = 1op) (address in hex = 0x102)  
+
+(instruction = rti) (instruction type = nop_setc_clrc_rte_rti) (address in hex = 0x103)  
+
+(instruction = setc) (instruction type = nop_setc_clrc_rte_rti) (address in hex = 0x200)  
+
+(instruction = pop r6) (instruction type = 1op) (address in hex = 0x201)  
+
+(instruction = call r6) (instruction type = 1op) (address in hex = 0x202)  
+
+(instruction = inc r6) (instruction type = 1op) (address in hex = 0x203)  
+
+(instruction = nop) (instruction type = nop_setc_clrc_rte_rti) (address in hex = 0x204)  
+
+(instruction = nop) (instruction type = nop_setc_clrc_rte_rti) (address in hex = 0x205)  
+
+(instruction = add r3,r6) (instruction type = 2op) (address in hex = 0x300)  
+
+(instruction = add r1,r2) (instruction type = 2op) (address in hex = 0x301)  
+
+(instruction = ret) (instruction type = nop_setc_clrc_rte_rti) (address in hex = 0x302)  
+
+(instruction = setc) (instruction type = nop_setc_clrc_rte_rti) (address in hex = 0x303)  
+
+(instruction = nop) (instruction type = nop_setc_clrc_rte_rti) (address in hex = 0x500)  
+
+(instruction = nop) (instruction type = nop_setc_clrc_rte_rti) (address in hex = 0x501)  
+
+-------------------
+10  address  0
+0000000000010000 (address in hex = 0x0)  
+
+100  address  2
+0000000100000000 (address in hex = 0x2)  
+
+in r1  address  16
+0111100100000000 (address in hex = 0x10)  
+
+in r2  address  17
+0111101000000000 (address in hex = 0x11)  
+
+in r3  address  18
+0111101100000000 (address in hex = 0x12)  
+
+in r4  address  19
+0111110000000000 (address in hex = 0x13)  
+
+push r4  address  20
+1001110000000000 (address in hex = 0x14)  
+
+jmp r1  address  21
+1110000100000000 (address in hex = 0x15)  
+
+inc r1  address  22
+0110000100000000 (address in hex = 0x16)  
+
+and r1,r5  address  48
+0010010100100000 (address in hex = 0x30)  
+
+jz r2  address  49
+1100101000000000 (address in hex = 0x31)  
+
+setc  address  50
+0100100000000000 (address in hex = 0x32)  
+
+jz r1  address  80
+1100100100000000 (address in hex = 0x50)  
+
+jc r3  address  81
+1101101100000000 (address in hex = 0x51)  
+
+not r5  address  82
+0101110100000000 (address in hex = 0x52)  
+
+in r6  address  83
+0111111000000000 (address in hex = 0x53)  
+
+jn r6  address  84
+1101011000000000 (address in hex = 0x54)  
+
+inc r1  address  85
+0110000100000000 (address in hex = 0x55)  
+
+clrc  address  256
+0101000000000000 (address in hex = 0x100)  
+
+and r0,r0  address  257
+0010000000000000 (address in hex = 0x101)  
+
+out r6  address  258
+0111011000000000 (address in hex = 0x102)  
+
+rti  address  259
+1111100000000000 (address in hex = 0x103)  
+
+setc  address  512
+0100100000000000 (address in hex = 0x200)  
+
+pop r6  address  513
+1010011000000000 (address in hex = 0x201)  
+
+call r6  address  514
+1110111000000000 (address in hex = 0x202)  
+
+inc r6  address  515
+0110011000000000 (address in hex = 0x203)  
+
+nop  address  516
+0000000000000000 (address in hex = 0x204)  
+
+nop  address  517
+0000000000000000 (address in hex = 0x205)  
+
+add r3,r6  address  768
+0001011001100000 (address in hex = 0x300)  
+
+add r1,r2  address  769
+0001001000100000 (address in hex = 0x301)  
+
+ret  address  770
+1111000000000000 (address in hex = 0x302)  
+
+setc  address  771
+0100100000000000 (address in hex = 0x303)  
+
+nop  address  1280
+0000000000000000 (address in hex = 0x500)  
+
+nop  address  1281
+0000000000000000 (address in hex = 0x501)  
+
+--------------------
+successful
