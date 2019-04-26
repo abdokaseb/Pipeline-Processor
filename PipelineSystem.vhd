@@ -24,9 +24,14 @@ ARCHITECTURE PipelineSystemArch of PipelineSystem is
     signal EXMEMbufferD,EXMEMbufferQ: STD_LOGIC_VECTOR(EXMEMLength DOWNTO 0);
     signal MEMWBbufferD, MEMWBbufferQ: STD_LOGIC_VECTOR(MEMWBLength DOWNTO 0);
 
-    signal PCReg,MemOut : STD_LOGIC_VECTOR(PCSize-1 DOWNTO 0);  -- direct output from memory used for pop flags or pop pc
+    signal PCReg: STD_LOGIC_VECTOR(PCSize-1 DOWNTO 0);
     signal IFIDen, IFIDrst, IDEXen, IDEXrst, EXMEMen, EXMEMrst, MEMWBen, MEMWBrst: STD_LOGIC;
-    signal FlagsToMem : STD_LOGIC_VECTOR(flagCount-1 DOWNTO 0);  
+
+-------- INTER STAGES COMMUNICATION ------------
+    signal FlagsFromMEMtoEXE : STD_LOGIC_VECTOR(flagCount-1 DOWNTO 0);  
+    signal FlagsWBFromMEMtoEXE : STD_LOGIC; 
+    signal PCFromMEMto_changethis_ : STD_LOGIC_VECTOR(flagCount-1 DOWNTO 0);  
+    signal PCWBFromMEMto_changethis_: STD_LOGIC; 
 BEGIN
 
     PCControlUnitEnt: entity work.PCControlUnit generic map(PCSize) port map(
@@ -56,6 +61,8 @@ BEGIN
         IDEXBuffer => IDEXBufferQ,
         EXMEMBuffer => EXMEMBufferQ,
         MEMWBBuffer => MEMWBBufferQ,
+        FlagsFromMEM => FlagsFromMEMtoEXE,
+        FlagsWBFromMEM => FlagsWBFromMEMtoEXE, 
         clk => clk,
         rst => rst,
         EXMEMbufferOut => EXMEMbufferD
@@ -65,6 +72,10 @@ BEGIN
 
     MemoryStageEnt: entity work.MemoryStage port map(
         EXMEMbuffer => EXMEMbufferQ,
+        FlagsOut => FlagsFromMEMtoEXE, 
+        FlagsWBout => FlagsWBFromMEMtoEXE,
+        PCout => PCFromMEMto_changethis_ ,
+        PCWBout => PCWBFromMEMto_changethis_,
         clk => clk,
         rst => rst,
         MemOut => MemOut,

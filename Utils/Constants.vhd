@@ -39,8 +39,9 @@ constant IFIDInstruction2E : integer := 31;
 --/Both instructions
 constant IFIDPCS : integer := 32;
 constant IFIDPCE : integer := 63;
+constant IFIDISINT : integer := 64;
 
-constant IFIDLength : integer := 64;
+constant IFIDLength : integer := 65;
 
 
 --ID/EX buffer
@@ -109,8 +110,9 @@ constant IDEXInc2E : integer := 131;
 constant IDEXPCS  : integer := 132;
 constant IDEXPCE  : integer := 163;
 constant IDEXisReset : integer := 164;
+constant IDEXISINT : integer := 165;
 
-constant IDEXLength : integer := 165;
+constant IDEXLength : integer := 166;
 
 
 
@@ -156,8 +158,10 @@ constant EXMEMPCS  : integer := 103;
 constant EXMEMPCE  : integer := 134;
 constant EXMEMFLAGSS : integer := 135;
 constant EXMEMFLAGSE : integer := 137;
+constant EXMEMISINT : integer := 138;
+constant EXMEMWHICINSTR : integer := 139; -- this till which instruction access memory the upper or the lower
 
-constant EXMEMLength : integer := 138;
+constant EXMEMLength : integer := 140;
 
 
 
@@ -188,10 +192,9 @@ constant MEMWBRdst2E : integer := 42;
 constant MEMWBInc2E : integer := 45;
 
 --/Both instructions
-constant MEMWBFLAGSS : integer := 46;
-constant MEMWBFLAGSE : integer := 48;
+-- no common data
 
-constant MEMWBLength : integer := 49;
+constant MEMWBLength : integer := 46;
 
 
 
@@ -276,7 +279,7 @@ constant OpCodeRTI: std_logic_vector(2 downto 0) :=  "111";
 constant OpCodeCALLDSB: std_logic_vector(1 downto 0) :=  OpCodeCALL(1 downto 0);
 constant OpCodeRETDSB: std_logic_vector(1 downto 0) :=  OpCodeRET(1 downto 0);
 constant OpCodeRTIDSB: std_logic_vector(1 downto 0) :=  OpCodeRTI(1 downto 0);
-
+constant OpCodeNODSB: std_logic_vector(1 downto 0) :=  "00";
 
 --flags 
 constant flagsCount: integer :=3;
