@@ -27,7 +27,7 @@ BEGIN
 Zeros <= (others => '0');
 tempA <= Zeros&ControlPCoperation;  --( if 00  we will add 0 on (pc stall)  ) | (if 01 we will add 1 (swap) ) | (if 10 we will add 2 (ordinary increment) )
 PCReg <= PCcurrent;
-process (clk)
+process (clk,reset)
     begin
         if (reset ='1') then 
             PCcurrent<=(x"00000010");         ----  assume no reset logic  (so i hardcoded the address of the programms in test cases)---

@@ -32,10 +32,17 @@ ARCHITECTURE PipelineSystemArch of PipelineSystem is
     signal FlagsWBFromMEMtoEXE : STD_LOGIC; 
     signal PCFromMEMStage : STD_LOGIC_VECTOR(PCLength-1 DOWNTO 0);  
     signal PCWBFromMEMStage: STD_LOGIC; 
+    Signal pcIncrementControl : STD_LOGIC_VECTOR(1 downto 0);
 BEGIN
 
     PCControlUnitEnt: entity work.PCControlUnit generic map(PCSize) port map(
         clk => clk,
+        reset =>rst,
+        ExPcEnable => '0',  ------ hardcoded --- signlal not found in EX stage 
+        ExPC => (others =>'0'),--- hardcode ---- not found in excution stage
+        MemPcEnable => PCWBFromMEMStage, 
+        MemPc=>PCFromMEMStage,
+        ControlPCoperation=> pcIncrementControl,
         PCReg => PCReg
     );
 
@@ -52,7 +59,8 @@ BEGIN
         MEMWBbuffer => MEMWBbufferQ,
         clk => clk,
         rst => rst,
-        IDEXBuffer => IDEXBufferD
+        IDEXBuffer => IDEXBufferD,
+        PcIncrement=> pcIncrementControl
     );
 
     IDEXRegEnt: entity work.Reg generic map(IDEXLength+1) port map(IDEXBufferD,IDEXen,clk,IDEXrst,IDEXBufferQ);

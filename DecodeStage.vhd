@@ -9,7 +9,8 @@ ENTITY DecodeStage IS
             IFIDbuffer: in STD_LOGIC_VECTOR(IFIDLength DOWNTO 0);
             MEMWBbuffer: in STD_LOGIC_VECTOR(MEMWBLength DOWNTO 0);
 			clk, rst: in STD_LOGIC;
-            IDEXBuffer: out STD_LOGIC_VECTOR(IDEXLength DOWNTO 0)
+            IDEXBuffer: out STD_LOGIC_VECTOR(IDEXLength DOWNTO 0);
+            PcIncrement : out STD_LOGIC_VECTOR(1 downto 0)
 		);
 
 END ENTITY DecodeStage;
@@ -25,7 +26,9 @@ BEGIN
     controlUnitEnt : entity work.controlUnit port map(
         Instruction1 => IFIDbuffer(IFIDInstruction1E downto IFIDInstruction1S),
         Instruction2 => IFIDbuffer(IFIDInstruction2E downto IFIDInstruction2S),
-        IDEXBuffer => IDEXBuffer       
+        IDEXBuffer => IDEXBuffer ,
+        AddedToPc =>  PcIncrement 
+
     );
     
     regFileEnt: entity work.GenenralPurposeRegFile generic map(16,8) port map(
