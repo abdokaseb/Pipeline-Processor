@@ -24,7 +24,7 @@ ARCHITECTURE FetchStageArch of FetchStage is
     signal dummyDatain : STD_LOGIC_VECTOR(wordSize - 1 DOWNTO 0); 
 BEGIN
 
-    CodeRamEnt : entity work.ram generic map(addressBits,wordSize) port map(
+    CodeRamEnt : entity work.ram generic map(RAMaddressBits,wordSize) port map(
         clk => clk,
         we => '0',
         twoWords => '1',

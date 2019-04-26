@@ -5,7 +5,8 @@ use work.constants.all;
 -- MemoryStage Entity
 
 ENTITY MemoryStage IS
-	GENERIC (addressSize:INTEGER := 5);
+	GENERIC (addressSize:INTEGER := 5;
+						wordSize: integer :=16);
 	PORT(
 			EXMEMbuffer: in STD_LOGIC_VECTOR(EXMEMLength DOWNTO 0);
 			clk, rst: in STD_LOGIC;
@@ -26,7 +27,7 @@ ARCHITECTURE MemoryStageArch of MemoryStage IS
 	SIGNAL dataMemOut1,dataMemOut2 : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL MemRead,MemWrite,twoWordsWriteInMem,PCWBPOPLD,FLAGSWBPOP: STD_LOGIC; 
 BEGIN	
-    MEMENTITY : ENTITY work.Ram PORT MAP(
+    MEMENTITY : ENTITY work.Ram generic map(RAMaddressBits,wordSize) PORT MAP(
         clk => clk,
         we => MemWrite,
         twoWords => twoWordsWriteInMem,

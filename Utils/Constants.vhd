@@ -296,6 +296,7 @@ constant GND : STD_LOGIC := '0';
 constant PCLength: integer :=32;
 constant SPLength: integer :=32;
 
+constant RAMaddressBits: integer := 11;
 end constants;
  
 
