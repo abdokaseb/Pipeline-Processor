@@ -292,7 +292,11 @@ constant nFlag: integer :=2;
 constant VCC : STD_LOGIC := '1';
 constant GND : STD_LOGIC := '0';
 
+-- PC/SP length
+constant PCLength: integer :=32;
+constant SPLength: integer :=32;
 
+constant RAMaddressBits: integer := 11;
 end constants;
  
 

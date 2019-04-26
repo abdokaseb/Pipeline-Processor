@@ -5,7 +5,7 @@ use work.constants.all;
 -- PCControlUnit Entity
 
 ENTITY PCControlUnit IS
-    Generic(PCSize: integer :=32);
+    Generic(PCSize: integer :=PCLength);
 	PORT(
         clk,reset,ExPcEnable,MemPcEnable: in STD_LOGIC;
         ControlPCoperation: in STD_LOGIC_VECTOR(1 downto 0);

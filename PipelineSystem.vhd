@@ -5,7 +5,7 @@ use work.constants.all;
 -- PipelineSystem Entity
 
 ENTITY PipelineSystem IS
-    Generic(PCSize: integer :=32;
+    Generic(PCSize: integer :=PCLength;
             wordsize: integer :=32;
             addressSize: integer :=5
     );
@@ -28,10 +28,10 @@ ARCHITECTURE PipelineSystemArch of PipelineSystem is
     signal IFIDen, IFIDrst, IDEXen, IDEXrst, EXMEMen, EXMEMrst, MEMWBen, MEMWBrst: STD_LOGIC;
 
 -------- INTER STAGES COMMUNICATION ------------
-    signal FlagsFromMEMtoEXE : STD_LOGIC_VECTOR(flagCount-1 DOWNTO 0);  
+    signal FlagsFromMEMtoEXE : STD_LOGIC_VECTOR(flagsCount-1 DOWNTO 0);  
     signal FlagsWBFromMEMtoEXE : STD_LOGIC; 
-    signal PCFromMEMto_changethis_ : STD_LOGIC_VECTOR(flagCount-1 DOWNTO 0);  
-    signal PCWBFromMEMto_changethis_: STD_LOGIC; 
+    signal PCFromMEMStage : STD_LOGIC_VECTOR(PCLength-1 DOWNTO 0);  
+    signal PCWBFromMEMStage: STD_LOGIC; 
 BEGIN
 
     PCControlUnitEnt: entity work.PCControlUnit generic map(PCSize) port map(
@@ -74,11 +74,11 @@ BEGIN
         EXMEMbuffer => EXMEMbufferQ,
         FlagsOut => FlagsFromMEMtoEXE, 
         FlagsWBout => FlagsWBFromMEMtoEXE,
-        PCout => PCFromMEMto_changethis_ ,
-        PCWBout => PCWBFromMEMto_changethis_,
+        PCout => PCFromMEMStage ,
+        PCWBout => PCWBFromMEMStage,
         clk => clk,
         rst => rst,
-        MemOut => MemOut,
+        -- MemOut => MemOut,
         MEMWBbuffer => MEMWBbufferD
     );
 
