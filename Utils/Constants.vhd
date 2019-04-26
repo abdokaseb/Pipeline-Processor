@@ -160,8 +160,9 @@ constant EXMEMFLAGSS : integer := 135;
 constant EXMEMFLAGSE : integer := 137;
 constant EXMEMISINT : integer := 138;
 constant EXMEMWHICINSTR : integer := 139; -- this till which instruction access memory the upper or the lower
+constant EXMEMStackOperation : integer := 140; 
 
-constant EXMEMLength : integer := 140;
+constant EXMEMLength : integer := 141;
 
 
 

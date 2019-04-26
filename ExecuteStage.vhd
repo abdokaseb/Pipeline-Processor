@@ -27,9 +27,22 @@ ARCHITECTURE ExecuteStageArch of ExecuteStage is
     SIGNAL FlagsToALU1,FlagsToALU2,FlagsFromALU1,FlagsFromALU2 : STD_LOGIC_VECTOR(flagsCount-1 DOWNTO 0);
 BEGIN
 
-    ForwardUnitEnt: entity work.ForwardUnit port map(IDEXBuffer,EXMEMBuffer,MEMWBBuffer,ALUsrc1,ALUdst1,ALUsrc2,ALUdst2);
+    ForwardUnitEnt: entity work.ForwardUnit port map(
+        IDEXBuffer,
+        EXMEMBuffer,
+        MEMWBBuffer,
+        ALUsrc1,
+        ALUdst1,
+        ALUsrc2,
+        ALUdst2);
 
-    --MemorySelectionUnitEnt: entity work.MemorySelectionUnit port map(IDEXBuffer,EXMEMbufferOut);
+    MemorySelectionUnitEnt: entity work.MemorySelectionUnit port map(
+        IDEXBuffer,
+        EXMEMbufferOut,
+        ALUsrc1,
+        ALUdst1,
+        ALUsrc2,
+        ALUdst2);
 
 
     ALU1Ent : entity work.alu port map(
