@@ -32,7 +32,19 @@ ARCHITECTURE ForwardUnitArch of ForwardUnit is
     Signal WbValue1,WbValue2:  STD_LOGIC_VECTOR(wordSize-1 DOWNTO 0);    ----- the forwarding from mem/Wb buffer
 
     -----------------------------------------------------
-    ----------- SIGNAL MAPPING From Buffers 
+    ---------------------------------------
+
+    -- notes -----------
+
+    -- 1- priority is for ex\mem forwarding so it is the first condition in if else statement 
+    -- 2- we have assumed no two instructions in the same batch will write back in the same register 
+    --     but make the second issue have the higer priority 
+     
+      ------------       |3|  |   |1|
+      -----------        |4|  |   |2|          4 is the highest priotity
+
+BEGIN
+----------- SIGNAL MAPPING From Buffers 
 
     IdEXRsc1 <= IDEXBuffer (IDEXRsrc1E downto IDEXRsrc1S ) ;
     IdEXRdst1 <= IDEXBuffer (IDEXRdst1E downto IDEXRdst1S ) ;
@@ -58,19 +70,6 @@ ARCHITECTURE ForwardUnitArch of ForwardUnit is
     MemWbWriteback2 <= MEMWBBuffer ( MEMWBWB2 ) ;
     WbValue1 <= MEMWBBuffer (MEMWBWriteBackValue1E downto MEMWBWriteBackValue1S ) ;
     WbValue2 <= MEMWBBuffer (MEMWBWriteBackValue2E downto MEMWBWriteBackValue2S ) ;
-
-    ----------------------------------------
-
-    -- notes -----------
-
-    -- 1- priority is for ex\mem forwarding so it is the first condition in if else statement 
-    -- 2- we have assumed no two instructions in the same batch will write back in the same register 
-    --     but make the second issue have the higer priority 
-     
-      ------------       |3|  |   |1|
-      -----------        |4|  |   |2|          4 is the highest priotity
-
-BEGIN
     ----------------------------------------------------------
     process (IdEXRsc1,ExMemRdst1,ExMemRdst2,ExMemWriteback1,ExMemWriteback2,MemWbRdst1,MemWbRdst2,MemWbWriteback1,MemWbWriteback2,AluResult2,AluResult1,WbValue2,WbValue1,RSrc1Value)
         begin 
@@ -90,7 +89,7 @@ BEGIN
     ----------------------------------------------------------------------
 
     ----------------------------------------------------------
-    process (IdEXRdst1,ExMemRdst1,ExMemRdst2,ExMemWriteback1,ExMemWriteback2,MemWbRdst1,MemWbRdst2,MemWbWriteback1,MemWbWriteback2,,AluResult2,AluResult1,WbValue2,WbValue1,RDst1Value)
+    process (IdEXRdst1,ExMemRdst1,ExMemRdst2,ExMemWriteback1,ExMemWriteback2,MemWbRdst1,MemWbRdst2,MemWbWriteback1,MemWbWriteback2,AluResult2,AluResult1,WbValue2,WbValue1,RDst1Value)
         begin 
             if (ExMemWriteback2='1' and (ExMemRdst2 =IdEXRdst1) ) then 
                 Dst1 <= AluResult2;
@@ -109,7 +108,7 @@ BEGIN
     ----------------------------------------------------------------------
 
   ----------------------------------------------------------
-    process (IdEXRsc2,ExMemRdst1,ExMemRdst2,ExMemWriteback1,ExMemWriteback2,MemWbRdst1,MemWbRdst2,MemWbWriteback1,MemWbWriteback2,,AluResult2,AluResult1,WbValue2,WbValue1,RSrc2Value)
+    process (IdEXRsc2,ExMemRdst1,ExMemRdst2,ExMemWriteback1,ExMemWriteback2,MemWbRdst1,MemWbRdst2,MemWbWriteback1,MemWbWriteback2,AluResult2,AluResult1,WbValue2,WbValue1,RSrc2Value)
         begin 
             if (ExMemWriteback2='1' and (ExMemRdst2 =IdEXRsc2) ) then 
                 Src2 <= AluResult2;
