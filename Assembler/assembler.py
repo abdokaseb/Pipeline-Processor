@@ -274,7 +274,7 @@ def main():
     #input_fil_name = input("input filename:")              ---
     #output_fil_name = input("output filename:")            ---
     #debug_fil_name = input("debug filename:")              ---
-    working_dir = ".\\testcases\\Branch\\"
+    working_dir = ".\\testcases\\TwoOperand\\"
     if (len(sys.argv)!=4):
         print("Wrong number of parameters")
         sys.exit()
