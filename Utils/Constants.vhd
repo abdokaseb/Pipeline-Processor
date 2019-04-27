@@ -3,6 +3,11 @@ USE IEEE.std_logic_1164.all;
 package constants is    
 
 ---Buffers
+TYPE buffer_type IS (IFIDbuff,IDEXbuff,EXMEMbuff,MEMWBbuff);
+constant IFID : buffer_type := IFIDbuff;
+constant IDEX : buffer_type := IDEXbuff;
+constant EXMEM : buffer_type := EXMEMbuff;
+constant MEMWB : buffer_type := MEMWBbuff;
 
 --IF/ID buffer
 
@@ -37,6 +42,8 @@ constant IFIDInstructionType2E : integer :=31;
 
 constant IFIDInstruction2E : integer := 31;
 --/Both instructions
+constant IFIDBOTHS : integer := 32;
+
 constant IFIDPCS : integer := 32;
 constant IFIDPCE : integer := 63;
 -- constant IFIDISINT : integer := 64;
@@ -109,6 +116,8 @@ constant IDEXFreeInc2S : integer := 123;
 constant IDEXInc2E : integer := 131;
 
 --/Both instructions
+constant IDEXBOTHS : integer := 132;
+
 constant IDEXPCS  : integer := 132;
 constant IDEXPCE  : integer := 163;
 constant IDEXisReset : integer := 164;
@@ -145,6 +154,8 @@ constant EXMEMRdst2E : integer := 42;
 constant EXMEMInc2E : integer := 45;
 
 --/Both instructions
+constant EXMEMBOTHS : integer := 46;
+
 constant EXMEMRsrcValFRWS : integer := 46;
 constant EXMEMRsrcValFRWE : integer := 61;
 constant EXMEMRdstValFRWS : integer := 62;
