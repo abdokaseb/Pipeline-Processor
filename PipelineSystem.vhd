@@ -102,7 +102,6 @@ BEGIN
         PCWBout => PCWBFromMEMStage,
         clk => clk,
         rst => rst,
-        -- MemOut => MemOut,
         MEMWBbuffer => MEMWBbufferD
     );
 
