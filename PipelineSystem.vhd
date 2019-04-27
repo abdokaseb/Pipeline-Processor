@@ -32,9 +32,15 @@ ARCHITECTURE PipelineSystemArch of PipelineSystem is
 -------- INTER STAGES COMMUNICATION ------------
     signal FlagsFromMEMtoEXE : STD_LOGIC_VECTOR(flagsCount-1 DOWNTO 0);  
     signal FlagsWBFromMEMtoEXE : STD_LOGIC; 
-    signal PCFromMEMStage : STD_LOGIC_VECTOR(PCLength-1 DOWNTO 0);  
-    signal PCWBFromMEMStage: STD_LOGIC; 
+    signal PCFromMEMStage,PCFromEXStage : STD_LOGIC_VECTOR(PCLength-1 DOWNTO 0);  
+    signal PCWBFromMEMStage,PCWBFromEXStage: STD_LOGIC; 
     Signal pcIncrementControl : STD_LOGIC_VECTOR(1 downto 0);
+
+    -- Flush Vectors (0) first(upper)buffer ,(1) second(lower)buffer ,(2) third(common)buffer 
+    signal IFIDflushVector: STD_LOGIC_VECTOR(0 TO 2);
+    signal IDEXflushVector: STD_LOGIC_VECTOR(0 TO 2);
+    signal EXMEMflushVector: STD_LOGIC_VECTOR(0 TO 2);
+    signal keepFlushing: STD_LOGIC;
 BEGIN
 
     IFIDen <= '1';
@@ -62,9 +68,9 @@ BEGIN
         PCReg => PCreg,
         clk => clk,
         IFIDBuffer => IFIDBufferD
-    );    
+    );   
 
-    IFIDRegEnt: entity work.Reg generic map(IFIDLength+1) port map(IFIDBufferD,IFIDen,clk,IFIDrst,IFIDBufferQ);
+    IFIDRegEnt: entity work.BuffwithFlushGen generic map(IFID,IFIDLength+1) port map(IFIDBufferD,IFIDen,clk,IFIDrst,IFIDBufferQ,IFIDflushVector);
 
     DecodeStageEnt: entity work.DecodeStage port map(
         IFIDbuffer => IFIDBufferQ,
@@ -79,7 +85,7 @@ BEGIN
         PcIncrement=> pcIncrementControl
     );
 
-    IDEXRegEnt: entity work.Reg generic map(IDEXLength+1) port map(IDEXBufferD,IDEXen,clk,IDEXrst,IDEXBufferQ);
+    IDEXRegEnt: entity work.BuffwithFlushGen generic map(IDEX,IDEXLength+1) port map(IDEXBufferD,IDEXen,clk,IDEXrst,IDEXBufferQ,IDEXflushVector);
 
     ExecuteStageEnt: entity work.ExecuteStage generic map(wordSize) port map(
         IDEXBuffer => IDEXBufferQ,
@@ -87,12 +93,15 @@ BEGIN
         MEMWBBuffer => MEMWBBufferQ,
         FlagsFromMEM => FlagsFromMEMtoEXE,
         FlagsWBFromMEM => FlagsWBFromMEMtoEXE, 
+        PCWBFromEX => ,
+        PCFromEX => ,
         clk => clk,
         rst => rst,
-        EXMEMbufferOut => EXMEMbufferD
+        EXMEMbufferOut => EXMEMbufferD,
+        keepFlushing => keepFlushing
     );
 
-    EXMEMRegEnt: entity work.Reg generic map(EXMEMLength+1) port map(EXMEMBufferD,EXMEMen,clk,EXMEMrst,EXMEMBufferQ);
+    EXMEMRegEnt: entity work.BuffwithFlushGen generic map(EXMEM,EXMEMLength+1) port map(EXMEMBufferD,EXMEMen,clk,EXMEMrst,EXMEMBufferQ,EXMEMflushVector);
 
     MemoryStageEnt: entity work.MemoryStage port map(
         EXMEMbuffer => EXMEMbufferQ,
@@ -102,7 +111,8 @@ BEGIN
         PCWBout => PCWBFromMEMStage,
         clk => clk,
         rst => rst,
-        MEMWBbuffer => MEMWBbufferD
+        MEMWBbuffer => MEMWBbufferD,
+        keepFlushing => keepFlushing -- nccessary for state machines RTI ,INT 
     );
 
     MEMWBRegEnt: entity work.Reg generic map(MEMWBLength+1) port map(MEMWBBufferD,MEMWBen,clk,MEMWBrst,MEMWBBufferQ);

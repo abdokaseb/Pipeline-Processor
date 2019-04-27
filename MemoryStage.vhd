@@ -13,8 +13,8 @@ ENTITY MemoryStage IS
 			MEMWBbuffer: out STD_LOGIC_VECTOR(MEMWBLength DOWNTO 0);
 			FlagsOut : out  STD_LOGIC_VECTOR(flagsCount-1 DOWNTO 0);
 			PCout : out  STD_LOGIC_VECTOR(PCLength-1 DOWNTO 0);
-			FlagsWBout,PCWBout : out  STD_LOGIC
-		);
+			FlagsWBout,PCWBout,keepFlushing : out  STD_LOGIC
+        );
 
 END ENTITY MemoryStage;
 
@@ -30,6 +30,7 @@ BEGIN
     MEMENTITY : ENTITY work.Ram generic map(addressSize,wordSize) PORT MAP(
         clk => clk,
         we => MemWrite,
+        rd => MemRead,
         twoWords => twoWordsWriteInMem,
         address => address,
 		datain1 => dataMemIn1,
@@ -49,8 +50,9 @@ BEGIN
 		MemRead => MemRead,
 		MemWrite => MemWrite,
 		PCWBPOPLD => PCWBPOPLD,
-		FLAGSWBPOP => FLAGSWBPOP
-	);
+        FLAGSWBPOP => FLAGSWBPOP,
+        keepFlushing => keepFlushing
+	); -- may add keep flushing for state mchanies and for call to flush stupid fetched instructions
 	
     MEMSTAGEOUTPUTENT : ENTITY work.MemStageOutput PORT MAP(
 		EXMEMbuffer => EXMEMbuffer,

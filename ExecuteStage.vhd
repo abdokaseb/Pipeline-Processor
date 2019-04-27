@@ -7,14 +7,17 @@ use work.constants.all;
 ENTITY ExecuteStage IS
     Generic(wordSize:integer :=16);
 	PORT(
-            IDEXBuffer: in STD_LOGIC_VECTOR(IDEXLength DOWNTO 0);
-            EXMEMBuffer: in STD_LOGIC_VECTOR(EXMEMLength DOWNTO 0);
-            MEMWBBuffer: in STD_LOGIC_VECTOR(MEMWBLength DOWNTO 0);
+            IDEXBuffer: in STD_LOGIC_VECTOR(IDEXLength downto 0);
+            EXMEMBuffer: in STD_LOGIC_VECTOR(EXMEMLength downto 0);
+            MEMWBBuffer: in STD_LOGIC_VECTOR(MEMWBLength downto 0);
             FlagsWBFromMEM:in STD_LOGIC;
             FlagsFromMEM:in STD_LOGIC_VECTOR (flagsCount-1 downto 0);
-            clk, rst: in STD_LOGIC;
-            EXMEMbufferOut: out STD_LOGIC_VECTOR(EXMEMLength DOWNTO 0)
-		);
+            clk, rst,keepFlushing: in STD_LOGIC;
+            EXMEMbufferOut: out STD_LOGIC_VECTOR(EXMEMLength downto 0);
+            IFIDflushVector , IDEXflushVector, EXMEMflushVector: out STD_LOGIC_VECTOR(0 TO 2);   
+            PCFromEX:out STD_LOGIC_VECTOR (31 downto 0);     
+            PCWBFromEX:out STD_LOGIC
+        );
 
 END ENTITY ExecuteStage;
 
@@ -24,7 +27,7 @@ END ENTITY ExecuteStage;
 ARCHITECTURE ExecuteStageArch of ExecuteStage is
 
     Signal ALUsrc1,ALUdst1,ALUsrc2,ALUdst2: std_logic_vector(wordSize-1 downto 0);
-    SIGNAL FlagsToALU1,FlagsToALU2,FlagsFromALU1,FlagsFromALU2 : STD_LOGIC_VECTOR(flagsCount-1 DOWNTO 0);
+    SIGNAL FlagsToALU1,FlagsToALU2,FlagsFromALU1,FlagsFromALU2 : STD_LOGIC_VECTOR(flagsCount-1 downto 0);
 BEGIN
 
     ForwardUnitEnt: entity work.ForwardUnit port map(
@@ -77,9 +80,23 @@ BEGIN
         FlagsToALU2 => FlagsToALU2,
         clk=>clk,
         rst=>rst,
-        Buff2Flush =>'0' ------------------- TO BE CHANGED
+        Buff2Flush => EXMEMflushVector(1) ------------------- TO BE CHANGED
     );
 
+    --------- BranchAndControHazardsUnit -------------
+    ControHazardsUnit: entity work.ControlHazardsUnit  port map(
+        IDEXbuffer => IDEXBuffer,
+        Rdst1FRWval => ALUdst1,
+        Rdst2FRWval => ALUdst2,
+        IFIDflushVector => IFIDflushVector, 
+        IDEXflushVector => IDEXflushVector,
+        EXMEMflushVector => EXMEMflushVector,
+        keepFlushing => keepFlushing,
+        PCFromEX => PCFromEX,
+        PCWBFromEX => PCWBFromEX,
+        FlagsToALU1 => FlagsToALU1,
+        FlagsToALU2 => FlagsToALU2
+    );
 
     EXMEMbufferOut(EXMEMWB1) <= IDEXBuffer(IDEXWB1);
     EXMEMbufferOut(EXMEMWB2) <= IDEXBuffer(IDEXWB2);
