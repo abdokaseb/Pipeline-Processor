@@ -10,7 +10,7 @@ ENTITY DecodeStage IS
             IFIDbuffer: in STD_LOGIC_VECTOR(IFIDLength DOWNTO 0);
             beforeIFIDbuffer: in STD_LOGIC_VECTOR(IFIDLength DOWNTO 0);
             MEMWBbuffer: in STD_LOGIC_VECTOR(MEMWBLength DOWNTO 0);
-            clk, rst: in STD_LOGIC;
+            clk, rst, interruptSignal, resetSignal: in STD_LOGIC;
             INPort: in STD_LOGIC_VECTOR(n-1 DOWNTO 0);
             IDEXBuffer: out STD_LOGIC_VECTOR(IDEXLength DOWNTO 0);
             PcIncrement : out STD_LOGIC_VECTOR(1 downto 0)
@@ -51,13 +51,18 @@ BEGIN
         WB2 => MEMWBbuffer(MEMWBWB2),
         ResetRegs => rst,
         clk => clk,
-        src1 => preIDEXBuffer(IFIDRscr1E downto IFIDRscr1S),
+        src1 => preIDEXBuffer(IFIDRsrc1E downto IFIDRsrc1S),
         dst1 => preIDEXBuffer(IFIDRdst1E downto IFIDRdst1S),
-        src2 => preIDEXBuffer(IFIDRscr2E downto IFIDRscr2S),
+        src2 => preIDEXBuffer(IFIDRsrc2E downto IFIDRsrc2S),
         dst2 => preIDEXBuffer(IFIDRdst2E downto IFIDRdst2S),
         WBdst1 => MEMWBbuffer(EXMEMRdst1E downto EXMEMRdst1S),
         WBdst2 => MEMWBbuffer(EXMEMRdst2E downto EXMEMRdst2S)
     );
+                
+    preIDEXBuffer(IDEXRsrc1E downto IDEXRsrc1S) <= IFIDbuffer(IFIDRsrc1E downto IFIDRsrc1S);
+    preIDEXBuffer(IDEXRdst1E downto IDEXRdst1S) <= IFIDbuffer(IFIDRdst1E downto IFIDRdst1S);
+    preIDEXBuffer(IDEXRsrc2E downto IDEXRsrc2S) <= IFIDbuffer(IFIDRsrc2E downto IFIDRsrc2S);
+    preIDEXBuffer(IDEXRdst2E downto IDEXRdst2S) <= IFIDbuffer(IFIDRdst2E downto IFIDRdst2S);
 
     preIDEXBuffer(IDEXPCE downto IDEXPCS) <= IFIDbuffer(IFIDPCE downto IFIDPCS);
 
@@ -69,18 +74,31 @@ BEGIN
             else beforeIFIDbuffer(IFIDInstruction1E downto IFIDInstruction1S) when isLDM2 = '1'
             else busDst2; 
 
+    preIDEXBuffer(IDEXISINT) <= interruptSignal;
+    preIDEXBuffer(IDEXisReset) <= resetSignal;
+    preIDEXBuffer(IDEXInc2E downto IDEXFreeInc2S) <= (Others => '0');
+    preIDEXBuffer(IDEXInc1E downto IDEXFreeInc1S) <= (Others => '0');
+    
     IDEXBuffer(IDEXInc1E downto IDEXInc1S) <= (Others => '0') when isLDMLastOne = '1'
                 else preIDEXBuffer(IDEXInc1E downto IDEXInc1S);
     IDEXBuffer(IDEXInc2E downto IDEXInc2S) <= (Others => '0') when isLDM1 = '1'
                 else preIDEXBuffer(IDEXInc2E downto IDEXInc2S);
     IDEXBuffer(IDEXLength downto IDEXInc2E+1) <= preIDEXBuffer(IDEXLength downto IDEXInc2E+1);
 
-    process(clk)
-    begin
-        if clk'event and clk = '1' then
-            isLDMLastOne <= isLDM2;
-        end if;
-    end process;
+
+        process(clk)
+        begin
+            if clk'event and clk = '1' then
+                isLDMLastOne <= isLDM2;
+            end if;
+        end process;
+
+
+    -- TO ASK 
+    preIDEXBuffer(IDEXDSB2E downto IDEXDSB2S) <= (Others=>'0');
+    preIDEXBuffer(IDEXDSB1E downto IDEXDSB1S) <= (Others=>'0');
+    preIDEXBuffer(IDEXWriteTwowords1) <= '0';
+    preIDEXBuffer(IDEXWriteTwowords2) <= '0';
 
 
 END ARCHITECTURE;

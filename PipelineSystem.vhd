@@ -10,7 +10,7 @@ ENTITY PipelineSystem IS
             addressSize: integer :=5
     );
 	PORT(
-            clk, rst: in STD_LOGIC;
+            clk, rst, interruptSignal, resetSignal: in STD_LOGIC;
             INPort: in STD_LOGIC_VECTOR(wordsize-1 DOWNTO 0);
             OutPort: out STD_LOGIC_VECTOR(wordsize-1 DOWNTO 0)
 		);
@@ -73,6 +73,8 @@ BEGIN
         INPort => INPort,
         clk => clk,
         rst => rst,
+        interruptSignal => interruptSignal, 
+        resetSignal => resetSignal,
         IDEXBuffer => IDEXBufferD,
         PcIncrement=> pcIncrementControl
     );

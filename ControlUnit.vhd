@@ -36,6 +36,9 @@ BEGIN
 		OperationCode2, isIN2, isLDM2
 	);
 
+	IDEXBuffer(IDEXMR1) <= MR1;
+	IDEXBuffer(IDEXMW1) <= MW1;
+	IDEXBuffer(IDEXWB1) <= WB1;
 	IDEXBuffer(IDEXStackOperation1) <= StackOperation1;
 	IDEXBuffer(IDEXShiftAmount1E downto IDEXShiftAmount1S) <= Instruction1(IFIDShiftAmount1E downto IFIDShiftAmount1S);
 	IDEXBuffer(IDEXOperationCode1E downto IDEXOperationCode1S) <= OperationCode1;
@@ -43,6 +46,9 @@ BEGIN
 	IDEXBuffer(IDEXBranchOrNot1) <= BranchOrNot1;
 	IDEXBuffer(IDEXIsALUOper1) <= IsALUOper1;
 
+	IDEXBuffer(IDEXMR2) <= MR2;
+	IDEXBuffer(IDEXMW2) <= MW2;
+	IDEXBuffer(IDEXWB2) <= WB2;
 	IDEXBuffer(IDEXStackOperation2) <= StackOperation2;
 	IDEXBuffer(IDEXShiftAmount2E downto IDEXShiftAmount2S) <= Instruction2(IFIDShiftAmount1E downto IFIDShiftAmount1S);
 	IDEXBuffer(IDEXOperationCode2E downto IDEXOperationCode2S) <= OperationCode2;

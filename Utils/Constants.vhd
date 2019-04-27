@@ -11,8 +11,8 @@ constant IFIDInstruction1S : integer := 0;
 
 constant IFIDShiftAmount1S : integer := 0;
 constant IFIDShiftAmount1E : integer := 4;
-constant IFIDRscr1S : integer :=5;
-constant IFIDRscr1E : integer :=7;
+constant IFIDRsrc1S : integer :=5;
+constant IFIDRsrc1E : integer :=7;
 constant IFIDRdst1S : integer :=8;
 constant IFIDRdst1E : integer :=10;
 constant IFIDInstructionOpCode1S : integer :=11;
@@ -26,8 +26,8 @@ constant IFIDInstruction2S : integer := 16;
 
 constant IFIDShiftAmount2S : integer := 16;
 constant IFIDShiftAmount2E : integer := 20;
-constant IFIDRscr2S : integer :=21;
-constant IFIDRscr2E : integer :=23;
+constant IFIDRsrc2S : integer :=21;
+constant IFIDRsrc2E : integer :=23;
 constant IFIDRdst2S : integer :=24;
 constant IFIDRdst2E : integer :=26;
 constant IFIDInstructionOpCode2S : integer :=27;
@@ -73,6 +73,7 @@ constant IDEXDSB1E : integer := 55;
 constant IDEXIsALUOper1 : integer := 56;
 
 -- I'll leave 10 bits for additional features :D if you use it please down the number
+constant IDEXFreeInc1S : integer := 57;
 constant IDEXInc1E : integer := 65;
 
 
@@ -98,12 +99,13 @@ constant IDEXOperationCode2S : integer := 114;
 constant IDEXOperationCode2E : integer := 117;
 constant IDEXOut2 : integer := 118;
 constant IDEXBranchOrNot2 : integer := 119;
-constant IDEXDSB2S : integer := 120;
+constant IDEXDSB2S : integer := 120;    -- Is it really important to put this here KASBE Ques
 constant IDEXDSB2E : integer := 121;
 constant IDEXIsALUOper2 : integer := 122;
 
 
 -- I'll leave 10 bits for additional features :D if you use it please down the number
+constant IDEXFreeInc2S : integer := 123;
 constant IDEXInc2E : integer := 131;
 
 --/Both instructions
