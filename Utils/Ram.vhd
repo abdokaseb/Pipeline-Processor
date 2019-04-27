@@ -8,7 +8,7 @@ ENTITY Ram IS
 
 	PORT(
 			clk : IN STD_LOGIC;
-			we,twoWords  : IN STD_LOGIC;
+			we,rd,twoWords : IN STD_LOGIC;
 			address : IN  STD_LOGIC_VECTOR(addressBits - 1 DOWNTO 0);
             datain1,datain2  : IN  STD_LOGIC_VECTOR(wordSize - 1 DOWNTO 0);
             dataout1,dataout2 : OUT STD_LOGIC_VECTOR(wordSize - 1 DOWNTO 0)
@@ -37,8 +37,8 @@ ARCHITECTURE RamArch OF Ram IS
 					END IF;
 				END IF;
 		END PROCESS;
-
-		dataout1 <= Ram(TO_INTEGER(UNSIGNED(address)));
-        dataout2 <= Ram(TO_INTEGER(UNSIGNED(address))+1);		
+        
+		dataout1 <= (OTHERS => 'Z' ) WHEN rd /= '1' ELSE Ram(TO_INTEGER(UNSIGNED(address)));
+        dataout2 <= (OTHERS => 'Z' ) WHEN rd /= '1' ELSE Ram(TO_INTEGER(UNSIGNED(address))+1);		
 
 END ARCHITECTURE;
