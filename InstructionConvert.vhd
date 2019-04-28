@@ -76,7 +76,7 @@ BEGIN
             or instructPart = OpCodeCALL)
         else '0';
     
-    IsALUOper <= '1' when typePart = twoOperandInstruction 
+    IsALUOper <= '1' when (typePart = twoOperandInstruction and not instructPart = OpCodeNOP)
             or (typePart = oneOperandInstruction and not (instructPart = OpCodeOUT or instructPart = OpCodeIN))
         else '0';
 

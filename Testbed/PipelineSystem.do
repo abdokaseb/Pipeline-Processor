@@ -29,8 +29,14 @@ add wave -position insertpoint sim:/pipelinesystem/DecodeStageEnt/regFileEnt/loo
 
 
 add wave -position insertpoint sim:/pipelinesystem/*
+# DecodeStageEnt
 add wave -position insertpoint sim:/pipelinesystem/DecodeStageEnt/*
 add wave -position insertpoint sim:/pipelinesystem/DecodeStageEnt/controlUnitEnt/*
+add wave -position insertpoint sim:/pipelinesystem/DecodeStageEnt/regFileEnt/*
+# ExecuteStageEnt
+add wave -position insertpoint sim:/pipelinesystem/ExecuteStageEnt/ALU1Ent/*
+add wave -position insertpoint sim:/pipelinesystem/ExecuteStageEnt/ALU2Ent/*
+add wave -position insertpoint sim:/pipelinesystem/ExecuteStageEnt/ForwardUnitEnt/*
 
 
 
