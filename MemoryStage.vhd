@@ -9,7 +9,7 @@ ENTITY MemoryStage IS
 						wordSize: integer :=16);
 	PORT(
 			EXMEMbuffer: in STD_LOGIC_VECTOR(EXMEMLength DOWNTO 0);
-			clk, rst: in STD_LOGIC;
+			clk, rst,RESET: in STD_LOGIC;
 			MEMWBbuffer: out STD_LOGIC_VECTOR(MEMWBLength DOWNTO 0);
 			FlagsOut : out  STD_LOGIC_VECTOR(flagsCount-1 DOWNTO 0);
 			PCout : out  STD_LOGIC_VECTOR(PCLength-1 DOWNTO 0);
@@ -42,7 +42,8 @@ BEGIN
     CALCMEMPARAMSENT : ENTITY work.CalcRamParamsUnit generic map(addressSize) PORT MAP(
 		EXMEMbuffer => EXMEMbuffer,
 		clk => clk,
-		rst => rst,
+        rst => rst,
+        RESET => RESET,
         twoWordsReadOrWrite => twoWordsReadOrWrite,
         addressToMem => address,
 		dataToMem1 => dataMemIn1,

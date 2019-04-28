@@ -30,7 +30,7 @@ PCReg <= PCcurrent;
 process (clk,reset)
     begin
         if (reset ='1') then 
-            PCcurrent<=(x"00000010");         ----  assume no reset logic  (so i hardcoded the address of the programms in test cases)---
+            PCcurrent<=(x"00000000");         ----  assume no reset logic  (so i hardcoded the address of the programms in test cases)---
         elsif (clk'EVENT AND clk='1') then 
                 if (MemPcEnable ='1') then 
                     PCcurrent<=MemPc;

@@ -9,7 +9,7 @@ ENTITY CalcRamParamsUnit IS
     GENERIC (addressSize :INTEGER := RAMaddressBits);
     PORT(
         EXMEMbuffer: IN STD_LOGIC_VECTOR(EXMEMLength DOWNTO 0);
-        clk,rst : IN STD_LOGIC;
+        clk,rst,RESET : IN STD_LOGIC;
         addressToMem : OUT STD_LOGIC_VECTOR(addressSize - 1 DOWNTO 0);
         dataToMem1,dataToMem2  : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
         MemRead,MemWrite,twoWordsReadOrWrite,PCWBPOPLD,FLAGSWBPOP,keepFlushing: OUT STD_LOGIC 
@@ -51,9 +51,20 @@ BEGIN
 
     STACKPINTERREG : ENTITY work.SP generic map(SPLength) port map(SPRegIn,VCC,clk,rst,SPRegOut);
 
-    PROCESS (RsrcVal, RdstVal, DSB, PC, FLAGS, MW, MR, isStackOper, isINT, INTstate, RTIstate,SPRegIn,tmpPC,whichInstr)
+    PROCESS (RsrcVal, RdstVal, DSB, PC, FLAGS, MW, MR, isStackOper, isINT, INTstate, RTIstate,SPRegIn,tmpPC,whichInstr,RESET)
     BEGIN
-        if isINT = '1' OR INTstate /= pushPC then --or DSB = OpCodeRTIDSB or RTIstate != popFlags) -- STALL OR PC + 0 ???
+        if RESET = '1' then
+            PCWBPOPLD <= '1'; 
+            FLAGSWBPOP <= '0';
+            keepFlushing <= '1';
+            twoWordsReadOrWrite <= '1';
+            SPRegIn <= SPRegOut;
+            MemRead <= '1';
+            MemWrite <= '0';
+            addressToMem <= STD_LOGIC_VECTOR(to_unsigned(DefaultResetPcAddress,addressSize));
+            dataToMem1 <= (OTHERS => '0');
+            dataToMem2 <= (OTHERS => '0'); 
+        elsif isINT = '1' OR INTstate /= pushPC then --or DSB = OpCodeRTIDSB or RTIstate != popFlags) -- STALL OR PC + 0 ???
             CASE INTstate IS
                 when pushPC =>
                     PCWBPOPLD <= '0';
