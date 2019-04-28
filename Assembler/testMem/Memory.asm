@@ -18,10 +18,10 @@ inc R1
 in R4        #R4=F320
 inc R1
 
-LDD R1,R2     #R1=3 and Mem[R2] = R1 #should be replaced with std
+STD R1,R2     #R1=3 and Mem[R2] = R1
 inc R1
 
-STD R2,R5     #R5 = Mem[R2]; = 3 #should be replaced with ldd
+LDD R2,R5     #R5 = Mem[R2]; = 3
 inc R1
 
 PUSH R1      #SP=FFFFFFFE,M[FFFFFFFF]=5
@@ -42,5 +42,5 @@ inc R7  # r1 causes load and use
 POP R2       #SP=FFFFFFFF,R2=5
 inc R7 # r1 causes load and use
 
-STD R3,R7    #R7 = Mem[R3] = 5 #should be replaced with ldd
+LDD R3,R7    #R7 = Mem[R3] = 5
 inc R1

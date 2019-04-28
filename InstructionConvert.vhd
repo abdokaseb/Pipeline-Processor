@@ -42,20 +42,20 @@ BEGIN
             else '0';
             
     MR <= '1' when (instructPart = OpCodePOP and typePart = MemoryInstruction)
-                or (instructPart =  OpCodeSTD and typePart = MemoryInstruction)
+                or (instructPart =  OpCodeLDD and typePart = MemoryInstruction)
                 or (instructPart =  OpCodeRET and typePart = branchInstruction)
                 or (instructPart =  OpCodeRTI and typePart = branchInstruction)
             else '0';
                 
                 
     MW <= '1' when (instructPart = OpCodePUSH and typePart = MemoryInstruction)
-                or (instructPart =  OpCodeLDD and typePart = MemoryInstruction)
+                or (instructPart =  OpCodeSTD and typePart = MemoryInstruction)
                 or (instructPart =  OpCodeCALL and typePart = branchInstruction)
             else '0';
     
     WB <= '1' when (instructPart = OpCodePOP and typePart = MemoryInstruction)
             or (instructPart =  OpCodeLDM and typePart = MemoryInstruction)
-            or (instructPart =  OpCodeSTD and typePart = MemoryInstruction)
+            or (instructPart =  OpCodeLDD and typePart = MemoryInstruction)
             or (typePart = twoOperandInstruction and instructPart /= OpCodeNOP)
             or (instructPart =  OpCodeNOT and typePart = oneOperandInstruction)
             or (instructPart =  OpCodeINC and typePart = oneOperandInstruction)

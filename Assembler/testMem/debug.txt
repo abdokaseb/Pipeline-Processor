@@ -10,9 +10,9 @@ in r3
 inc r1
 in r4
 inc r1
-ldd r1,r2
+std r1,r2
 inc r1
-std r2,r5
+ldd r2,r5
 inc r1
 push r1
 inc r1
@@ -26,7 +26,7 @@ pop r1
 inc r7
 pop r2
 inc r7
-std r3,r7
+ldd r3,r7
 inc r1
 ------------------- end preprocessing  --------------
 ------------------- addresses --------------
@@ -46,11 +46,11 @@ inc r1
 
 (instruction = inc r1) (instruction type = 1op) (address in hex = 0x15)  
 
-(instruction = ldd r1,r2) (instruction type = 2op) (address in hex = 0x16)  
+(instruction = std r1,r2) (instruction type = 2op) (address in hex = 0x16)  
 
 (instruction = inc r1) (instruction type = 1op) (address in hex = 0x17)  
 
-(instruction = std r2,r5) (instruction type = 2op) (address in hex = 0x18)  
+(instruction = ldd r2,r5) (instruction type = 2op) (address in hex = 0x18)  
 
 (instruction = inc r1) (instruction type = 1op) (address in hex = 0x19)  
 
@@ -78,7 +78,7 @@ inc r1
 
 (instruction = inc r7) (instruction type = 1op) (address in hex = 0x25)  
 
-(instruction = std r3,r7) (instruction type = 2op) (address in hex = 0x26)  
+(instruction = ldd r3,r7) (instruction type = 2op) (address in hex = 0x26)  
 
 (instruction = inc r1) (instruction type = 1op) (address in hex = 0x27)  
 
@@ -107,14 +107,14 @@ in r4  address  20
 inc r1  address  21
 0110000100000000 (address in hex = 0x15)  
 
-ldd r1,r2  address  22
-1011001000100000 (address in hex = 0x16)  
+std r1,r2  address  22
+1011101000100000 (address in hex = 0x16)  
 
 inc r1  address  23
 0110000100000000 (address in hex = 0x17)  
 
-std r2,r5  address  24
-1011110101000000 (address in hex = 0x18)  
+ldd r2,r5  address  24
+1011010101000000 (address in hex = 0x18)  
 
 inc r1  address  25
 0110000100000000 (address in hex = 0x19)  
@@ -155,8 +155,8 @@ pop r2  address  36
 inc r7  address  37
 0110011100000000 (address in hex = 0x25)  
 
-std r3,r7  address  38
-1011111101100000 (address in hex = 0x26)  
+ldd r3,r7  address  38
+1011011101100000 (address in hex = 0x26)  
 
 inc r1  address  39
 0110000100000000 (address in hex = 0x27)  

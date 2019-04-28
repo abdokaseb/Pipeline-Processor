@@ -45,4 +45,4 @@ run
 force -freeze sim:/pipelinesystem/INPort 16'hFFFF 0
 run
 force -freeze sim:/pipelinesystem/INPort 16'hF320 0
-run 1200
+run 1300
