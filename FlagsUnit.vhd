@@ -38,15 +38,18 @@ BEGIN
             FlagsToALU2 <= FlagsFromALU1; 
             FlagsRegIn <= FlagsFromALU1;	
         ELSIF (isALUOper2 = '1') THEN
+            FlagsToALU1 <= FlagsRegOut;
             IF (Buff2Flush = '0') THEN
                 FlagsToALU2 <= FlagsRegOut; 
                 FlagsRegIn <= FlagsFromALU2;
             Else -- flush second instruction
-                FlagsToALU2 <= (OTHERS =>'0');
+                FlagsRegIn <= FlagsRegOut;
+                FlagsToALU2 <= (OTHERS =>'0'); -- second buffer will be flushed any way so alu result is useless
             END IF;
         ELSE
             -- no ALU operations but may be branch or even push flags
             -- for push flags take any flags signal for push in stack ,as INT will flush alus and alus won't use flags any way
+            FlagsRegIn <= FlagsRegOut;
             FlagsToALU1 <= FlagsRegOut; 
             FlagsToALU2 <= FlagsRegOut;
         END IF;
