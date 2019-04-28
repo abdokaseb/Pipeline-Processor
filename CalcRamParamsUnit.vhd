@@ -12,7 +12,7 @@ ENTITY CalcRamParamsUnit IS
         clk,rst : IN STD_LOGIC;
         addressToMem : OUT STD_LOGIC_VECTOR(addressSize - 1 DOWNTO 0);
         dataToMem1,dataToMem2  : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-        MemRead,MemWrite,twoWordsWriteInMem,PCWBPOPLD,FLAGSWBPOP,keepFlushing: OUT STD_LOGIC 
+        MemRead,MemWrite,twoWordsReadOrWrite,PCWBPOPLD,FLAGSWBPOP,keepFlushing: OUT STD_LOGIC 
         -- MemRead is n't important for memory but for mux 
         -- PCWBPOPLD write in pc value from memory due to pop like RET or due to load like INT
     );
@@ -26,9 +26,9 @@ ARCHITECTURE CalcRamParamsUnitArch OF CalcRamParamsUnit IS
     SIGNAL DSB : STD_LOGIC_VECTOR (1 DOWNTO 0);
     SIGNAL PC : STD_LOGIC_VECTOR (PCLength-1 DOWNTO 0);
     SIGNAL FLAGS,FlagsLatch : STD_LOGIC_VECTOR (flagsCount-1 DOWNTO 0);
-    SIGNAL isStackOper,isINT,MR,MW: STD_LOGIC;
+    SIGNAL isStackOper,isINT,MR,MW,whichInstr: STD_LOGIC;
     ------------------
-    SIGNAL SPRegOut,SPRegIn,tmpPC : STD_LOGIC_VECTOR(PCLength-1 DOWNTO 0);
+    SIGNAL SPRegOut,SPRegIn,tmpPC,tmpSP : STD_LOGIC_VECTOR(PCLength-1 DOWNTO 0);
     SIGNAL RsrcVal,RdstVal : STD_LOGIC_VECTOR(15 DOWNTO 0);
     
     -------------- State Machines -----------
@@ -39,7 +39,7 @@ ARCHITECTURE CalcRamParamsUnitArch OF CalcRamParamsUnit IS
 
 BEGIN
     RsrcVal <= EXMEMbuffer(EXMEMRsrcValFRWE DOWNTO EXMEMRsrcValFRWS);
-    RsrcVal <= EXMEMbuffer(EXMEMRdstValFRWE DOWNTO EXMEMRdstValFRWS);
+    RdstVal <= EXMEMbuffer(EXMEMRdstValFRWE DOWNTO EXMEMRdstValFRWS);
     DSB <= EXMEMbuffer(EXMEMDSBE DOWNTO EXMEMDSBS);
     PC <= EXMEMbuffer(EXMEMPCE DOWNTO EXMEMPCS);
     FLAGS <= EXMEMbuffer(EXMEMFLAGSE DOWNTO EXMEMFLAGSS);
@@ -47,10 +47,11 @@ BEGIN
     isINT <= EXMEMbuffer(EXMEMISINT);
     MW <= EXMEMbuffer(EXMEMMW);
     MR <= EXMEMbuffer(EXMEMMR);
+    whichInstr <= EXMEMbuffer(EXMEMWHICINSTR);
 
     STACKPINTERREG : ENTITY work.SP generic map(SPLength) port map(SPRegIn,VCC,clk,rst,SPRegOut);
 
-    PROCESS (RsrcVal, RdstVal, DSB, PC, FLAGS, MW, MR, isStackOper, isINT, INTstate, RTIstate)
+    PROCESS (RsrcVal, RdstVal, DSB, PC, FLAGS, MW, MR, isStackOper, isINT, INTstate, RTIstate,SPRegIn,tmpPC,whichInstr)
     BEGIN
         if isINT = '1' OR INTstate /= pushPC then --or DSB = OpCodeRTIDSB or RTIstate != popFlags) -- STALL OR PC + 0 ???
             CASE INTstate IS
@@ -58,29 +59,29 @@ BEGIN
                     PCWBPOPLD <= '0';
                     FLAGSWBPOP <= '0';
                     keepFlushing <= '1';
-                    twoWordsWriteInMem <= '1';
+                    twoWordsReadOrWrite <= '1';
                     SPRegIn <= std_logic_vector( unsigned(SPRegOut) - 2);
                     MemRead <= '0';
                     MemWrite <= '1';
-                    addressToMem <= SPRegIn(addressSize-1 DOWNTO 0 ); 
+                    addressToMem <= SPRegOut(addressSize-1 DOWNTO 0 ); 
                     dataToMem1 <= PC(31 DOWNTO 16);
                     dataToMem2 <= PC(15 DOWNTO 0);                    
                 when pushFlags =>
                     PCWBPOPLD <= '0';
                     FLAGSWBPOP <= '0';
                     keepFlushing <= '1';
-                    twoWordsWriteInMem <= '0';
+                    twoWordsReadOrWrite <= '0';
                     SPRegIn <= std_logic_vector( unsigned(SPRegOut) - 1);
                     MemRead <= '0';
                     MemWrite <= '1';
-                    addressToMem <= SPRegIn(addressSize-1 DOWNTO 0 ); 
+                    addressToMem <= SPRegOut(addressSize-1 DOWNTO 0 ); 
                     dataToMem1(flagsCount -1 downto 0) <= FlagsLatch; -- latch flags during first state
                     dataToMem2 <= (OTHERS => '0');
                 when readNewPC =>
                     PCWBPOPLD <= '1'; 
                     FLAGSWBPOP <= '0';
                     keepFlushing <= '0';
-                    twoWordsWriteInMem <= '0';
+                    twoWordsReadOrWrite <= '1';
                     SPRegIn <= SPRegOut;
                     MemRead <= '1';
                     MemWrite <= '0';
@@ -94,19 +95,19 @@ BEGIN
                     PCWBPOPLD <= '0';
                     FLAGSWBPOP <= '1';
                     keepFlushing <= '1';
-                    twoWordsWriteInMem <= '0';
+                    twoWordsReadOrWrite <= '0';
                     SPRegIn <= std_logic_vector( unsigned(SPRegOut) + 1 );
                     MemRead <= '1';
                     MemWrite <= '0';
-                    addressToMem <= SPRegOut(addressSize-1 DOWNTO 0 ); 
+                    addressToMem <= SPRegIn(addressSize-1 DOWNTO 0 ); 
                     dataToMem1 <= (OTHERS => '0');
                     dataToMem2 <= (OTHERS => '0');  
                 when popPC =>
                     PCWBPOPLD <= '1';
                     FLAGSWBPOP <= '0';
                     keepFlushing <= '0';
-                    twoWordsWriteInMem <= '1';
-                    SPRegIn <= std_logic_vector( unsigned(SPRegOut) - 1);
+                    twoWordsReadOrWrite <= '1';
+                    SPRegIn <= std_logic_vector( unsigned(SPRegOut) + 2);
                     MemRead <= '1';
                     MemWrite <= '0';
                     addressToMem <= SPRegIn(addressSize-1 DOWNTO 0 ); 
@@ -117,20 +118,20 @@ BEGIN
             PCWBPOPLD <= '0';
             FLAGSWBPOP <= '0';
             keepFlushing <= '0';
-            twoWordsWriteInMem <= '0';
+            twoWordsReadOrWrite <= '0';
             if isStackOper = '1' then
                 if MR = '1' then
                     SPRegIn <= std_logic_vector( unsigned(SPRegOut) + 1 );
                     MemRead <= '1';
                     MemWrite <= '0';
-                    addressToMem <= SPRegOut(addressSize-1 DOWNTO 0 ); 
+                    addressToMem <= SPRegIn(addressSize-1 DOWNTO 0 ); 
                     dataToMem1 <= (OTHERS => '0');
                     dataToMem2 <= (OTHERS => '0');  
                 elsif MW = '1' then
                     SPRegIn <= std_logic_vector( unsigned(SPRegOut) - 1 );
                     MemRead <= '0';
                     MemWrite <= '1';
-                    addressToMem <= SPRegIn(addressSize-1 DOWNTO 0 ); 
+                    addressToMem <= SPRegOut(addressSize-1 DOWNTO 0 ); 
                     dataToMem1 <= RdstVal;
                     dataToMem2 <= (OTHERS => '0'); -- useless
                 else
@@ -146,13 +147,13 @@ BEGIN
                 if MR ='1' then
                     MemRead <= '1';
                     MemWrite <= '0';
-                    addressToMem <= (3 DOWNTO 0 => '0') & RsrcVal;
+                    addressToMem <= std_logic_vector(resize(unsigned(RsrcVal), addressSize));
                     dataToMem1 <= (OTHERS => '0');
                     dataToMem2 <= (OTHERS => '0');
                 elsif MW = '1' then
                     MemRead <= '0';
                     MemWrite <= '1';
-                    addressToMem <= (3 DOWNTO 0 => '0') & RdstVal;
+                    addressToMem <= std_logic_vector(resize(unsigned(RdstVal), addressSize));
                     dataToMem1 <= RsrcVal;
                     dataToMem2 <= RsrcVal;
                 else
@@ -167,23 +168,23 @@ BEGIN
             PCWBPOPLD <= '1';
             FLAGSWBPOP <= '0';
             keepFlushing <= '0';
-            twoWordsWriteInMem <= '0';
+            twoWordsReadOrWrite <= '1';
             SPRegIn <= std_logic_vector( unsigned(SPRegOut) + 2 );
             MemRead <= '1';
             MemWrite <= '0';
-            addressToMem <= SPRegOut(addressSize-1 DOWNTO 0 ); 
+            addressToMem <= SPRegIn(addressSize-1 DOWNTO 0 ); 
             dataToMem1 <= (OTHERS => '0');
             dataToMem2 <= (OTHERS => '0'); 
         elsif DSB = OpCodeCALLDSB then 
             PCWBPOPLD <= '0';
             FLAGSWBPOP <= '0';
             keepFlushing <= '0';
-            twoWordsWriteInMem <= '0';
+            twoWordsReadOrWrite <= '1';
             SPRegIn <= std_logic_vector( unsigned(SPRegOut) - 2 ); 
             MemRead <= '1';
             MemWrite <= '0';
-            addressToMem <= SPRegIn(addressSize-1 DOWNTO 0 );
-            if (EXMEMbuffer(EXMEMWHICINSTR) ='0') then
+            addressToMem <= SPRegOut(addressSize-1 DOWNTO 0 );
+            if (whichInstr ='0') then
                 tmpPc <= std_logic_vector( unsigned(PC) + 1 );
                 dataToMem2 <= tmpPc(15 DOWNTO 0);
                 dataToMem1 <= tmpPc(31 DOWNTO 16);
@@ -196,7 +197,7 @@ BEGIN
             keepFlushing <= '0';
             PCWBPOPLD <= '0';
             FLAGSWBPOP <= '0';
-            twoWordsWriteInMem <= '0';
+            twoWordsReadOrWrite <= '0';
             SPRegIn <= SPRegOut;
             MemRead <= '0';
             MemWrite <= '0';

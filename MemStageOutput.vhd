@@ -34,8 +34,8 @@ BEGIN
 	
 	PCout <= dataFromMem1 & dataFromMem2 WHEN PCWBPOPLD ='1' AND MR = '1' ELSE (OTHERS => '0');
 	FlagsOut <= dataFromMem1(flagsCount -1 DOWNTO 0) WHEN FLAGSWBPOP ='1' AND MR = '1' ELSE (OTHERS => '0');
-	WBVal1 <= ALUResult1 WHEN MR = '0' ELSE dataFromMem1;
-	WBVal2 <= ALUResult2 WHEN MR = '0' ELSE dataFromMem1;
+	WBVal1 <= dataFromMem1 WHEN MR = '1' AND EXMEMbuffer(EXMEMWHICINSTR) = '0' ELSE ALUResult1;
+	WBVal2 <= dataFromMem1 WHEN MR = '1' AND EXMEMbuffer(EXMEMWHICINSTR) = '1' ELSE ALUResult2;
 
 	------------- Just PSSED VLAUES  FROM EXMEM TO MEMWB --------------
 	MEMWBbuffer(MEMWBWB1) <= EXMEMbuffer(EXMEMWB1);

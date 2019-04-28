@@ -25,13 +25,13 @@ ARCHITECTURE MemoryStageArch of MemoryStage IS
 	SIGNAL address : STD_LOGIC_VECTOR(addressSize - 1 DOWNTO 0);
 	SIGNAL dataMemIn1,dataMemIn2  : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL dataMemOut1,dataMemOut2 : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	SIGNAL MemRead,MemWrite,twoWordsWriteInMem,PCWBPOPLD,FLAGSWBPOP: STD_LOGIC; 
+	SIGNAL MemRead,MemWrite,twoWordsReadOrWrite,PCWBPOPLD,FLAGSWBPOP: STD_LOGIC; 
 BEGIN	
     MEMENTITY : ENTITY work.Ram generic map(addressSize,wordSize) PORT MAP(
         clk => clk,
         we => MemWrite,
         rd => MemRead,
-        twoWords => twoWordsWriteInMem,
+        twoWords => twoWordsReadOrWrite,
         address => address,
 		datain1 => dataMemIn1,
 		datain2 => dataMemIn2,
@@ -43,7 +43,7 @@ BEGIN
 		EXMEMbuffer => EXMEMbuffer,
 		clk => clk,
 		rst => rst,
-        twoWordsWriteInMem => twoWordsWriteInMem,
+        twoWordsReadOrWrite => twoWordsReadOrWrite,
         addressToMem => address,
 		dataToMem1 => dataMemIn1,
 		dataToMem2 => dataMemIn2,
