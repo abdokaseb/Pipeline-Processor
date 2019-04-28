@@ -107,6 +107,7 @@ BEGIN
         Rdst2FRWval => ALUdst2,
         isOut1 => IDEXBuffer(IDEXOut1), 
         isOut2 => IDEXBuffer(IDEXOut2),
+        Buff2Flush => EXMEMflushVector(1),
         OutOfOut => OutOfOutInstr
     );
 
