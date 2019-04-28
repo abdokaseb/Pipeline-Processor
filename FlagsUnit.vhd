@@ -22,7 +22,7 @@ ARCHITECTURE FlagsUnitArch OF FlagsUnit IS
     SIGNAL FlagsRegOut,FlagsRegIn : STD_LOGIC_VECTOR(FlagsCount-1 DOWNTO 0);
 BEGIN
     FLAGSREG : ENTITY work.Reg generic map(FlagsCount) port map(FlagsRegIn,VCC,clk,rst,FlagsRegOut);
-    FlagsToMem <= FlagsRegOut; -- alus will have no effect on as int flushes instuctions any way
+    FlagsToMem <= FlagsRegIn; -- alus will have no effect on as int flushes instuctions any way
     PROCESS (FlagsFromALU1,FlagsFromALU2,FlagsFromMem,isALUOper1,isALUOper2)
     BEGIN
         IF (FlagsWBFromMEM = '1') THEN
