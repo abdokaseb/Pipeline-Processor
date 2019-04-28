@@ -1,5 +1,5 @@
 import numpy as np
-import queue as Q
+import Queue as Q
 import sys
 import re
 
@@ -274,7 +274,7 @@ def main():
     #input_fil_name = input("input filename:")              ---
     #output_fil_name = input("output filename:")            ---
     #debug_fil_name = input("debug filename:")              ---
-    working_dir = ".\\testcases\\TwoOperand\\"
+    working_dir = ""
     if (len(sys.argv)!=4):
         print("Wrong number of parameters")
         sys.exit()

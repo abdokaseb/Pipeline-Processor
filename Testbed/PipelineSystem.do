@@ -1,5 +1,5 @@
-restart -f -nowave
-
+# restart -f -nowave
+vsim work.pipelinesystem
 add wave -position insertpoint  \
 sim:/pipelinesystem/clk \
 sim:/pipelinesystem/INPort \
@@ -35,7 +35,7 @@ add wave -position insertpoint sim:/pipelinesystem/DecodeStageEnt/controlUnitEnt
 
 
 # restart -f
-mem load -i /home/ayman/Desktop/Project/Arch/Assembler/testcases/TwoOperand/mem11.mem /pipelinesystem/FetchStageEnt/CodeRamEnt/Ram
+mem load -i Assembler/out.mem /pipelinesystem/FetchStageEnt/CodeRamEnt/Ram
 
 force -freeze sim:/pipelinesystem/clk 1 0, 0 {50 ps} -r 100
 # force -freeze sim:/pipelinesystem/clk 0 0, 1 {50 ps} -r 100
@@ -45,14 +45,15 @@ force -freeze sim:/pipelinesystem/resetSignal 0 0
 
 # force -freeze sim:/pipelinesystem/IFIDrst 1 0
 # force -freeze sim:/pipelinesystem/IDEXrst 1 0
-force -freeze sim:/pipelinesystem/EXMEMrst 1 0
+# force -freeze sim:/pipelinesystem/EXMEMrst 1 0
 # force -freeze sim:/pipelinesystem/MEMWBrst 1 0
 run
+force -freeze sim:/pipelinesystem/IDEXBufferD 166'h0 0
 force -freeze sim:/pipelinesystem/rst 0 0
-force -freeze sim:/pipelinesystem/IFIDrst 0 0
 force -freeze sim:/pipelinesystem/INPort 16'h5 0
-
+force -freeze sim:/pipelinesystem/IFIDrst 0 0
 run
+noforce sim:/pipelinesystem/IDEXBufferD
 force -freeze sim:/pipelinesystem/INPort 16'h19 0
 force -freeze sim:/pipelinesystem/IDEXrst 0 0
 run
@@ -62,4 +63,5 @@ run
 force -freeze sim:/pipelinesystem/INPort 16'hF320 0
 force -freeze sim:/pipelinesystem/MEMWBrst 0 0
 run
-
+run
+run 2000

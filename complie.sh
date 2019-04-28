@@ -17,6 +17,7 @@ vcom Utils/CounterUpDown.vhd | grep Error
 vcom Utils/ALU.vhd | grep Error
 vcom Utils/GenenralPurposeRegFile.vhd | grep Error
 vcom Utils/SP.vhd   | grep Error
+vcom Utils/BuffwithFlushGen.vhd | grep Error
 
 # others files
 vcom FetchStage.vhd | grep Error
@@ -25,11 +26,12 @@ vcom InstructionConvert.vhd | grep Error
 vcom ControlUnit.vhd | grep Error
 vcom DecodeStage.vhd -2008 | grep Error
 
+vcom ControlHazardsUnit.vhd | grep Error
 vcom ForwardUnit.vhd | grep Error
 vcom FlagsUnit.vhd | grep Error
 vcom CalcRamParamsUnit.vhd | grep Error
 vcom MemorySelectionUnit.vhd | grep Error
-vcom ExecuteStage.vhd | grep Error
+vcom ExecuteStage.vhd -2008 | grep Error
 
 vcom MemStageOutput.vhd | grep Error
 vcom MemoryStage.vhd | grep Error

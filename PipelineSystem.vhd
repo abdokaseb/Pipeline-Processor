@@ -56,8 +56,8 @@ BEGIN
     PCControlUnitEnt: entity work.PCControlUnit generic map(PCSize) port map(
         clk => clk,
         reset =>rst,
-        ExPcEnable => '0',  ------ hardcoded --- signlal not found in EX stage 
-        ExPC => (others =>'0'),--- hardcode ---- not found in excution stage
+        ExPcEnable => PCWBFromEXStage,
+        ExPC => PCFromEXStage,
         MemPcEnable => PCWBFromMEMStage, 
         MemPc=>PCFromMEMStage,
         ControlPCoperation=> pcIncrementControl,
@@ -93,8 +93,8 @@ BEGIN
         MEMWBBuffer => MEMWBBufferQ,
         FlagsFromMEM => FlagsFromMEMtoEXE,
         FlagsWBFromMEM => FlagsWBFromMEMtoEXE, 
-        PCWBFromEX => ,
-        PCFromEX => ,
+        PCWBFromEX => PCWBFromEXStage,
+        PCFromEX => PCFromEXStage,
         clk => clk,
         rst => rst,
         EXMEMbufferOut => EXMEMbufferD,

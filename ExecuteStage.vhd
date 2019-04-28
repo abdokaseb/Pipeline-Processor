@@ -27,7 +27,7 @@ END ENTITY ExecuteStage;
 ARCHITECTURE ExecuteStageArch of ExecuteStage is
 
     Signal ALUsrc1,ALUdst1,ALUsrc2,ALUdst2: std_logic_vector(wordSize-1 downto 0);
-    SIGNAL FlagsToALU1,FlagsToALU2,FlagsFromALU1,FlagsFromALU2 : STD_LOGIC_VECTOR(flagsCount-1 downto 0);
+    SIGNAL FlagsToALU1,FlagsToALU2,FlagsFromALU1,FlagsFromALU2,FlagsToMem : STD_LOGIC_VECTOR(flagsCount-1 downto 0);
 BEGIN
 
     ForwardUnitEnt: entity work.ForwardUnit port map(
@@ -78,6 +78,7 @@ BEGIN
         IsALUOper2 => IDEXBuffer(IDEXIsALUOper2),
         FlagsToALU1 => FlagsToALU1,
         FlagsToALU2 => FlagsToALU2,
+        FlagsToMem => FlagsToMem,
         clk=>clk,
         rst=>rst,
         Buff2Flush => EXMEMflushVector(1) ------------------- TO BE CHANGED
@@ -103,6 +104,13 @@ BEGIN
     EXMEMbufferOut(EXMEMRdst1E downto EXMEMRdst1S) <= IDEXbuffer(IDEXRdst1E downto IDEXRdst1S);
     EXMEMbufferOut(EXMEMRdst2E downto EXMEMRdst2S) <= IDEXbuffer(IDEXRdst2E downto IDEXRdst2S);
     EXMEMbufferOut(EXMEMPCE downto EXMEMPCS) <= IDEXbuffer(IDEXPCE downto IDEXPCS);
+    -- Newly added from kaseb to just remove XX in simulation
+    -- This could be very wrong, but just I reset it
+    EXMEMbufferOut(EXMEMISINT) <= IDEXbuffer(IDEXISINT);
+    EXMEMbufferOut(EXMEMFLAGSE downto EXMEMFLAGSS) <= FlagsToMem;
+    EXMEMbufferOut(EXMEMWriteTwowordsS) <= '0';
+    EXMEMbufferOut(EXMEMDSBE downto EXMEMDSBS) <= "00";
+    
     
 
 END ARCHITECTURE;
