@@ -39,6 +39,6 @@ ARCHITECTURE RamArch OF Ram IS
 		END PROCESS;
         
 		dataout1 <= (OTHERS => 'Z' ) WHEN rd /= '1' ELSE Ram(TO_INTEGER(UNSIGNED(address)));
-        dataout2 <= (OTHERS => 'Z' ) WHEN rd /= '1' ELSE Ram(TO_INTEGER(UNSIGNED(address))+1);		
+        dataout2 <= (OTHERS => 'Z' ) WHEN rd /= '1' or twoWords /= '1' ELSE Ram(TO_INTEGER(UNSIGNED(address))+1);		
 
 END ARCHITECTURE;
