@@ -56,7 +56,7 @@ BEGIN
     WB <= '1' when (instructPart = OpCodePOP and typePart = MemoryInstruction)
             or (instructPart =  OpCodeLDM and typePart = MemoryInstruction)
             or (instructPart =  OpCodeSTD and typePart = MemoryInstruction)
-            or typePart = twoOperandInstruction
+            or (typePart = twoOperandInstruction and instructPart /= OpCodeNOP)
             or (instructPart =  OpCodeNOT and typePart = oneOperandInstruction)
             or (instructPart =  OpCodeINC and typePart = oneOperandInstruction)
             or (instructPart =  OpCodeDEC and typePart = oneOperandInstruction)
@@ -76,7 +76,7 @@ BEGIN
             or instructPart = OpCodeCALL)
         else '0';
     
-    IsALUOper <= '1' when (typePart = twoOperandInstruction and not instructPart = OpCodeNOP)
+    IsALUOper <= '1' when (typePart = twoOperandInstruction and instructPart /= OpCodeNOP)
             or (typePart = oneOperandInstruction and not (instructPart = OpCodeOUT or instructPart = OpCodeIN))
         else '0';
 
