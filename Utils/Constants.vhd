@@ -316,7 +316,8 @@ package constants is
     constant RAMaddressBits: integer := 11;
 
 -- Defualt INT address
-    constant DefaultIntAddress: integer := 1;
+    constant DefaultIntAddress: integer := 2;
+    constant DefaultResetPcAddress : integer := 0;
 end constants;
     
 

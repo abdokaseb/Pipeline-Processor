@@ -18,29 +18,30 @@ inc R1
 in R4        #R4=F320
 inc R1
 
-STD R1,R2     #R1=3 and Mem[R2] = R1
-inc R1
+LDM R2,3     #R2 = 3
 
-LDD R2,R5     #R5 = Mem[R2]; = 3
-inc R1
+INC R1
+LDM R1,100    #R1 = 100
 
+#100
+STD R1,R2     #Mem[R2] = 100
+
+inc R1
+LDD R2,R5     #R5 = Mem[R2];
+
+inc R7 
 PUSH R1      #SP=FFFFFFFE,M[FFFFFFFF]=5
-inc R1
 
+inc R7 
 PUSH R2      #SP=FFFFFFFD,M[FFFFFFFE]=19
-inc R1
 
-inc R1 
+
 dec R2 
-
 inc R1 
-dec R2 
 
+dec R2 
 POP R1       #SP=FFFFFFFE,R1=19
+
 inc R7  # r1 causes load and use
-
 POP R2       #SP=FFFFFFFF,R2=5
-inc R7 # r1 causes load and use
 
-LDD R3,R7    #R7 = Mem[R3] = 5
-inc R1

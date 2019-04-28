@@ -16,7 +16,8 @@ ENTITY ExecuteStage IS
             EXMEMbufferOut: out STD_LOGIC_VECTOR(EXMEMLength downto 0);
             IFIDflushVector , IDEXflushVector, EXMEMflushVector: out STD_LOGIC_VECTOR(0 TO 2);   
             PCFromEX:out STD_LOGIC_VECTOR (31 downto 0);     
-            PCWBFromEX:out STD_LOGIC
+            PCWBFromEX:out STD_LOGIC;
+            OutOfOutInstr: out STD_LOGIC_VECTOR (15 downto 0)   
         );
 
 END ENTITY ExecuteStage;
@@ -99,6 +100,16 @@ BEGIN
         FlagsToALU2 => FlagsToALU2,
         EXMEMbufferOut => EXMEMbufferOut -- to put DSB
     );
+
+    --------- OutInstrUnit ---------------
+    OutInstrUnit: entity work.OutInstrUnit  port map(
+        Rdst1FRWval => ALUdst1,
+        Rdst2FRWval => ALUdst2,
+        isOut1 => IDEXBuffer(IDEXOut1), 
+        isOut2 => IDEXBuffer(IDEXOut2),
+        OutOfOut => OutOfOutInstr
+    );
+
 
     ------------- Just passed Signals ------------------------
     EXMEMbufferOut(EXMEMWB1) <= IDEXBuffer(IDEXWB1);

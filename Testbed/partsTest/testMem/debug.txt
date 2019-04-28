@@ -1,0 +1,189 @@
+------------------- preprocessing --------------
+.org 0
+10
+.org 2
+100
+.org 10
+in r2
+inc r1
+in r3
+inc r1
+in r4
+inc r1
+ldm r2,3
+inc r1
+ldm r1,100
+std r1,r2
+inc r1
+ldd r2,r5
+inc r1
+push r1
+inc r1
+push r2
+inc r1
+inc r1
+dec r2
+inc r1
+dec r2
+pop r1
+inc r7
+pop r2
+inc r7
+ldd r3,r7
+inc r1
+------------------- end preprocessing  --------------
+------------------- addresses --------------
+(instruction = 10) (instruction type = hex) (address in hex = 0x0)  
+
+(instruction = 100) (instruction type = hex) (address in hex = 0x2)  
+
+(instruction = in r2) (instruction type = 1op) (address in hex = 0x10)  
+
+(instruction = inc r1) (instruction type = 1op) (address in hex = 0x11)  
+
+(instruction = in r3) (instruction type = 1op) (address in hex = 0x12)  
+
+(instruction = inc r1) (instruction type = 1op) (address in hex = 0x13)  
+
+(instruction = in r4) (instruction type = 1op) (address in hex = 0x14)  
+
+(instruction = inc r1) (instruction type = 1op) (address in hex = 0x15)  
+
+(instruction = ldm r2,3) (instruction type = 2op) (address in hex = 0x16)  
+
+(instruction = inc r1) (instruction type = 1op) (address in hex = 0x18)  
+
+(instruction = ldm r1,100) (instruction type = 2op) (address in hex = 0x19)  
+
+(instruction = std r1,r2) (instruction type = 2op) (address in hex = 0x1b)  
+
+(instruction = inc r1) (instruction type = 1op) (address in hex = 0x1c)  
+
+(instruction = ldd r2,r5) (instruction type = 2op) (address in hex = 0x1d)  
+
+(instruction = inc r1) (instruction type = 1op) (address in hex = 0x1e)  
+
+(instruction = push r1) (instruction type = 1op) (address in hex = 0x1f)  
+
+(instruction = inc r1) (instruction type = 1op) (address in hex = 0x20)  
+
+(instruction = push r2) (instruction type = 1op) (address in hex = 0x21)  
+
+(instruction = inc r1) (instruction type = 1op) (address in hex = 0x22)  
+
+(instruction = inc r1) (instruction type = 1op) (address in hex = 0x23)  
+
+(instruction = dec r2) (instruction type = 1op) (address in hex = 0x24)  
+
+(instruction = inc r1) (instruction type = 1op) (address in hex = 0x25)  
+
+(instruction = dec r2) (instruction type = 1op) (address in hex = 0x26)  
+
+(instruction = pop r1) (instruction type = 1op) (address in hex = 0x27)  
+
+(instruction = inc r7) (instruction type = 1op) (address in hex = 0x28)  
+
+(instruction = pop r2) (instruction type = 1op) (address in hex = 0x29)  
+
+(instruction = inc r7) (instruction type = 1op) (address in hex = 0x2a)  
+
+(instruction = ldd r3,r7) (instruction type = 2op) (address in hex = 0x2b)  
+
+(instruction = inc r1) (instruction type = 1op) (address in hex = 0x2c)  
+
+-------------------
+10  address  0
+0000000000010000 (address in hex = 0x0)  
+
+100  address  2
+0000000100000000 (address in hex = 0x2)  
+
+in r2  address  16
+0111101000000000 (address in hex = 0x10)  
+
+inc r1  address  17
+0110000100000000 (address in hex = 0x11)  
+
+in r3  address  18
+0111101100000000 (address in hex = 0x12)  
+
+inc r1  address  19
+0110000100000000 (address in hex = 0x13)  
+
+in r4  address  20
+0111110000000000 (address in hex = 0x14)  
+
+inc r1  address  21
+0110000100000000 (address in hex = 0x15)  
+
+ldm r2,3  address  22
+1010101000000000 (address in hex = 0x16)  
+
+
+0000000000000011 (address in hex = 0x17)  
+
+inc r1  address  24
+0110000100000000 (address in hex = 0x18)  
+
+ldm r1,100  address  25
+1010100100000000 (address in hex = 0x19)  
+
+
+0000000100000000 (address in hex = 0x1a)  
+
+std r1,r2  address  27
+1011101000100000 (address in hex = 0x1b)  
+
+inc r1  address  28
+0110000100000000 (address in hex = 0x1c)  
+
+ldd r2,r5  address  29
+1011010101000000 (address in hex = 0x1d)  
+
+inc r1  address  30
+0110000100000000 (address in hex = 0x1e)  
+
+push r1  address  31
+1001100100000000 (address in hex = 0x1f)  
+
+inc r1  address  32
+0110000100000000 (address in hex = 0x20)  
+
+push r2  address  33
+1001101000000000 (address in hex = 0x21)  
+
+inc r1  address  34
+0110000100000000 (address in hex = 0x22)  
+
+inc r1  address  35
+0110000100000000 (address in hex = 0x23)  
+
+dec r2  address  36
+0110101000000000 (address in hex = 0x24)  
+
+inc r1  address  37
+0110000100000000 (address in hex = 0x25)  
+
+dec r2  address  38
+0110101000000000 (address in hex = 0x26)  
+
+pop r1  address  39
+1010000100000000 (address in hex = 0x27)  
+
+inc r7  address  40
+0110011100000000 (address in hex = 0x28)  
+
+pop r2  address  41
+1010001000000000 (address in hex = 0x29)  
+
+inc r7  address  42
+0110011100000000 (address in hex = 0x2a)  
+
+ldd r3,r7  address  43
+1011011101100000 (address in hex = 0x2b)  
+
+inc r1  address  44
+0110000100000000 (address in hex = 0x2c)  
+
+--------------------
+successful

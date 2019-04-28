@@ -29,7 +29,7 @@ ARCHITECTURE PipelineSystemArch of PipelineSystem is
     signal PCReg: STD_LOGIC_VECTOR(PCSize-1 DOWNTO 0);
     signal IFIDen, IFIDrst, IDEXen, IDEXrst, EXMEMen, EXMEMrst, MEMWBen, MEMWBrst: STD_LOGIC;
 
--------- INTER STAGES COMMUNICATION ------------
+    -------- INTER STAGES COMMUNICATION ------------
     signal FlagsFromMEMtoEXE : STD_LOGIC_VECTOR(flagsCount-1 DOWNTO 0);  
     signal FlagsWBFromMEMtoEXE : STD_LOGIC; 
     signal PCFromMEMStage,PCFromEXStage : STD_LOGIC_VECTOR(PCLength-1 DOWNTO 0);  
@@ -101,7 +101,8 @@ BEGIN
         keepFlushing => keepFlushing,
         IFIDflushVector => IFIDflushVector,
         IDEXflushVector => IDEXflushVector, 
-        EXMEMflushVector => EXMEMflushVector
+        EXMEMflushVector => EXMEMflushVector,
+        OutOfOutInstr => OutPort
     );
 
     EXMEMRegEnt: entity work.BuffwithFlushGen generic map(EXMEM,EXMEMLength+1) port map(EXMEMBufferD,EXMEMen,clk,EXMEMrst,EXMEMBufferQ,EXMEMflushVector);
@@ -112,6 +113,7 @@ BEGIN
         FlagsWBout => FlagsWBFromMEMtoEXE,
         PCout => PCFromMEMStage ,
         PCWBout => PCWBFromMEMStage,
+        RESET => resetSignal,
         clk => clk,
         rst => rst,
         MEMWBbuffer => MEMWBbufferD,
