@@ -98,7 +98,10 @@ BEGIN
         clk => clk,
         rst => rst,
         EXMEMbufferOut => EXMEMbufferD,
-        keepFlushing => keepFlushing
+        keepFlushing => keepFlushing,
+        IFIDflushVector => IFIDflushVector,
+        IDEXflushVector => IDEXflushVector, 
+        EXMEMflushVector => EXMEMflushVector
     );
 
     EXMEMRegEnt: entity work.BuffwithFlushGen generic map(EXMEM,EXMEMLength+1) port map(EXMEMBufferD,EXMEMen,clk,EXMEMrst,EXMEMBufferQ,EXMEMflushVector);
