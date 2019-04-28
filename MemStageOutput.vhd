@@ -25,7 +25,7 @@ ARCHITECTURE MemStageOutputArch OF MemStageOutput IS
 	SIGNAL ALUResult1, ALUResult2, WBVal1,WBVal2 : STD_LOGIC_VECTOR(15 DOWNTO 0);
 BEGIN
 	ALUResult1 <= EXMEMbuffer(EXMEMResult1E DOWNTO EXMEMResult1S);
-	ALUResult2 <= EXMEMbuffer(EXMEMResult1E DOWNTO EXMEMResult1S);
+	ALUResult2 <= EXMEMbuffer(EXMEMResult2E DOWNTO EXMEMResult2S);
 	MEMWBbuffer(MEMWBWriteBackValue1E DOWNTO MEMWBWriteBackValue1S) <= WBVal1;
 	MEMWBbuffer(MEMWBWriteBackValue2E DOWNTO MEMWBWriteBackValue2S) <= WBVal2;
 
