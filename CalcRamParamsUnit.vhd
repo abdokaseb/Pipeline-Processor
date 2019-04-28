@@ -84,7 +84,7 @@ BEGIN
                     SPRegIn <= SPRegOut;
                     MemRead <= '1';
                     MemWrite <= '0';
-                    addressToMem <= STD_LOGIC_VECTOR(to_unsigned(1,addressSize));
+                    addressToMem <= STD_LOGIC_VECTOR(to_unsigned(DefaultIntAddress,addressSize));
                     dataToMem1 <= (OTHERS => '0');
                     dataToMem2 <= (OTHERS => '0'); 
             END CASE;             

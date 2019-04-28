@@ -314,6 +314,9 @@ package constants is
     constant SPLength: integer :=32;
 
     constant RAMaddressBits: integer := 11;
+
+-- Defualt INT address
+    constant DefaultIntAddress: integer := 1;
 end constants;
     
 
