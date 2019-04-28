@@ -12,7 +12,8 @@ ENTITY ControlHazardsUnit IS
         keepFlushing : in STD_LOGIC;
         IFIDflushVector , IDEXflushVector, EXMEMflushVector: out STD_LOGIC_VECTOR(0 TO 2);
         PCFromEX:out STD_LOGIC_VECTOR (31 downto 0);     
-        PCWBFromEX:out STD_LOGIC
+        PCWBFromEX:out STD_LOGIC;
+        EXMEMbufferOut : out STD_LOGIC_VECTOR(EXMEMLength downto 0)
     );
                         
 END ENTITY ControlHazardsUnit;
@@ -45,4 +46,9 @@ BEGIN
                                 ("010") when condition1 and branch1OpCode(2) = '1' else 
                                 (others => '1') when keepFlushing ='1' else
                                 (others => '0');
+
+    EXMEMbufferOut(EXMEMDSBE downto EXMEMDSBS) <=  branch1OpCode(1 downto 0) when condition1 and branch1OpCode(2) = '1' else
+                                                branch2OpCode(1 downto 0) when condition2 and branch2OpCode(2) = '1' else
+                                                (others => '0');
+
 END ARCHITECTURE;
