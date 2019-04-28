@@ -37,8 +37,8 @@ architecture aluArch of alu is
         -- transfer (A)
         -- ADD (A + B)
         -- ADC (A + B + carry)
-        -- SUB (B - A)
-        -- SBC (B - A - carry)
+        -- was SUB (B - A)--> now (A - B)
+        -- was SBC (B - A - carry)--> now (A- B - carry)
         -- AND (A and B)
         -- OR (A or B)
         -- XNOR (A xnor B)
@@ -58,9 +58,10 @@ architecture aluArch of alu is
 
         fAdder: entity work.nbitAdder generic map(n) port map(tempB, tempA, tempCarryIn, tempF, tempCarryOut);
 
-        tempB <= B;
+        tempB <= A when operationControl = OperationSUB
+        else B;
 
-        tempA <= not(A) when operationControl = OperationSUB
+        tempA <= not(B) when operationControl = OperationSUB
         else (others => '0') when operationControl = OperationINC
         else (others => '1') when operationControl = OperationDEC
         else A;

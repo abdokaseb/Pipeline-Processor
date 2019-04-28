@@ -41,20 +41,20 @@ BEGIN
     );
     
     regFileEnt: entity work.GenenralPurposeRegFile generic map(16,8) port map(
-        busSrc1 => preIDEXBuffer(IDEXRsrc1ValueE downto IDEXRsrc1ValueS),
-        busDst1 => busDst1,
-        busSrc2 => preIDEXBuffer(IDEXRsrc2ValueE downto IDEXRsrc2ValueS),
-        busDst2 => busDst2,
+        busSrc1 => busSrc1,
+        busDst1 => preIDEXBuffer(IDEXRdst1ValueE downto IDEXRdst1ValueS),
+        busSrc2 => busSrc2,
+        busDst2 => preIDEXBuffer(IDEXRdst2ValueE downto IDEXRdst2ValueS),
         busRes1 => MEMWBbuffer(MEMWBWriteBackValue1E downto MEMWBWriteBackValue1S),
         busRes2 => MEMWBbuffer(MEMWBWriteBackValue2E downto MEMWBWriteBackValue2S),
         WB1 => MEMWBbuffer(MEMWBWB1),
         WB2 => MEMWBbuffer(MEMWBWB2),
         ResetRegs => rst,
         clk => clk,
-        src1 => preIDEXBuffer(IFIDRsrc1E downto IFIDRsrc1S),
-        dst1 => preIDEXBuffer(IFIDRdst1E downto IFIDRdst1S),
-        src2 => preIDEXBuffer(IFIDRsrc2E downto IFIDRsrc2S),
-        dst2 => preIDEXBuffer(IFIDRdst2E downto IFIDRdst2S),
+        src1 => preIDEXBuffer(IDEXRsrc1E downto IDEXRsrc1S),
+        dst1 => preIDEXBuffer(IDEXRdst1E downto IDEXRdst1S),
+        src2 => preIDEXBuffer(IDEXRsrc2E downto IDEXRsrc2S),
+        dst2 => preIDEXBuffer(IDEXRdst2E downto IDEXRdst2S),
         WBdst1 => MEMWBbuffer(EXMEMRdst1E downto EXMEMRdst1S),
         WBdst2 => MEMWBbuffer(EXMEMRdst2E downto EXMEMRdst2S)
     );
@@ -66,13 +66,13 @@ BEGIN
 
     preIDEXBuffer(IDEXPCE downto IDEXPCS) <= IFIDbuffer(IFIDPCE downto IFIDPCS);
 
-    preIDEXBuffer(IDEXRdst1ValueE downto IDEXRdst1ValueS) <=  INPort when isIN1 = '1'
+    preIDEXBuffer(IDEXRsrc1ValueE downto IDEXRsrc1ValueS) <=  INPort when isIN1 = '1'
             else IFIDbuffer(IFIDInstruction2E downto IFIDInstruction2S) when isLDM1 = '1'
-            else busDst1; 
+            else busSrc1; 
 
-    preIDEXBuffer(IDEXRdst2ValueE downto IDEXRdst2ValueS) <=  INPort when isIN2 = '1'
+    preIDEXBuffer(IDEXRsrc2ValueE downto IDEXRsrc2ValueS) <=  INPort when isIN2 = '1'
             else beforeIFIDbuffer(IFIDInstruction1E downto IFIDInstruction1S) when isLDM2 = '1'
-            else busDst2; 
+            else busSrc2; 
 
     preIDEXBuffer(IDEXISINT) <= interruptSignal;
     preIDEXBuffer(IDEXisReset) <= resetSignal;
