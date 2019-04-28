@@ -68,6 +68,9 @@ BEGIN
 		MEMWBbuffer => MEMWBbuffer
     );
 
+    -- not used signals
+    MEMWBbuffer(MEMWBInc1E downto MEMWBFreeInc1S) <= (others => '0');
+    MEMWBbuffer(MEMWBInc2E downto MEMWBFreeInc2S) <= (others => '0');
 
 
 END ARCHITECTURE;

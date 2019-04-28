@@ -81,7 +81,7 @@ BEGIN
         FlagsToMem => FlagsToMem,
         clk=>clk,
         rst=>rst,
-        Buff2Flush => EXMEMflushVector(1) ------------------- TO BE CHANGED
+        Buff2Flush => EXMEMflushVector(1) ------------------- flushing second buffer
     );
 
     --------- BranchAndControHazardsUnit -------------
@@ -96,21 +96,24 @@ BEGIN
         PCFromEX => PCFromEX,
         PCWBFromEX => PCWBFromEX,
         FlagsToALU1 => FlagsToALU1,
-        FlagsToALU2 => FlagsToALU2
+        FlagsToALU2 => FlagsToALU2,
+        EXMEMbufferOut => EXMEMbufferOut -- to put DSB
     );
 
+    ------------- Just passed Signals ------------------------
     EXMEMbufferOut(EXMEMWB1) <= IDEXBuffer(IDEXWB1);
     EXMEMbufferOut(EXMEMWB2) <= IDEXBuffer(IDEXWB2);
     EXMEMbufferOut(EXMEMRdst1E downto EXMEMRdst1S) <= IDEXbuffer(IDEXRdst1E downto IDEXRdst1S);
     EXMEMbufferOut(EXMEMRdst2E downto EXMEMRdst2S) <= IDEXbuffer(IDEXRdst2E downto IDEXRdst2S);
     EXMEMbufferOut(EXMEMPCE downto EXMEMPCS) <= IDEXbuffer(IDEXPCE downto IDEXPCS);
-    -- Newly added from kaseb to just remove XX in simulation
-    -- This could be very wrong, but just I reset it
     EXMEMbufferOut(EXMEMISINT) <= IDEXbuffer(IDEXISINT);
     EXMEMbufferOut(EXMEMFLAGSE downto EXMEMFLAGSS) <= FlagsToMem;
-    EXMEMbufferOut(EXMEMWriteTwowordsS) <= '0';
-    EXMEMbufferOut(EXMEMDSBE downto EXMEMDSBS) <= "00";
-    
+
+    -- not use signals
+    EXMEMbufferOut(EXMEMWriteTwowordsS) <= '0'; -- noteused
+    EXMEMbufferOut(EXMEMInc1E downto EXMEMFreeInc1S) <= (others => '0');
+    EXMEMbufferOut(EXMEMInc2E downto EXMEMFreeInc2S) <= (others => '0');
+
     
 
 END ARCHITECTURE;
