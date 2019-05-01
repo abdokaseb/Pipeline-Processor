@@ -19,7 +19,7 @@ END ENTITY InstructionConvert;
 
 ARCHITECTURE InstructionConvertArch of InstructionConvert is
 
-    signal typePartFromIns, typePart : STD_LOGIC_VECTOR(1 downto 0);
+    signal typePartFromIns,typePart   : STD_LOGIC_VECTOR(1 downto 0);
     signal instructPartFromIns, instructPart : STD_LOGIC_VECTOR(2 downto 0);
 BEGIN
 

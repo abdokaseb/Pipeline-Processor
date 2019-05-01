@@ -9,7 +9,9 @@ ENTITY ControlUnit IS
 			Instruction1,Instruction2: in STD_LOGIC_VECTOR(IFIDInstruction1E DOWNTO 0);
 			IDEXBuffer: out STD_LOGIC_VECTOR(IDEXLength DOWNTO 0);
 			AddedToPc: out STD_LOGIC_VECTOR(1 downto 0);
-			isIN1, isIN2, isLDM1, isLDM2: out STD_LOGIC
+			isIN1, isIN2, isLDM1, isLDM2: out STD_LOGIC;
+			IFIDBuffer: in STD_LOGIC_VECTOR(IFIDLength DOWNTO 0);
+			clk,rst: in STD_LOGIC
 		);
 
 END ENTITY ControlUnit;
@@ -56,6 +58,9 @@ BEGIN
 	IDEXBuffer(IDEXBranchOrNot2) <= BranchOrNot2;
 	IDEXBuffer(IDEXIsALUOper2) <= IsALUOper2;
 
-	AddedToPc <= "10";
+	AddToPC: entity work.AddedToPC port map(
+		IFIDBuffer,
+		clk, rst,AddedToPc 
+    );	
 
 END ARCHITECTURE;

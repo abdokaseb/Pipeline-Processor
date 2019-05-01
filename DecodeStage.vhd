@@ -37,7 +37,10 @@ BEGIN
         isIN1 => isIN1,
         isIN2 => isIN2,
         isLDM1 => isLDM1,
-        isLDM2 => isLDM2
+        isLDM2 => isLDM2,
+        IFIDbuffer=>IFIDbuffer,
+        clk =>clk,
+        rst =>rst
     );
     
     regFileEnt: entity work.GenenralPurposeRegFile generic map(16,8) port map(
