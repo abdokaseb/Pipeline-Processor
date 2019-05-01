@@ -13,7 +13,8 @@ ENTITY DecodeStage IS
             clk, rst, interruptSignal, resetSignal: in STD_LOGIC;
             INPort: in STD_LOGIC_VECTOR(n-1 DOWNTO 0);
             IDEXBuffer: out STD_LOGIC_VECTOR(IDEXLength DOWNTO 0);
-            PcIncrement : out STD_LOGIC_VECTOR(1 downto 0)
+            PcIncrement : out STD_LOGIC_VECTOR(1 downto 0);
+            isLDM: out STD_LOGIC
 		);
 
 END ENTITY DecodeStage;
@@ -92,7 +93,7 @@ BEGIN
     IDEXBuffer(IDEXLength downto IDEXInc2E+1) <= (Others => '0') when PcIncrement = "00"
                 else preIDEXBuffer(IDEXLength downto IDEXInc2E+1);
 
-
+    isLDM <= isLDM2;
     process(clk)
     begin
         if clk'event and clk = '1' then

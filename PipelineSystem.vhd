@@ -37,11 +37,11 @@ ARCHITECTURE PipelineSystemArch of PipelineSystem is
     Signal pcIncrementControl : STD_LOGIC_VECTOR(1 downto 0);
 
     -- Flush Vectors (0) first(upper)buffer ,(1) second(lower)buffer ,(2) third(common)buffer 
-    signal IFIDflushVector: STD_LOGIC_VECTOR(0 TO 2);
+    signal IFIDflushVector, IFIDflushVectorToBuffer: STD_LOGIC_VECTOR(0 TO 2);
     signal IDEXflushVector: STD_LOGIC_VECTOR(0 TO 2);
     signal EXMEMflushVector: STD_LOGIC_VECTOR(0 TO 2);
 
-    signal keepFlushing, inInterruptState,finishInt: STD_LOGIC;
+    signal keepFlushing, inInterruptState,finishInt,isLDM: STD_LOGIC;
 BEGIN
 
     IFIDen <= '1';
@@ -74,6 +74,7 @@ BEGIN
         IFIDBuffer => IFIDBufferD
     );   
 
+    IFIDflushVectorToBuffer <= IFIDflushVector or "00"&isLDM;
     IFIDRegEnt: entity work.BuffwithFlushGen generic map(IFID,IFIDLength+1) port map(IFIDBufferD,IFIDen,clk,IFIDrst,IFIDBufferQ,IFIDflushVector);
 
     DecodeStageEnt: entity work.DecodeStage port map(
@@ -86,7 +87,8 @@ BEGIN
         interruptSignal => interruptSignal, 
         resetSignal => resetSignal,
         IDEXBuffer => IDEXBufferD,
-        PcIncrement=> pcIncrementControl
+        PcIncrement=> pcIncrementControl,
+        isLDM => isLDM
     );
 
     IDEXRegEnt: entity work.BuffwithFlushGen generic map(IDEX,IDEXLength+1) port map(IDEXBufferD,IDEXen,clk,IDEXrst,IDEXBufferQ,IDEXflushVector);

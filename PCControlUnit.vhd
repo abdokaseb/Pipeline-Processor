@@ -23,14 +23,18 @@ END ENTITY PCControlUnit;
 ARCHITECTURE PCControlUnitArch of PCControlUnit is
     Signal PCcurrent,tempF ,tempA: STD_LOGIC_VECTOR(PCSize-1 DOWNTO 0);
     Signal Zeros: STD_LOGIC_VECTOR(PCSize-3 DOWNTO 0);
+    signal latchedEnables: STD_LOGIC_VECTOR(2 DOWNTO 0);
     SIGNal TempCarryOut: STD_LOGIC;
 BEGIN
     fAdder: entity work.nbitAdder generic map(PCSize) port map(PCcurrent, tempA, '0', tempF, TempCarryOut);
 Zeros <= (others => '0');
 --( if 00  we will add 0 on (pc stall)  ) | (if 01 we will add 1 (swap) ) | (if 10 we will add 2 (ordinary increment) )
-tempA <= (others => '0') when ExPcEnable = '1' or MemPcEnable = '1' or inInterruptState = '1'
+tempA <= (others => '0') when latchedEnables(0) = '1' or latchedEnables(1) = '1' or latchedEnables(2) = '1'
     else Zeros&ControlPCoperation;  
-PCReg <= PCcurrent;
+PCReg <= tempF;
+
+    latchValuesEntity: entity work.Reg generic map(3) port map(ExPcEnable & MemPcEnable & inInterruptState, '1', clk,'0',latchedEnables);
+
 process (clk,reset)
     begin
         if (reset ='1') then 
