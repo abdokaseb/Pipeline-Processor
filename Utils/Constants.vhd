@@ -173,9 +173,9 @@ package constants is
     constant EXMEMPCE  : integer := 114;
     constant EXMEMFLAGSS : integer := 115;
     constant EXMEMFLAGSE : integer := 117;
-    constant EXMEMISINT : integer := 118;
-    constant EXMEMWHICINSTR : integer := 119; -- this till which instruction access memory the upper or the lower
-    constant EXMEMStackOperation : integer := 120; 
+    constant EXMEMWHICINSTR : integer := 118; -- this till which instruction access memory the upper or the lower
+    constant EXMEMStackOperation : integer := 119; 
+    constant EXMEMISINT : integer := 120;
 
     constant EXMEMLength : integer := 120;
 
