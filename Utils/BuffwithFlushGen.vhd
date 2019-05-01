@@ -38,10 +38,10 @@ BEGIN
     BUFGENIDEX: IF buffType = IDEX GENERATE
         SIGNAL firstD ,firstQ : STD_LOGIC_VECTOR (IDEXInc1E DOWNTO IDEXInc1S);
         SIGNAL secondD ,secondQ : STD_LOGIC_VECTOR (IDEXInc2E DOWNTO IDEXInc2S);
-        SIGNAL commonD ,commonQ : STD_LOGIC_VECTOR (IDEXLength-1 DOWNTO IDEXBOTHS); -- -1 for saving interrupt
+        SIGNAL commonD ,commonQ : STD_LOGIC_VECTOR (IDEXLength DOWNTO IDEXBOTHS);
         firstD <= (OTHERS => '0' ) WHEN flushVector(0) = '1' ELSE buffD(IDEXInc1E DOWNTO IDEXInc1S);
         secondD <= (OTHERS => '0' ) WHEN flushVector(1) = '1' ELSE buffD(IDEXInc2E DOWNTO IDEXInc2S);
-        commonD <= (OTHERS => '0' ) WHEN flushVector(2) = '1' ELSE buffD(IDEXLength DOWNTO IDEXBOTHS);
+        commonD <= (buffD(IDEXISINT), OTHERS => '0' ) WHEN flushVector(2) = '1' ELSE buffD(IDEXLength DOWNTO IDEXBOTHS);
         buffQ <=  commonQ & secondQ & firstQ;
         
         firstBUFF: ENTITY work.Reg GENERIC MAP (firstD'LENGTH) PORT MAP ( firstD ,en ,clk ,rst ,firstQ );
@@ -52,10 +52,10 @@ BEGIN
     BUFGENEXMEM: IF buffType = EXMEM GENERATE
         SIGNAL firstD ,firstQ : STD_LOGIC_VECTOR (EXMEMInc1E DOWNTO EXMEMInc1S);
         SIGNAL secondD ,secondQ : STD_LOGIC_VECTOR (EXMEMInc2E DOWNTO EXMEMInc2S);
-        SIGNAL commonD ,commonQ : STD_LOGIC_VECTOR (EXMEMLength-1 DOWNTO EXMEMBOTHS);-- -1 for saving interrupt
+        SIGNAL commonD ,commonQ : STD_LOGIC_VECTOR (EXMEMLength DOWNTO EXMEMBOTHS);
         firstD <= (OTHERS => '0' ) WHEN flushVector(0) = '1' ELSE buffD(EXMEMInc1E DOWNTO EXMEMInc1S);
         secondD <= (OTHERS => '0' ) WHEN flushVector(1) = '1' ELSE buffD(EXMEMInc2E DOWNTO EXMEMInc2S);
-        commonD <= (OTHERS => '0' ) WHEN flushVector(2) = '1' ELSE buffD(EXMEMLength DOWNTO EXMEMBOTHS);
+        commonD <= (buffD(EXMEMISINT),OTHERS => '0' ) WHEN flushVector(2) = '1' ELSE buffD(EXMEMLength DOWNTO EXMEMBOTHS);
         buffQ <=  commonQ & secondQ & firstQ;
 
         firstBUFF: ENTITY work.Reg GENERIC MAP (firstD'LENGTH) PORT MAP ( firstD ,en ,clk ,rst ,firstQ );
