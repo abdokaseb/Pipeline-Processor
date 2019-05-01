@@ -33,7 +33,7 @@ BEGIN
         Instruction1 => IFIDbuffer(IFIDInstruction1E downto IFIDInstruction1S),
         Instruction2 => IFIDbuffer(IFIDInstruction2E downto IFIDInstruction2S),
         IDEXBuffer => preIDEXBuffer,
-        AddedToPc =>  PcIncrement,
+        AddedToPcSignal =>  PcIncrement,
         isIN1 => isIN1,
         isIN2 => isIN2,
         isLDM1 => isLDM1,
@@ -83,18 +83,22 @@ BEGIN
     preIDEXBuffer(IDEXInc1E downto IDEXFreeInc1S) <= (Others => '0');
     
     IDEXBuffer(IDEXInc1E downto IDEXInc1S) <= (Others => '0') when isLDMLastOne = '1'
+                                                                or PcIncrement = "00"
                 else preIDEXBuffer(IDEXInc1E downto IDEXInc1S);
     IDEXBuffer(IDEXInc2E downto IDEXInc2S) <= (Others => '0') when isLDM1 = '1'
+                                                                or PcIncrement = "00"
+                                                                or PcIncrement = "01"
                 else preIDEXBuffer(IDEXInc2E downto IDEXInc2S);
-    IDEXBuffer(IDEXLength downto IDEXInc2E+1) <= preIDEXBuffer(IDEXLength downto IDEXInc2E+1);
+    IDEXBuffer(IDEXLength downto IDEXInc2E+1) <= (Others => '0') when PcIncrement = "00"
+                else preIDEXBuffer(IDEXLength downto IDEXInc2E+1);
 
 
-        process(clk)
-        begin
-            if clk'event and clk = '1' then
-                isLDMLastOne <= isLDM2;
-            end if;
-        end process;
+    process(clk)
+    begin
+        if clk'event and clk = '1' then
+            isLDMLastOne <= isLDM2;
+        end if;
+    end process;
 
 
     -- TO ASK 

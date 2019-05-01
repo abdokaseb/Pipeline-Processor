@@ -22,10 +22,12 @@ vcom Utils/BuffwithFlushGen.vhd | grep Error
 # others files
 vcom FetchStage.vhd | grep Error
 
+vcom AddedToPC.vhd | grep Error
 vcom InstructionConvert.vhd | grep Error
 vcom ControlUnit.vhd | grep Error
 vcom DecodeStage.vhd -2008 | grep Error
 
+vcom OutInstrUnit.vhd | grep Error
 vcom ControlHazardsUnit.vhd | grep Error
 vcom ForwardUnit.vhd | grep Error
 vcom FlagsUnit.vhd | grep Error
