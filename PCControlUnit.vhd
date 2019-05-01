@@ -25,7 +25,7 @@ ARCHITECTURE PCControlUnitArch of PCControlUnit is
 BEGIN
     fAdder: entity work.nbitAdder generic map(PCSize) port map(PCcurrent, tempA, '0', tempF, TempCarryOut);
 Zeros <= (others => '0');
-tempA <= Zeros&ControlPCoperation;  --( if 00  we will add 0 on (pc stall)  ) | (if 01 we will add 1 (swap) ) | (if 10 we will add 2 (ordinary increment) )
+tempA <= (others => '0') when ExPcEnable = '1' or MemPcEnable = '1' else Zeros&ControlPCoperation;  --( if 00  we will add 0 on (pc stall)  ) | (if 01 we will add 1 (swap) ) | (if 10 we will add 2 (ordinary increment) )
 PCReg <= PCcurrent;
 process (clk,reset)
     begin
