@@ -11,16 +11,16 @@
 
 .ORG 10
 in R1     #R1=30
-inc R6
+inc R7
 
 in R2     #R2=50
-inc R6
+inc R7
 
 in R3     #R3=100
-inc R6
+inc R7
 
 in R4     #R4=300
-inc R6
+inc R7
 
 Push R4   #sp=FFFFFFFE, M[FFFFFFFF]=300
 JMP R1 
@@ -58,7 +58,7 @@ SETC      #C-->1
 POP R6     #R6=300, SP=FFFFFFFF
 
 inc R7
-inc R7
+SETC  
 
 Call R6    #SP=FFFFFFFD, M[FFFFFFFF]=half next PC,M[FFFFFFFE]=other half next PC
           #try interrup here

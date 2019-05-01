@@ -5,13 +5,13 @@
 100
 .org 10
 in r1
-inc r6
+inc r7
 in r2
-inc r6
+inc r7
 in r3
-inc r6
+inc r7
 in r4
-inc r6
+inc r7
 push r4
 jmp r1
 inc r1
@@ -35,7 +35,7 @@ rti
 setc
 pop r6
 inc r7
-inc r7
+setc
 call r6
 inc r6
 nop
@@ -56,19 +56,19 @@ nop
 
 (instruction = in r1) (instruction type = 1op) (address in hex = 0x10)  
 
-(instruction = inc r6) (instruction type = 1op) (address in hex = 0x11)  
+(instruction = inc r7) (instruction type = 1op) (address in hex = 0x11)  
 
 (instruction = in r2) (instruction type = 1op) (address in hex = 0x12)  
 
-(instruction = inc r6) (instruction type = 1op) (address in hex = 0x13)  
+(instruction = inc r7) (instruction type = 1op) (address in hex = 0x13)  
 
 (instruction = in r3) (instruction type = 1op) (address in hex = 0x14)  
 
-(instruction = inc r6) (instruction type = 1op) (address in hex = 0x15)  
+(instruction = inc r7) (instruction type = 1op) (address in hex = 0x15)  
 
 (instruction = in r4) (instruction type = 1op) (address in hex = 0x16)  
 
-(instruction = inc r6) (instruction type = 1op) (address in hex = 0x17)  
+(instruction = inc r7) (instruction type = 1op) (address in hex = 0x17)  
 
 (instruction = push r4) (instruction type = 1op) (address in hex = 0x18)  
 
@@ -108,7 +108,7 @@ nop
 
 (instruction = inc r7) (instruction type = 1op) (address in hex = 0x202)  
 
-(instruction = inc r7) (instruction type = 1op) (address in hex = 0x203)  
+(instruction = setc) (instruction type = nop_setc_clrc_rte_rti) (address in hex = 0x203)  
 
 (instruction = call r6) (instruction type = 1op) (address in hex = 0x204)  
 
@@ -140,26 +140,26 @@ nop
 in r1  address  16
 0111100100000000 (address in hex = 0x10)  
 
-inc r6  address  17
-0110011000000000 (address in hex = 0x11)  
+inc r7  address  17
+0110011100000000 (address in hex = 0x11)  
 
 in r2  address  18
 0111101000000000 (address in hex = 0x12)  
 
-inc r6  address  19
-0110011000000000 (address in hex = 0x13)  
+inc r7  address  19
+0110011100000000 (address in hex = 0x13)  
 
 in r3  address  20
 0111101100000000 (address in hex = 0x14)  
 
-inc r6  address  21
-0110011000000000 (address in hex = 0x15)  
+inc r7  address  21
+0110011100000000 (address in hex = 0x15)  
 
 in r4  address  22
 0111110000000000 (address in hex = 0x16)  
 
-inc r6  address  23
-0110011000000000 (address in hex = 0x17)  
+inc r7  address  23
+0110011100000000 (address in hex = 0x17)  
 
 push r4  address  24
 1001110000000000 (address in hex = 0x18)  
@@ -218,8 +218,8 @@ pop r6  address  513
 inc r7  address  514
 0110011100000000 (address in hex = 0x202)  
 
-inc r7  address  515
-0110011100000000 (address in hex = 0x203)  
+setc  address  515
+0100100000000000 (address in hex = 0x203)  
 
 call r6  address  516
 1110111000000000 (address in hex = 0x204)  

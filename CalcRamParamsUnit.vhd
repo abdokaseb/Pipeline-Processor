@@ -183,7 +183,7 @@ BEGIN
             finishInt <= '0';
             PCWBPOPLD <= '1';
             FLAGSWBPOP <= '0';
-            keepFlushing <= '0';
+            keepFlushing <= '1';
             twoWordsReadOrWrite <= '1';
             SPRegIn <= std_logic_vector( unsigned(SPRegOut) + 2 );
             tmpSP <= std_logic_vector( unsigned(SPRegOut) + 1);
@@ -199,8 +199,8 @@ BEGIN
             twoWordsReadOrWrite <= '1';
             SPRegIn <= std_logic_vector( unsigned(SPRegOut) - 2 ); 
             tmpSP <= std_logic_vector( unsigned(SPRegOut) - 1);
-            MemRead <= '1';
-            MemWrite <= '0';
+            MemRead <= '0';
+            MemWrite <= '1';
             addressToMem <= tmpSP(addressSize-1 DOWNTO 0 );
             if (whichInstr ='0') then
                 tmpPc <= std_logic_vector( unsigned(PCfromBuffer) + 1 );
