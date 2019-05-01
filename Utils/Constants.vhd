@@ -241,8 +241,8 @@ package constants is
     constant OperationSUB: std_logic_vector(3 downto 0) :=  "0011";
     constant OperationAND: std_logic_vector(3 downto 0) :=  "0100";
     constant OperationOR: std_logic_vector(3 downto 0) :=  "0101";
-    constant OperationSHL: std_logic_vector(3 downto 0) :=  "0110";
-    constant OperationSHR: std_logic_vector(3 downto 0) :=  "0111";
+    constant OperationSHL: std_logic_vector(3 downto 0) :=  "1110";
+    constant OperationSHR: std_logic_vector(3 downto 0) :=  "1111";
     constant OperationSETC: std_logic_vector(3 downto 0) :=  "1001";
     constant OperationCLRC: std_logic_vector(3 downto 0) :=  "1010";
     constant OperationNOT: std_logic_vector(3 downto 0) :=  "1011";

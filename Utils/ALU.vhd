@@ -78,16 +78,16 @@ architecture aluArch of alu is
         else (A and B)                              when operationControl = OperationAND
         else (A or B)                               when operationControl = OperationOR
         else not(B)                                 when operationControl = OperationNOT
-        else B(n - 1 - TO_INTEGER(UNSIGNED(shiftAm)) downto 0) & (TO_INTEGER(UNSIGNED(shiftAm))-1 downto 0 => '0')  when operationControl = OperationSHL
-        else (TO_INTEGER(UNSIGNED(shiftAm))-1 downto 0 => '0') & B(n - 1 downto TO_INTEGER(UNSIGNED(shiftAm)))  when operationControl = OperationSHR
+        else B(n - 1 - TO_INTEGER(UNSIGNED(shiftAm)) downto 0) & (TO_INTEGER(UNSIGNED(shiftAm))-1 downto 0 => '0')  when operationControl = OperationSHL and shiftAm /= (nshift-1 downto 0 => '0')
+        else (TO_INTEGER(UNSIGNED(shiftAm))-1 downto 0 => '0') & B(n - 1 downto TO_INTEGER(UNSIGNED(shiftAm)))  when operationControl = OperationSHR and shiftAm /= (nshift-1 downto 0 => '0')
 
         else (others => 'Z');
 
         --carry flag
         flagOut(cFlag) <= tempCarryOut          when operationControl = OperationADD or operationControl = OperationSUB  
                                                             or  operationControl = OperationINC or  operationControl = OperationDEC
-        else B(TO_INTEGER(UNSIGNED(shiftAm))-1)     when  operationControl = OperationSHR
-        else B(n-TO_INTEGER(UNSIGNED(shiftAm)))   when operationControl = OperationSHL
+        else B(TO_INTEGER(UNSIGNED(shiftAm))-1)     when  operationControl = OperationSHR and shiftAm /= (nshift-1 downto 0 => '0')
+        else B(n-TO_INTEGER(UNSIGNED(shiftAm)))   when operationControl = OperationSHL and shiftAm /= (nshift-1 downto 0 => '0')
         else '1'                                when operationControl = OperationSETC
         else '0'                                when operationControl = OperationCLRC
         else flagIn(cFlag);
