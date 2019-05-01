@@ -65,7 +65,7 @@ BEGIN
         PCReg => PCReg,
         InterruptS => interruptSignal, 
         InterruptE => finishInt,
-        inInterruptState <= inInterruptState
+        inInterruptState => inInterruptState
     );
 
     FetchStageEnt: entity work.FetchStage generic map(addressSize,wordsize,PCSize) port map(

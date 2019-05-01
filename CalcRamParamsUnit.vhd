@@ -52,7 +52,7 @@ BEGIN
 
     STACKPINTERREG : ENTITY work.SP generic map(SPLength) port map(SPRegIn,VCC,clk,rst,SPRegOut);
 
-    PROCESS (RsrcVal, RdstVal, DSB, PCfromBuffer, FLAGS, MW, MR, isStackOper, isINTLatch, INTstate, RTIstate,SPRegIn,tmpPC,whichInstr,RESET)
+    PROCESS (RsrcVal, RdstVal, DSB, PCfromBuffer, FLAGS, MW, MR, isStackOper, isINTLatch, INTstate, RTIstate,SPRegIn,tmpPC,whichInstr,RESET,tmpSP)
     BEGIN
         if RESET = '1' then
             PCWBPOPLD <= '1'; 
@@ -68,11 +68,11 @@ BEGIN
             dataToMem2 <= (OTHERS => '0'); 
         elsif (DSB = OpCodeRTIDSB) or (RTIstate /= popFlags) then
             finishInt <= '0';
+            keepFlushing <= '1';
             CASE RTIstate IS
                 when popFlags =>
                     PCWBPOPLD <= '0';
                     FLAGSWBPOP <= '1';
-                    keepFlushing <= '1';
                     twoWordsReadOrWrite <= '0';
                     SPRegIn <= std_logic_vector( unsigned(SPRegOut) + 1 );
                     MemRead <= '1';
@@ -83,32 +83,32 @@ BEGIN
                 when popPC =>
                     PCWBPOPLD <= '1';
                     FLAGSWBPOP <= '0';
-                    keepFlushing <= '0';
                     twoWordsReadOrWrite <= '1';
-                    SPRegIn <= std_logic_vector( unsigned(SPRegOut) + 2);
+                    SPRegIn <= std_logic_vector( unsigned(SPRegOut) + 2 );
+                    tmpSP <= std_logic_vector( unsigned(SPRegOut) + 1);
                     MemRead <= '1';
                     MemWrite <= '0';
-                    addressToMem <= SPRegIn(addressSize-1 DOWNTO 0 ); 
+                    addressToMem <= tmpSP(addressSize-1 DOWNTO 0 ); 
                     dataToMem1(flagsCount -1 downto 0) <= FLAGS;
                     dataToMem2 <= (OTHERS => '0');
             END CASE;
         elsif isINTLatch = '1' OR (INTstate /= pushPC) then --or DSB = OpCodeRTIDSB or RTIstate != popFlags) -- STALL OR PCfromBuffer + 0 ???
+            keepFlushing <= '1';
             CASE INTstate IS
                 when pushPC =>
                     PCWBPOPLD <= '0';
                     FLAGSWBPOP <= '0';
-                    keepFlushing <= '1';
                     twoWordsReadOrWrite <= '1';
                     SPRegIn <= std_logic_vector( unsigned(SPRegOut) - 2);
+                    tmpSP <= std_logic_vector( unsigned(SPRegOut) - 1);
                     MemRead <= '0';
                     MemWrite <= '1';
-                    addressToMem <= SPRegOut(addressSize-1 DOWNTO 0 ); 
+                    addressToMem <= tmpSP(addressSize-1 DOWNTO 0 ); 
                     dataToMem1 <= currentPC(PCLength-1 DOWNTO 16);
                     dataToMem2 <= currentPC(15 DOWNTO 0);                    
                 when pushFlags =>
                     PCWBPOPLD <= '0';
                     FLAGSWBPOP <= '0';
-                    keepFlushing <= '1';
                     twoWordsReadOrWrite <= '0';
                     SPRegIn <= std_logic_vector( unsigned(SPRegOut) - 1);
                     MemRead <= '0';
@@ -120,7 +120,6 @@ BEGIN
                     finishInt <= '1';
                     PCWBPOPLD <= '1'; 
                     FLAGSWBPOP <= '0';
-                    keepFlushing <= '0';
                     twoWordsReadOrWrite <= '1';
                     SPRegIn <= SPRegOut;
                     MemRead <= '1';
@@ -187,9 +186,10 @@ BEGIN
             keepFlushing <= '0';
             twoWordsReadOrWrite <= '1';
             SPRegIn <= std_logic_vector( unsigned(SPRegOut) + 2 );
+            tmpSP <= std_logic_vector( unsigned(SPRegOut) + 1);
             MemRead <= '1';
             MemWrite <= '0';
-            addressToMem <= SPRegIn(addressSize-1 DOWNTO 0 ); 
+            addressToMem <= tmpSP(addressSize-1 DOWNTO 0 ); 
             dataToMem1 <= (OTHERS => '0');
             dataToMem2 <= (OTHERS => '0'); 
         elsif DSB = OpCodeCALLDSB then 
@@ -198,9 +198,10 @@ BEGIN
             keepFlushing <= '0';
             twoWordsReadOrWrite <= '1';
             SPRegIn <= std_logic_vector( unsigned(SPRegOut) - 2 ); 
+            tmpSP <= std_logic_vector( unsigned(SPRegOut) - 1);
             MemRead <= '1';
             MemWrite <= '0';
-            addressToMem <= SPRegOut(addressSize-1 DOWNTO 0 );
+            addressToMem <= tmpSP(addressSize-1 DOWNTO 0 );
             if (whichInstr ='0') then
                 tmpPc <= std_logic_vector( unsigned(PCfromBuffer) + 1 );
                 dataToMem2 <= tmpPc(15 DOWNTO 0);
@@ -248,12 +249,14 @@ BEGIN
 
 --------------------------------------------------------- RTI STATE MACHINE --------------------------------------------
 
-    PROCESS (rst,clk) 
+    PROCESS (rst,clk,isINT) 
     BEGIN
         if rst = '1' or ((DSB /=  OpCodeRTIDSB) and RTIstate = popFlags) then -- STALL OR PCfromBuffer + 0 ??? i am assuming PCfromBuffer + 0
             RTIstate <= popFlags;
             if (isINTLatch = '1' and (INTstate /= pushPC)) or (rst = '1') then
                 isINTLatch <= '0';
+            else
+                isINTLatch <= isINT;
             end if;
         else -- RTI STATE MACHINE
             if isINT = '1' then 
