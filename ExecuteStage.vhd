@@ -28,7 +28,7 @@ END ENTITY ExecuteStage;
 ARCHITECTURE ExecuteStageArch of ExecuteStage is
 
     Signal ALUsrc1,ALUdst1,ALUsrc2,ALUdst2: std_logic_vector(wordSize-1 downto 0);
-    SIGNAL FlagsToALU1,FlagsToALU2,FlagsFromALU1,FlagsFromALU2,FlagsToMem : STD_LOGIC_VECTOR(flagsCount-1 downto 0);
+    SIGNAL FlagsToALU1,FlagsToALU2,FlagsFromALU1,FlagsFromALU2,FlagsToMem,BranchExeFlags1,BranchExeFlags2 : STD_LOGIC_VECTOR(flagsCount-1 downto 0);
 BEGIN
 
     ForwardUnitEnt: entity work.ForwardUnit port map(
@@ -80,6 +80,8 @@ BEGIN
         FlagsToALU1 => FlagsToALU1,
         FlagsToALU2 => FlagsToALU2,
         FlagsToMem => FlagsToMem,
+        BranchExeFlags1 => BranchExeFlags1,
+        BranchExeFlags2 => BranchExeFlags2,
         clk=>clk,
         rst=>rst,
         Buff2Flush => EXMEMflushVector(1) ------------------- flushing second buffer
@@ -98,6 +100,8 @@ BEGIN
         PCWBFromEX => PCWBFromEX,
         FlagsToALU1 => FlagsToALU1,
         FlagsToALU2 => FlagsToALU2,
+        BranchExeFlags1 => BranchExeFlags1,
+        BranchExeFlags2 => BranchExeFlags2,
         EXMEMbufferOut => EXMEMbufferOut -- to put DSB
     );
 
