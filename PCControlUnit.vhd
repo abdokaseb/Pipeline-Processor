@@ -10,7 +10,9 @@ ENTITY PCControlUnit IS
         clk,reset,ExPcEnable,MemPcEnable: in STD_LOGIC;
         ControlPCoperation: in STD_LOGIC_VECTOR(1 downto 0);
         ExPC,MemPc: in STD_LOGIC_Vector(PCSize-1 DownTO 0); 
-        PCReg: out STD_LOGIC_VECTOR(PCSize-1 DOWNTO 0)
+        PCReg: out STD_LOGIC_VECTOR(PCSize-1 DOWNTO 0);
+        InterruptS, InterruptE: in STD_LOGIC;
+        inInterruptState: out STD_LOGIC
     );
 
 END ENTITY PCControlUnit;
@@ -25,7 +27,9 @@ ARCHITECTURE PCControlUnitArch of PCControlUnit is
 BEGIN
     fAdder: entity work.nbitAdder generic map(PCSize) port map(PCcurrent, tempA, '0', tempF, TempCarryOut);
 Zeros <= (others => '0');
-tempA <= (others => '0') when ExPcEnable = '1' or MemPcEnable = '1' else Zeros&ControlPCoperation;  --( if 00  we will add 0 on (pc stall)  ) | (if 01 we will add 1 (swap) ) | (if 10 we will add 2 (ordinary increment) )
+--( if 00  we will add 0 on (pc stall)  ) | (if 01 we will add 1 (swap) ) | (if 10 we will add 2 (ordinary increment) )
+tempA <= (others => '0') when ExPcEnable = '1' or MemPcEnable = '1' or inInterruptState = '1'
+    else Zeros&ControlPCoperation;  
 PCReg <= PCcurrent;
 process (clk,reset)
     begin
@@ -41,5 +45,17 @@ process (clk,reset)
                 end if;
         end if;
     end process;
+
+process (InterruptS, InterruptE)
+    begin
+        if (InterruptS = '1') then
+            inInterruptState <= '1';
+        elsif (InterruptE = '1') then
+            inInterruptState <= '0';
+        else
+            inInterruptState <= inInterruptState;
+        end if;
+    end process;
+
 
 END ARCHITECTURE;
