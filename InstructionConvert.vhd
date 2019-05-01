@@ -73,7 +73,8 @@ BEGIN
     BranchOrNot <= '1' when typePart = branchInstruction and (
                instructPart = OpCodeJZ or instructPart = OpCodeJN 
             or instructPart = OpCodeJC or instructPart = OpCodeJMP 
-            or instructPart = OpCodeCALL)
+            or instructPart = OpCodeCALL or instructPart = OpCodeRET
+            or instructPart = OpCodeRTI)
         else '0';
     
     IsALUOper <= '1' when (typePart = twoOperandInstruction and instructPart /= OpCodeNOP)
