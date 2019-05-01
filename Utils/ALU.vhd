@@ -93,11 +93,15 @@ architecture aluArch of alu is
         else flagIn(cFlag);
         
         --zero flag
-        flagOut(zFlag) <= flagIn(zFlag) when operationControl = OperationMOV
+        flagOut(zFlag) <= flagIn(zFlag) when (operationControl = OperationMOV or
+                                              operationControl = OperationSETC  or 
+                                              operationControl = OperationCLRC)
                         else '1' when  FTemp = zeroSignal
-                        else '0';
+                        else '0';     -- ramy -- if no operatio change zero flag it shuold ramin the same as the flag in
         --negative flag
-        flagOut(nFlag) <= flagIn(nFlag) when operationControl = OperationMOV else FTemp(n-1) ;
+        flagOut(nFlag) <= flagIn(nFlag) when(operationControl = OperationMOV or
+                                              operationControl = OperationSETC  or 
+                                              operationControl = OperationCLRC) else FTemp(n-1) ;
         
         
 end architecture;
