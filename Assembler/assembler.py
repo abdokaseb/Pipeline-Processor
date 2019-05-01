@@ -159,7 +159,7 @@ def generate_opcode(lines_with_type,debug):
                  ["\n%s (address in hex = 0x%x)  \n\n" % x for x in instructions_words])
         elif line_type == "hex":
             value = get_bin(int(line,16), 32)
-            instructions_words = [(value[16:32], beg), (value[0:16], beg+1)]
+            instructions_words = [(value[0:16], beg), (value[16:32], beg+1)]
             output=output+instructions_words
             debug.writelines(
                  ["\n%s (address in hex = 0x%x)  \n\n" % x for x in instructions_words])
@@ -273,7 +273,7 @@ def main():
     #input_fil_name = input("input filename:")              ---
     #output_fil_name = input("output filename:")            ---
     #debug_fil_name = input("debug filename:")              ---
-    working_dir = ".\\testcases\\Branch\\"
+    working_dir = ".\\testcases\\TwoOperand\\"
     if (len(sys.argv)!=4):
         print("Wrong number of parameters")
         sys.exit()
