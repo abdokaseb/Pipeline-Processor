@@ -64,25 +64,10 @@ run 300
 force -freeze sim:/pipelinesystem/interruptSignal 1 0
 run
 force -freeze sim:/pipelinesystem/interruptSignal 0 0
-run 1000
-run
-run
-run
-run
+run 1400
 force -freeze sim:/pipelinesystem/INPort 16'h200 0
-run
-run
-add wave -position 23  sim:/pipelinesystem/ExecuteStageEnt/FlagsUnitEnt/FlagsRegOut
-add wave -position 24  sim:/pipelinesystem/ExecuteStageEnt/FlagsUnitEnt/FlagsRegIn
-run
-run
-run
-run
-run
-add wave -position 40  sim:/pipelinesystem/MemoryStageEnt/CALCMEMPARAMSENT/SPRegIn
-add wave -position 41  sim:/pipelinesystem/MemoryStageEnt/CALCMEMPARAMSENT/SPRegOut
-force -freeze sim:/pipelinesystem/interruptSignal 1 0
-run
+run 1200
+
 
 force -freeze sim:/pipelinesystem/clk 1 0, 0 {50 ns} -r 100
 force -freeze sim:/pipelinesystem/rst 1 0
