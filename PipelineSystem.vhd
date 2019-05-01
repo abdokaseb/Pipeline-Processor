@@ -40,14 +40,12 @@ ARCHITECTURE PipelineSystemArch of PipelineSystem is
     signal IFIDflushVector: STD_LOGIC_VECTOR(0 TO 2);
     signal IDEXflushVector: STD_LOGIC_VECTOR(0 TO 2);
     signal EXMEMflushVector: STD_LOGIC_VECTOR(0 TO 2);
-    signal keepFlushing: STD_LOGIC;
 
-    -- Int is done signal
-    signal finishInt :STD_LOGIC;
+    signal keepFlushing, inInterruptState,finishInt: STD_LOGIC;
 BEGIN
 
     IFIDen <= '1';
-    IFIDrst <= '0' or rst;
+    IFIDrst <= '0' or rst or inInterruptState;
     IDEXen <= '1';
     IDEXrst <= '0' or rst;
     EXMEMen <= '1';
@@ -64,7 +62,10 @@ BEGIN
         MemPcEnable => PCWBFromMEMStage, 
         MemPc=>PCFromMEMStage,
         ControlPCoperation=> pcIncrementControl,
-        PCReg => PCReg
+        PCReg => PCReg,
+        InterruptS => interruptSignal, 
+        InterruptE => finishInt,
+        inInterruptState <= inInterruptState
     );
 
     FetchStageEnt: entity work.FetchStage generic map(addressSize,wordsize,PCSize) port map(
