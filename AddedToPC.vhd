@@ -66,8 +66,12 @@ currentInstruction2dst <= currentInstruction2(IFIDRdst2E downto IFIDRdst2S );
 
 addedToPC <= "00" when (typePartNextIns1= MemoryInstruction and instructPartNextIns1= OpCodeLDD and (nextInstruction1dst=currentInstruction1src or nextInstruction1dst=currentInstruction1dst))
                     or (typePartNextIns2= MemoryInstruction and instructPartNextIns2= OpCodeLDD and (nextInstruction2dst=currentInstruction1src or nextInstruction2dst=currentInstruction1dst))
+                    or (typePartNextIns1= MemoryInstruction and instructPartNextIns1= OpCodePOP and (nextInstruction1dst=currentInstruction1src or nextInstruction1dst=currentInstruction1dst))
+                    or (typePartNextIns2= MemoryInstruction and instructPartNextIns2= OpCodePOP and (nextInstruction2dst=currentInstruction1src or nextInstruction2dst=currentInstruction1dst))
         else "01" when (typePartNextIns1= MemoryInstruction and instructPartNextIns1= OpCodeLDD and (nextInstruction1dst=currentInstruction2src or nextInstruction1dst=currentInstruction2dst))
                     or (typePartNextIns2= MemoryInstruction and instructPartNextIns2= OpCodeLDD and (nextInstruction2dst=currentInstruction2src or nextInstruction2dst=currentInstruction2dst))
+                    or (typePartNextIns1= MemoryInstruction and instructPartNextIns1= OpCodePOP and (nextInstruction1dst=currentInstruction2src or nextInstruction1dst=currentInstruction2dst))
+                    or (typePartNextIns2= MemoryInstruction and instructPartNextIns2= OpCodePOP and (nextInstruction2dst=currentInstruction2src or nextInstruction2dst=currentInstruction2dst))
                     or (WB1 = '1' and (currentInstruction1dst = currentInstruction2src or currentInstruction1dst = currentInstruction2dst))
                     or ((typePartCurrentIns1= oneOperandInstruction and instructPartCurrentIns1= OpCodeIN) and (typePartCurrentIns2= oneOperandInstruction and instructPartCurrentIns2= OpCodeIN))
                     or ((typePartCurrentIns1= oneOperandInstruction and instructPartCurrentIns1= OpCodeOUT) and (typePartCurrentIns2= oneOperandInstruction and instructPartCurrentIns2= OpCodeOUT))
