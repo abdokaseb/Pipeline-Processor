@@ -41,6 +41,9 @@ ARCHITECTURE PipelineSystemArch of PipelineSystem is
     signal IDEXflushVector: STD_LOGIC_VECTOR(0 TO 2);
     signal EXMEMflushVector: STD_LOGIC_VECTOR(0 TO 2);
     signal keepFlushing: STD_LOGIC;
+
+    -- Int is done signal
+    signal finishInt :STD_LOGIC;
 BEGIN
 
     IFIDen <= '1';
@@ -111,13 +114,15 @@ BEGIN
         EXMEMbuffer => EXMEMbufferQ,
         FlagsOut => FlagsFromMEMtoEXE, 
         FlagsWBout => FlagsWBFromMEMtoEXE,
+        currentPC => PCReg,
         PCout => PCFromMEMStage ,
         PCWBout => PCWBFromMEMStage,
         RESET => resetSignal,
         clk => clk,
         rst => rst,
         MEMWBbuffer => MEMWBbufferD,
-        keepFlushing => keepFlushing -- nccessary for state machines RTI ,INT 
+        keepFlushing => keepFlushing, -- nccessary for state machines RTI ,INT 
+        finishInt => finishInt  -- nccessary for telling control unit thant int operations are done to start moving pc again
     );
 
     MEMWBRegEnt: entity work.Reg generic map(MEMWBLength+1) port map(MEMWBBufferD,MEMWBen,clk,MEMWBrst,MEMWBBufferQ);

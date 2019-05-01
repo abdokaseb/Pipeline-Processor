@@ -8,12 +8,13 @@ ENTITY MemoryStage IS
 	GENERIC (addressSize:INTEGER := RAMaddressBits;
 						wordSize: integer :=16);
 	PORT(
-			EXMEMbuffer: in STD_LOGIC_VECTOR(EXMEMLength DOWNTO 0);
+            EXMEMbuffer: in STD_LOGIC_VECTOR(EXMEMLength DOWNTO 0);
+            currentPC: IN STD_LOGIC_VECTOR(PCLength-1 DOWNTO 0);
 			clk, rst,RESET: in STD_LOGIC;
 			MEMWBbuffer: out STD_LOGIC_VECTOR(MEMWBLength DOWNTO 0);
 			FlagsOut : out  STD_LOGIC_VECTOR(flagsCount-1 DOWNTO 0);
 			PCout : out  STD_LOGIC_VECTOR(PCLength-1 DOWNTO 0);
-			FlagsWBout,PCWBout,keepFlushing : out  STD_LOGIC
+			FlagsWBout,PCWBout,keepFlushing,finishInt : out  STD_LOGIC
         );
 
 END ENTITY MemoryStage;
@@ -40,7 +41,8 @@ BEGIN
     );
 
     CALCMEMPARAMSENT : ENTITY work.CalcRamParamsUnit generic map(addressSize) PORT MAP(
-		EXMEMbuffer => EXMEMbuffer,
+        EXMEMbuffer => EXMEMbuffer,
+        currentPC => currentPC,
 		clk => clk,
         rst => rst,
         RESET => RESET,
@@ -52,7 +54,8 @@ BEGIN
 		MemWrite => MemWrite,
 		PCWBPOPLD => PCWBPOPLD,
         FLAGSWBPOP => FLAGSWBPOP,
-        keepFlushing => keepFlushing
+        keepFlushing => keepFlushing,
+        finishInt => finishInt
 	); -- may add keep flushing for state mchanies and for call to flush stupid fetched instructions
 	
     MEMSTAGEOUTPUTENT : ENTITY work.MemStageOutput PORT MAP(
