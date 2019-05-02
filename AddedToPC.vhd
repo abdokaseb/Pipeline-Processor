@@ -18,8 +18,8 @@ END ENTITY AddToPC;
 
 
 ARCHITECTURE AddToPCArch of AddToPC is
-    signal currentInstruction1: STD_LOGIC_VECTOR(IFIDInstruction1E DOWNTO IFIDInstruction1S);
-    signal currentInstruction2: STD_LOGIC_VECTOR(IFIDInstruction2E DOWNTO IFIDInstruction2S);
+    signal currentInstruction1,flushCurrentInstruction1: STD_LOGIC_VECTOR(IFIDInstruction1E DOWNTO IFIDInstruction1S);
+    signal currentInstruction2,flushCurrentInstruction2: STD_LOGIC_VECTOR(IFIDInstruction2E DOWNTO IFIDInstruction2S);
     signal nextInstruction1: STD_LOGIC_VECTOR(IFIDInstruction1E DOWNTO IFIDInstruction1S);
     signal nextInstruction2: STD_LOGIC_VECTOR(IFIDInstruction2E DOWNTO IFIDInstruction2S);
 
@@ -33,18 +33,20 @@ ARCHITECTURE AddToPCArch of AddToPC is
     signal rstNextInstruction: STD_LOGIC;
 
     signal currentInstruction1src, currentInstruction1dst, currentInstruction2src, currentInstruction2dst, nextInstruction1dst, nextInstruction2dst :STD_LOGIC_VECTOR(2 downto 0);
-BEGIN
 
-NextInst1: entity work.Reg generic map(16) port map(
-    currentInstruction1,
-		'1', clk, rstNextInstruction,nextInstruction1 
-    );
-NextInst2: entity work.Reg generic map(16) port map(
-    currentInstruction2,
-		'1', clk, rstNextInstruction,nextInstruction2 
-    );
-rstNextInstruction <= '1' when addedToPC = "00"
-        else rst;
+    BEGIN
+
+    flushCurrentInstruction1 <= (others=> '0') when addedToPC = "00" else  currentInstruction1;
+    flushCurrentInstruction2 <= (others=> '0') when addedToPC = "00" else  currentInstruction2;
+
+    NextInst1: entity work.Reg generic map(16) port map(
+        flushCurrentInstruction1,'1', clk, rst,nextInstruction1 
+        );
+
+    NextInst2: entity work.Reg generic map(16) port map(
+        flushCurrentInstruction2,'1', clk, rst,nextInstruction2 
+        );
+
 currentInstruction1 <= IFIDBuffer(IFIDInstruction1E downto IFIDInstruction1S);
 currentInstruction2 <= IFIDBuffer(IFIDInstruction2E downto IFIDInstruction2S);
 
