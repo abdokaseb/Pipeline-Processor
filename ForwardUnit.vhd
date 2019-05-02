@@ -10,7 +10,8 @@ ENTITY ForwardUnit IS
             IDEXBuffer: in STD_LOGIC_VECTOR(IDEXLength DOWNTO 0);
             EXMEMBuffer: in STD_LOGIC_VECTOR(EXMEMLength DOWNTO 0);
             MEMWBBuffer: in STD_LOGIC_VECTOR(MEMWBLength DOWNTO 0);
-            Src1,Dst1,Src2,Dst2: out STD_LOGIC_VECTOR(wordSize-1 DOWNTO 0)
+            Src1,Dst1,Src2,Dst2: out STD_LOGIC_VECTOR(wordSize-1 DOWNTO 0);
+            result1: in STD_LOGIC_VECTOR(wordSize-1 DOWNTO 0)
 		);
 
 END ENTITY ForwardUnit;
@@ -108,9 +109,11 @@ BEGIN
     ----------------------------------------------------------------------
 
   ----------------------------------------------------------
-    process (IdEXRsc2,ExMemRdst1,ExMemRdst2,ExMemWriteback1,ExMemWriteback2,MemWbRdst1,MemWbRdst2,MemWbWriteback1,MemWbWriteback2,AluResult2,AluResult1,WbValue2,WbValue1,RSrc2Value)
+    process (IdEXRsc2,ExMemRdst1,ExMemRdst2,ExMemWriteback1,ExMemWriteback2,MemWbRdst1,MemWbRdst2,MemWbWriteback1,MemWbWriteback2,AluResult2,AluResult1,WbValue2,WbValue1,RSrc2Value,result1)
         begin 
-            if (ExMemWriteback2='1' and (ExMemRdst2 =IdEXRsc2) ) then 
+            if (IdEXRsc2 = IdEXRdst1) then
+                Src2 <= result1;
+            elsif (ExMemWriteback2='1' and (ExMemRdst2 =IdEXRsc2) ) then 
                 Src2 <= AluResult2;
             elsif (ExMemWriteback1='1' and (ExMemRdst1 =IdEXRsc2) ) then 
                 Src2 <= AluResult1;
@@ -128,9 +131,11 @@ BEGIN
 
 
     ----------------------------------------------------------
-    process (IdEXRdst2,ExMemRdst1,ExMemRdst2,ExMemWriteback1,ExMemWriteback2,MemWbRdst1,MemWbRdst2,MemWbWriteback1,MemWbWriteback2,AluResult2,AluResult1,WbValue2,WbValue1,RDst2Value)
+    process (IdEXRdst2,ExMemRdst1,ExMemRdst2,ExMemWriteback1,ExMemWriteback2,MemWbRdst1,MemWbRdst2,MemWbWriteback1,MemWbWriteback2,AluResult2,AluResult1,WbValue2,WbValue1,RDst2Value,result1)
         begin 
-            if (ExMemWriteback2='1' and (ExMemRdst2 =IdEXRdst2) ) then 
+            if (IdEXRdst2 = IdEXRdst1) then
+                Dst2 <= result1;
+            elsif (ExMemWriteback2='1' and (ExMemRdst2 =IdEXRdst2) ) then 
                 Dst2 <= AluResult2;
             elsif (ExMemWriteback1='1' and (ExMemRdst1 =IdEXRdst2) ) then 
                 Dst2 <= AluResult1;

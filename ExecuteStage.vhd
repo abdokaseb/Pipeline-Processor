@@ -38,7 +38,9 @@ BEGIN
         ALUsrc1,
         ALUdst1,
         ALUsrc2,
-        ALUdst2);
+        ALUdst2,
+        EXMEMbufferOut(EXMEMResult1E downto EXMEMResult1S)
+        );
 
     MemorySelectionUnitEnt: entity work.MemorySelectionUnit port map(
         IDEXBuffer,

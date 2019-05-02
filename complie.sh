@@ -38,5 +38,5 @@ vcom ExecuteStage.vhd -2008 | grep Error
 vcom MemStageOutput.vhd | grep Error
 vcom MemoryStage.vhd | grep Error
 
-vcom PCControlUnit.vhd | grep Error
+vcom PCControlUnit.vhd -2008 | grep Error
 vcom PipelineSystem.vhd | grep Error
