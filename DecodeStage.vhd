@@ -103,10 +103,10 @@ BEGIN
     isLDM <= '0' when isLDM1 = '1'
     else isLDM2;
     
-    process(clk)
+    process(clk,isLDM)
     begin
         if clk'event and clk = '1' then
-            isLDMLastOne <= isLDM2;
+            isLDMLastOne <= isLDM;
         end if;
     end process;
 
