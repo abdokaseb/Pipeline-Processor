@@ -78,9 +78,10 @@ package constants is
     constant IDEXDSB1S : integer := 54;
     constant IDEXDSB1E : integer := 55;
     constant IDEXIsALUOper1 : integer := 56;
+    constant IDEXIsNoForward1 : integer := 57;
 
     -- I'll leave 10 bits for additional features :D if you use it please down the number
-    constant IDEXFreeInc1S : integer := 57;
+    constant IDEXFreeInc1S : integer := 58;
     constant IDEXInc1E : integer := 65;
 
 
@@ -109,10 +110,11 @@ package constants is
     constant IDEXDSB2S : integer := 120;    -- Is it really important to put this here KASBE Ques
     constant IDEXDSB2E : integer := 121;
     constant IDEXIsALUOper2 : integer := 122;
+    constant IDEXIsNoForward2 : integer := 123;
 
 
     -- I'll leave 10 bits for additional features :D if you use it please down the number
-    constant IDEXFreeInc2S : integer := 123;
+    constant IDEXFreeInc2S : integer := 124;
     constant IDEXInc2E : integer := 131;
 
     --/Both instructions
