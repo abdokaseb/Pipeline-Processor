@@ -100,7 +100,9 @@ BEGIN
                 else preIDEXBuffer(IDEXInc2E downto IDEXInc2S);
     IDEXBuffer(IDEXLength downto IDEXInc2E+1) <= preIDEXBuffer(IDEXLength downto IDEXInc2E+1);
 
-    isLDM <= isLDM2;
+    isLDM <= '0' when isLDM1 = '1'
+    else isLDM2;
+    
     process(clk)
     begin
         if clk'event and clk = '1' then
