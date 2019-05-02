@@ -72,7 +72,7 @@ run
 force -freeze sim:/pipelinesystem/interruptSignal 0 0
 run 1400
 force -freeze sim:/pipelinesystem/INPort 16'h200 0
-run 500
+run 600
 force -freeze sim:/pipelinesystem/interruptSignal 1 0
 run
 force -freeze sim:/pipelinesystem/interruptSignal 0 0

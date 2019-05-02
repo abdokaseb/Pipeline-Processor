@@ -98,8 +98,7 @@ BEGIN
                                                                 or PcIncrement = "01"
                                                                 or interruptSignalLastOne = '1'
                 else preIDEXBuffer(IDEXInc2E downto IDEXInc2S);
-    IDEXBuffer(IDEXLength downto IDEXInc2E+1) <= (Others => '0') when PcIncrement = "00"
-                else preIDEXBuffer(IDEXLength downto IDEXInc2E+1);
+    IDEXBuffer(IDEXLength downto IDEXInc2E+1) <= preIDEXBuffer(IDEXLength downto IDEXInc2E+1);
 
     isLDM <= isLDM2;
     process(clk)
