@@ -109,7 +109,7 @@ BEGIN
     ----------------------------------------------------------------------
 
   ----------------------------------------------------------
-    process (IdEXRsc2,ExMemRdst1,ExMemRdst2,ExMemWriteback1,ExMemWriteback2,MemWbRdst1,MemWbRdst2,MemWbWriteback1,MemWbWriteback2,AluResult2,AluResult1,WbValue2,WbValue1,RSrc2Value,result1)
+    process (IdEXRsc2,ExMemRdst1,IdEXRdst1,result1,ExMemRdst2,ExMemWriteback1,ExMemWriteback2,MemWbRdst1,MemWbRdst2,MemWbWriteback1,MemWbWriteback2,AluResult2,AluResult1,WbValue2,WbValue1,RSrc2Value,result1)
         begin 
             if (IdEXRsc2 = IdEXRdst1) then
                 Src2 <= result1;
@@ -131,7 +131,7 @@ BEGIN
 
 
     ----------------------------------------------------------
-    process (IdEXRdst2,ExMemRdst1,ExMemRdst2,ExMemWriteback1,ExMemWriteback2,MemWbRdst1,MemWbRdst2,MemWbWriteback1,MemWbWriteback2,AluResult2,AluResult1,WbValue2,WbValue1,RDst2Value,result1)
+    process (IdEXRdst2,ExMemRdst1,IdEXRdst1,ExMemRdst2,ExMemWriteback1,ExMemWriteback2,MemWbRdst1,MemWbRdst2,MemWbWriteback1,MemWbWriteback2,AluResult2,AluResult1,WbValue2,WbValue1,RDst2Value,result1)
         begin 
             if (IdEXRdst2 = IdEXRdst1) then
                 Dst2 <= result1;
