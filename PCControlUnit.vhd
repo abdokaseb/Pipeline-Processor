@@ -35,7 +35,7 @@ tempA <= (others => '0') when latchedEnables(0) = '1' or latchedEnables(1) = '1'
 PCReg <= tempF;
 
     latchValuesEntity: entity work.Reg generic map(3) port map(ExPcEnable & MemPcEnable & inInterruptStateInternal, '1', clk,'0',latchedEnables);
-    inInterruptState <= latchedEnables(2);
+    inInterruptState <= latchedEnables(0);
 process (clk,reset)
     begin
         if (reset ='1') then 

@@ -74,8 +74,8 @@ BEGIN
         IFIDBuffer => IFIDBufferD
     );   
 
-    IFIDflushVectorToBuffer <= IFIDflushVector or "00"&isLDM;
-    IFIDRegEnt: entity work.BuffwithFlushGen generic map(IFID,IFIDLength+1) port map(IFIDBufferD,IFIDen,clk,IFIDrst,IFIDBufferQ,IFIDflushVector);
+    IFIDflushVectorToBuffer <= IFIDflushVector or isLDM&"00";
+    IFIDRegEnt: entity work.BuffwithFlushGen generic map(IFID,IFIDLength+1) port map(IFIDBufferD,IFIDen,clk,IFIDrst,IFIDBufferQ,IFIDflushVectorToBuffer);
 
     DecodeStageEnt: entity work.DecodeStage port map(
         IFIDbuffer => IFIDBufferQ,

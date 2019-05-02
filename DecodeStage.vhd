@@ -101,7 +101,9 @@ BEGIN
     IDEXBuffer(IDEXLength downto IDEXInc2E+1) <= (Others => '0') when PcIncrement = "00"
                 else preIDEXBuffer(IDEXLength downto IDEXInc2E+1);
 
-    isLDM <= isLDM2;
+    isLDM <= '0' when isLDM1 = '1'
+    else isLDM2;
+    
     process(clk)
     begin
         if clk'event and clk = '1' then
