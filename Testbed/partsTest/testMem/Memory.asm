@@ -12,15 +12,10 @@ in R2        #R2=19 add 19 in R2
 in R3        #R3=FFFF
 
 in R4        #R4=F320
-LDM R1
+LDM R1,5     
+LDM R5,201     #R5=201
+LDM R6,200     #R6=200
 
-5     
-LDM R5,
-
-201     #R5=201
-LDM R6,
-
-200     #R6=200
 PUSH R1      #SP=FFFFFFFE,M[FFFFFFFF]=5
 
 PUSH R2      #SP=FFFFFFFD,M[FFFFFFFE]=19

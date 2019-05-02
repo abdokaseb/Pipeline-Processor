@@ -34,7 +34,7 @@ add wave -position insertpoint sim:/pipelinesystem/DecodeStageEnt/regFileEnt/loo
 
 
 restart -f
-mem load -i C:/Users/PC-PC/Desktop/Pipeline-Processor/Testbed/partsTest/testMem/mem.mem /pipelinesystem/FetchStageEnt/CodeRamEnt/Ram
+mem load -i /home/shehab/Desktop/Pipeline-Processor/Assembler/testcases/Memory/mem11.mem /pipelinesystem/FetchStageEnt/CodeRamEnt/Ram
 mem load -filltype value -filldata 0000 -fillradix hexadecimal /pipelinesystem/MemoryStageEnt/MEMENTITY/Ram(0)
 mem load -filltype value -filldata 0010 -fillradix hexadecimal /pipelinesystem/MemoryStageEnt/MEMENTITY/Ram(1)
 mem load -filltype value -filldata 0000 -fillradix hexadecimal /pipelinesystem/MemoryStageEnt/MEMENTITY/Ram(2)

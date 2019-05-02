@@ -3,7 +3,6 @@
 10
 .org 2
 100
-.org 10
 in r2
 in r3
 in r4
@@ -24,33 +23,33 @@ ldd r4,r6
 
 (instruction = 100) (instruction type = hex) (address in hex = 0x2)  
 
-(instruction = in r2) (instruction type = 1op) (address in hex = 0x10)  
+(instruction = in r2) (instruction type = 1op) (address in hex = 0x3)  
 
-(instruction = in r3) (instruction type = 1op) (address in hex = 0x11)  
+(instruction = in r3) (instruction type = 1op) (address in hex = 0x4)  
 
-(instruction = in r4) (instruction type = 1op) (address in hex = 0x12)  
+(instruction = in r4) (instruction type = 1op) (address in hex = 0x5)  
 
-(instruction = ldm r1,5) (instruction type = 2op) (address in hex = 0x13)  
+(instruction = ldm r1,5) (instruction type = 2op) (address in hex = 0x6)  
 
-(instruction = ldm r5,201) (instruction type = 2op) (address in hex = 0x15)  
+(instruction = ldm r5,201) (instruction type = 2op) (address in hex = 0x8)  
 
-(instruction = ldm r6,200) (instruction type = 2op) (address in hex = 0x17)  
+(instruction = ldm r6,200) (instruction type = 2op) (address in hex = 0xa)  
 
-(instruction = push r1) (instruction type = 1op) (address in hex = 0x19)  
+(instruction = push r1) (instruction type = 1op) (address in hex = 0xc)  
 
-(instruction = push r2) (instruction type = 1op) (address in hex = 0x1a)  
+(instruction = push r2) (instruction type = 1op) (address in hex = 0xd)  
 
-(instruction = pop r1) (instruction type = 1op) (address in hex = 0x1b)  
+(instruction = pop r1) (instruction type = 1op) (address in hex = 0xe)  
 
-(instruction = pop r2) (instruction type = 1op) (address in hex = 0x1c)  
+(instruction = pop r2) (instruction type = 1op) (address in hex = 0xf)  
 
-(instruction = std r2,r6) (instruction type = 2op) (address in hex = 0x1d)  
+(instruction = std r2,r6) (instruction type = 2op) (address in hex = 0x10)  
 
-(instruction = std r1,r5) (instruction type = 2op) (address in hex = 0x1e)  
+(instruction = std r1,r5) (instruction type = 2op) (address in hex = 0x11)  
 
-(instruction = ldd r3,r5) (instruction type = 2op) (address in hex = 0x1f)  
+(instruction = ldd r3,r5) (instruction type = 2op) (address in hex = 0x12)  
 
-(instruction = ldd r4,r6) (instruction type = 2op) (address in hex = 0x20)  
+(instruction = ldd r4,r6) (instruction type = 2op) (address in hex = 0x13)  
 
 -------------------
 10  address  0
@@ -65,56 +64,56 @@ ldd r4,r6
 
 0000000100000000 (address in hex = 0x3)  
 
-in r2  address  16
-0111101000000000 (address in hex = 0x10)  
+in r2  address  3
+0111101000000000 (address in hex = 0x3)  
 
-in r3  address  17
-0111101100000000 (address in hex = 0x11)  
+in r3  address  4
+0111101100000000 (address in hex = 0x4)  
 
-in r4  address  18
-0111110000000000 (address in hex = 0x12)  
+in r4  address  5
+0111110000000000 (address in hex = 0x5)  
 
-ldm r1,5  address  19
-1010100100000000 (address in hex = 0x13)  
-
-
-0000000000000101 (address in hex = 0x14)  
-
-ldm r5,201  address  21
-1010110100000000 (address in hex = 0x15)  
+ldm r1,5  address  6
+1010100100000000 (address in hex = 0x6)  
 
 
-0000001000000001 (address in hex = 0x16)  
+0000000000000101 (address in hex = 0x7)  
 
-ldm r6,200  address  23
-1010111000000000 (address in hex = 0x17)  
+ldm r5,201  address  8
+1010110100000000 (address in hex = 0x8)  
 
 
-0000001000000000 (address in hex = 0x18)  
+0000001000000001 (address in hex = 0x9)  
 
-push r1  address  25
-1001100100000000 (address in hex = 0x19)  
+ldm r6,200  address  10
+1010111000000000 (address in hex = 0xa)  
 
-push r2  address  26
-1001101000000000 (address in hex = 0x1a)  
 
-pop r1  address  27
-1010000100000000 (address in hex = 0x1b)  
+0000001000000000 (address in hex = 0xb)  
 
-pop r2  address  28
-1010001000000000 (address in hex = 0x1c)  
+push r1  address  12
+1001100100000000 (address in hex = 0xc)  
 
-std r2,r6  address  29
-1011111001000000 (address in hex = 0x1d)  
+push r2  address  13
+1001101000000000 (address in hex = 0xd)  
 
-std r1,r5  address  30
-1011110100100000 (address in hex = 0x1e)  
+pop r1  address  14
+1010000100000000 (address in hex = 0xe)  
 
-ldd r3,r5  address  31
-1011010101100000 (address in hex = 0x1f)  
+pop r2  address  15
+1010001000000000 (address in hex = 0xf)  
 
-ldd r4,r6  address  32
-1011011010000000 (address in hex = 0x20)  
+std r2,r6  address  16
+1011111001000000 (address in hex = 0x10)  
+
+std r1,r5  address  17
+1011110100100000 (address in hex = 0x11)  
+
+ldd r3,r5  address  18
+1011010101100000 (address in hex = 0x12)  
+
+ldd r4,r6  address  19
+1011011010000000 (address in hex = 0x13)  
 
 --------------------
 successful
