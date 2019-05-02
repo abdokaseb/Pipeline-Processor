@@ -23,7 +23,7 @@ END ENTITY DecodeStage;
 -- DecodeStageister Architecture
 
 ARCHITECTURE DecodeStageArch of DecodeStage is
-    signal isIN1, isIN2, isLDM1, isLDM2, isLDMLastOne: STD_LOGIC;
+    signal isIN1, isIN2, isLDM1, isLDM2, isLDMLastOne,interruptSignalLastOne: STD_LOGIC;
     signal busSrc1, busDst1, busSrc2, busDst2: std_logic_vector(n-1 downto 0);
     signal preIDEXBuffer: STD_LOGIC_VECTOR(IDEXLength DOWNTO 0);
 
@@ -78,17 +78,25 @@ BEGIN
             else beforeIFIDbuffer(IFIDInstruction1E downto IFIDInstruction1S) when isLDM2 = '1'
             else busSrc2; 
 
-    preIDEXBuffer(IDEXISINT) <= interruptSignal;
+    preIDEXBuffer(IDEXISINT) <= interruptSignalLastOne;
+    process(clk)
+    begin
+        if clk'event and clk = '1' then
+            interruptSignalLastOne <= interruptSignal;
+        end if;
+    end process;
     preIDEXBuffer(IDEXisReset) <= resetSignal;
     preIDEXBuffer(IDEXInc2E downto IDEXFreeInc2S) <= (Others => '0');
     preIDEXBuffer(IDEXInc1E downto IDEXFreeInc1S) <= (Others => '0');
     
     IDEXBuffer(IDEXInc1E downto IDEXInc1S) <= (Others => '0') when isLDMLastOne = '1'
                                                                 or PcIncrement = "00"
+                                                                or interruptSignalLastOne = '1'
                 else preIDEXBuffer(IDEXInc1E downto IDEXInc1S);
     IDEXBuffer(IDEXInc2E downto IDEXInc2S) <= (Others => '0') when isLDM1 = '1'
                                                                 or PcIncrement = "00"
                                                                 or PcIncrement = "01"
+                                                                or interruptSignalLastOne = '1'
                 else preIDEXBuffer(IDEXInc2E downto IDEXInc2S);
     IDEXBuffer(IDEXLength downto IDEXInc2E+1) <= (Others => '0') when PcIncrement = "00"
                 else preIDEXBuffer(IDEXLength downto IDEXInc2E+1);
