@@ -5,6 +5,7 @@ set NumericStdNoWarnings 1
 add wave -position insertpoint \
 sim:/pipelinesystem/clk \
 sim:/pipelinesystem/rst \
+sim:/pipelinesystem/resetSignal \
 sim:/pipelinesystem/OutPort \
 sim:/pipelinesystem/IFIDBufferD \
 sim:/pipelinesystem/IFIDBufferQ \
@@ -54,7 +55,6 @@ force -freeze sim:/pipelinesystem/interruptSignal 0 0
 force -freeze sim:/pipelinesystem/resetSignal 0 0
 run
 force -freeze sim:/pipelinesystem/rst 0 0
-run
 force -freeze sim:/pipelinesystem/resetSignal 1 0
 run
 force -freeze sim:/pipelinesystem/resetSignal 0 0
@@ -76,3 +76,4 @@ run 600
 force -freeze sim:/pipelinesystem/interruptSignal 1 0
 run
 force -freeze sim:/pipelinesystem/interruptSignal 0 0
+run 2400

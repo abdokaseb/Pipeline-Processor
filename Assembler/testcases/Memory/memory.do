@@ -5,6 +5,7 @@ set NumericStdNoWarnings 1
 add wave -position insertpoint \
 sim:/pipelinesystem/clk \
 sim:/pipelinesystem/rst \
+sim:/pipelinesystem/resetSignal \
 sim:/pipelinesystem/OutPort \
 sim:/pipelinesystem/IFIDBufferD \
 sim:/pipelinesystem/IFIDBufferQ \
@@ -20,7 +21,7 @@ sim:/pipelinesystem/MemoryStageEnt/CALCMEMPARAMSENT/SPRegOut \
 sim:/pipelinesystem/MemoryStageEnt/CALCMEMPARAMSENT/SPRegIn
 
 
-#add wave -position insertpoint sim:/pipelinesystem/MemoryStageEnt/*
+add wave -position insertpoint sim:/pipelinesystem/MemoryStageEnt/*
 #*/
 
 add wave -position insertpoint sim:/pipelinesystem/DecodeStageEnt/regFileEnt/loopGenerateRegs(0)/Reg/Q
@@ -47,7 +48,6 @@ force -freeze sim:/pipelinesystem/interruptSignal 0 0
 force -freeze sim:/pipelinesystem/resetSignal 0 0
 run
 force -freeze sim:/pipelinesystem/rst 0 0
-run
 force -freeze sim:/pipelinesystem/resetSignal 1 0
 run
 force -freeze sim:/pipelinesystem/resetSignal 0 0
@@ -57,4 +57,4 @@ run
 force -freeze sim:/pipelinesystem/INPort 16'hFFFF 0
 run
 force -freeze sim:/pipelinesystem/INPort 16'hF320 0
-run
+run 1500
