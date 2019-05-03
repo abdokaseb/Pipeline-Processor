@@ -73,7 +73,7 @@ addedToPC <= "00" when (typePartNextIns1= MemoryInstruction and instructPartNext
                     or (typePartNextIns1= MemoryInstruction and instructPartNextIns1= OpCodePOP and (nextInstruction1dst=currentInstruction2src or nextInstruction1dst=currentInstruction2dst))
                     or (typePartNextIns2= MemoryInstruction and instructPartNextIns2= OpCodePOP and (nextInstruction2dst=currentInstruction2src or nextInstruction2dst=currentInstruction2dst))
                     --or (WB1 = '1' and (currentInstruction1dst = currentInstruction2src or currentInstruction1dst = currentInstruction2dst))
-                    or (typePartNextIns1= MemoryInstruction and WB1 = '1' and  (currentInstruction1dst = currentInstruction2src or currentInstruction1dst = currentInstruction2dst))
+                    or (typePartCurrentIns1= MemoryInstruction and WB1 = '1' and  (currentInstruction1dst = currentInstruction2src or currentInstruction1dst = currentInstruction2dst))
                     or ((typePartCurrentIns1= oneOperandInstruction and instructPartCurrentIns1= OpCodeIN) and (typePartCurrentIns2= oneOperandInstruction and instructPartCurrentIns2= OpCodeIN))
                     or ((typePartCurrentIns1= oneOperandInstruction and instructPartCurrentIns1= OpCodeOUT) and (typePartCurrentIns2= oneOperandInstruction and instructPartCurrentIns2= OpCodeOUT))
                     or ((MR1 = '1' or MW1 = '1') and (MR2 = '1' or MW2 = '1'))
