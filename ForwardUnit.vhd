@@ -25,7 +25,7 @@ ARCHITECTURE ForwardUnitArch of ForwardUnit is
     signal ExMemRdst1,ExMemRdst2 : STD_LOGIC_Vector (2 downto 0);
     signal ExMemWriteback1,ExMemWriteback2 : STD_LOGIC;
     signal MemWbRdst1,MemWbRdst2 : STD_LOGIC_Vector (2 downto 0);
-    signal MemWbWriteback1,MemWbWriteback2 : STD_LOGIC;       
+    signal MemWbWriteback1,MemWbWriteback2,IDEXWriteback1 : STD_LOGIC;       
     
     ----------     from above signal we determine the output value between the next values 
     Signal RSrc1Value,RDst1Value,RSrc2Value,RDst2Value:  STD_LOGIC_VECTOR(wordSize-1 DOWNTO 0);  ------- the originals value if there is no forwarding 
@@ -55,6 +55,7 @@ BEGIN
     RDst1Value <= IDEXBuffer (IDEXRdst1ValueE downto IDEXRdst1ValueS ) ;
     RSrc2Value <= IDEXBuffer (IDEXRsrc2ValueE downto IDEXRsrc2ValueS ) ;
     RDst2Value <= IDEXBuffer (IDEXRdst2ValueE downto IDEXRdst2ValueS ) ;
+    IDEXWriteback1 <= IDEXBuffer(IDEXWB1);
 
 
     ExMemRdst1 <= EXMEMBuffer (EXMEMRdst1E downto EXMEMRdst1S ) ;
@@ -109,9 +110,9 @@ BEGIN
     ----------------------------------------------------------------------
 
   ----------------------------------------------------------
-    process (IdEXRsc2,ExMemRdst1,IdEXRdst1,ExMemRdst2,ExMemWriteback1,ExMemWriteback2,MemWbRdst1,MemWbRdst2,MemWbWriteback1,MemWbWriteback2,AluResult2,AluResult1,WbValue2,WbValue1,RSrc2Value,result1)
+    process (IdEXRsc2,ExMemRdst1,IdEXRdst1,ExMemRdst2,ExMemWriteback1,ExMemWriteback2,MemWbRdst1,MemWbRdst2,MemWbWriteback1,MemWbWriteback2,AluResult2,AluResult1,WbValue2,WbValue1,RSrc2Value,result1,IDEXWriteback1)
         begin 
-            if (IdEXRsc2 = IdEXRdst1) then
+            if (IDEXWriteback1='1' and IdEXRsc2 = IdEXRdst1) then
                 Src2 <= result1;
             elsif (ExMemWriteback2='1' and (ExMemRdst2 =IdEXRsc2) ) then 
                 Src2 <= AluResult2;
@@ -131,9 +132,9 @@ BEGIN
 
 
     ----------------------------------------------------------
-    process (IdEXRdst2,ExMemRdst1,IdEXRdst1,ExMemRdst2,ExMemWriteback1,ExMemWriteback2,MemWbRdst1,MemWbRdst2,MemWbWriteback1,MemWbWriteback2,AluResult2,AluResult1,WbValue2,WbValue1,RDst2Value,result1)
+    process (IdEXRdst2,ExMemRdst1,IdEXRdst1,ExMemRdst2,ExMemWriteback1,ExMemWriteback2,MemWbRdst1,MemWbRdst2,MemWbWriteback1,MemWbWriteback2,AluResult2,AluResult1,WbValue2,WbValue1,RDst2Value,result1,IDEXWriteback1)
         begin 
-            if (IdEXRdst2 = IdEXRdst1) then
+            if (IDEXWriteback1='1' and IdEXRdst2 = IdEXRdst1) then
                 Dst2 <= result1;
             elsif (ExMemWriteback2='1' and (ExMemRdst2 =IdEXRdst2) ) then 
                 Dst2 <= AluResult2;
