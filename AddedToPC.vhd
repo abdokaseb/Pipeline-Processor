@@ -30,14 +30,14 @@ ARCHITECTURE AddToPCArch of AddToPC is
     
    -- signal typePartCurrentInst1,typePartCurrentInst2 : STD_LOGIC_VECTOR(1 downto 0);
     --signal instructPart : STD_LOGIC_VECTOR(2 downto 0);
-    signal rstNextInstruction: STD_LOGIC;
+    signal rstNextInstruction1,rstNextInstruction2: STD_LOGIC;
 
     signal currentInstruction1src, currentInstruction1dst, currentInstruction2src, currentInstruction2dst, nextInstruction1dst, nextInstruction2dst :STD_LOGIC_VECTOR(2 downto 0);
 
     BEGIN
 
     flushCurrentInstruction1 <= (others=> '0') when addedToPC = "00" else  currentInstruction1;
-    flushCurrentInstruction2 <= (others=> '0') when addedToPC = "00" else  currentInstruction2;
+    flushCurrentInstruction2 <= (others=> '0') when (addedToPC = "00" or addedToPC ="01") else  currentInstruction2;
 
     NextInst1: entity work.Reg generic map(16) port map(
         flushCurrentInstruction1,'1', clk, rst,nextInstruction1 
