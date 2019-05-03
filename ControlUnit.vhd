@@ -63,7 +63,7 @@ BEGIN
 	AddToPCEnt: entity work.AddToPC port map(
 		IFIDBuffer,
 		clk, rst,AddedToPcSignal,
-		MR1, MW1, WB1, MR2, MW2
+		MR1, MW1, WB1, MR2, MW2, isLDM1, isLDM2
     );	
 
 END ARCHITECTURE;

@@ -9,7 +9,7 @@ ENTITY AddToPC IS
             IFIDBuffer: in STD_LOGIC_VECTOR(IFIDLength DOWNTO 0);
             clk,rst: in STD_LOGIC;
             addedToPC: out STD_LOGIC_VECTOR(1 downto 0);
-            MR1, MW1, WB1, MR2, MW2: in STD_LOGIC
+            MR1, MW1, WB1, MR2, MW2, isLDM1, isLDM2: in STD_LOGIC
 		);
 
 END ENTITY AddToPC;
@@ -36,7 +36,7 @@ ARCHITECTURE AddToPCArch of AddToPC is
 
     BEGIN
 
-    flushCurrentInstruction1 <= (others=> '0') when addedToPC = "00" else  currentInstruction1;
+    flushCurrentInstruction1 <= (others=> '0') when addedToPC = "00" or isLDM2 = '1' else  currentInstruction1;
     flushCurrentInstruction2 <= (others=> '0') when addedToPC = "00" else  currentInstruction2;
 
     NextInst1: entity work.Reg generic map(16) port map(
@@ -48,7 +48,8 @@ ARCHITECTURE AddToPCArch of AddToPC is
         );
 
 currentInstruction1 <= IFIDBuffer(IFIDInstruction1E downto IFIDInstruction1S);
-currentInstruction2 <= IFIDBuffer(IFIDInstruction2E downto IFIDInstruction2S);
+currentInstruction2 <= (Others => '0') when isLDM1 = '1'
+            else IFIDBuffer(IFIDInstruction2E downto IFIDInstruction2S);
 
 typePartCurrentIns1 <= currentInstruction1(IFIDInstructionType1E downto IFIDInstructionType1S);
 instructPartCurrentIns1 <= currentInstruction1(IFIDInstructionOpCode1E downto IFIDInstructionOpCode1S);
