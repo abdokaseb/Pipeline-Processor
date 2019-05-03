@@ -22,9 +22,9 @@ vcom Utils/BuffwithFlushGen.vhd | grep Error
 # others files
 vcom FetchStage.vhd | grep Error
 
-vcom AddedToPC.vhd | grep Error
+vcom AddedToPC.vhd -2008 | grep Error
 vcom InstructionConvert.vhd | grep Error
-vcom ControlUnit.vhd | grep Error
+vcom ControlUnit.vhd -2008 | grep Error
 vcom DecodeStage.vhd -2008 | grep Error
 
 vcom OutInstrUnit.vhd | grep Error
@@ -38,5 +38,5 @@ vcom ExecuteStage.vhd -2008 | grep Error
 vcom MemStageOutput.vhd | grep Error
 vcom MemoryStage.vhd | grep Error
 
-vcom PCControlUnit.vhd | grep Error
+vcom PCControlUnit.vhd -2008 | grep Error
 vcom PipelineSystem.vhd | grep Error
