@@ -16,8 +16,8 @@ pop r1
 pop r2
 std r2,r6
 std r1,r0
-ldd r3,r0
-ldd r4,r6
+ldd r0,r3
+ldd r6,r4
 ------------------- end preprocessing  --------------
 ------------------- addresses --------------
 (instruction = 10) (instruction type = hex) (address in hex = 0x0)  
@@ -48,16 +48,22 @@ ldd r4,r6
 
 (instruction = std r1,r0) (instruction type = 2op) (address in hex = 0x1e)  
 
-(instruction = ldd r3,r0) (instruction type = 2op) (address in hex = 0x1f)  
+(instruction = ldd r0,r3) (instruction type = 2op) (address in hex = 0x1f)  
 
-(instruction = ldd r4,r6) (instruction type = 2op) (address in hex = 0x20)  
+(instruction = ldd r6,r4) (instruction type = 2op) (address in hex = 0x20)  
 
 -------------------
 10  address  0
-0000000000010000 (address in hex = 0x0)  
+0000000000000000 (address in hex = 0x0)  
+
+
+0000000000010000 (address in hex = 0x1)  
 
 100  address  2
-0000000100000000 (address in hex = 0x2)  
+0000000000000000 (address in hex = 0x2)  
+
+
+0000000100000000 (address in hex = 0x3)  
 
 in r2  address  16
 0111101000000000 (address in hex = 0x10)  
@@ -104,11 +110,11 @@ std r2,r6  address  29
 std r1,r0  address  30
 1011100000100000 (address in hex = 0x1e)  
 
-ldd r3,r0  address  31
-1011000001100000 (address in hex = 0x1f)  
+ldd r0,r3  address  31
+1011001100000000 (address in hex = 0x1f)  
 
-ldd r4,r6  address  32
-1011011010000000 (address in hex = 0x20)  
+ldd r6,r4  address  32
+1011010011000000 (address in hex = 0x20)  
 
 --------------------
 successful

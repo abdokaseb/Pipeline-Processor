@@ -25,6 +25,7 @@ ARCHITECTURE PCControlUnitArch of PCControlUnit is
     Signal Zeros: STD_LOGIC_VECTOR(PCSize-3 DOWNTO 0);
     signal latchedEnables: STD_LOGIC_VECTOR(2 DOWNTO 0);
     SIGNal TempCarryOut: STD_LOGIC;
+    signal inInterruptStateInternal: STD_LOGIC;
 BEGIN
     fAdder: entity work.nbitAdder generic map(PCSize) port map(PCcurrent, tempA, '0', tempF, TempCarryOut);
 Zeros <= (others => '0');
@@ -33,8 +34,8 @@ tempA <= (others => '0') when latchedEnables(0) = '1' or latchedEnables(1) = '1'
     else Zeros&ControlPCoperation;  
 PCReg <= tempF;
 
-    latchValuesEntity: entity work.Reg generic map(3) port map(ExPcEnable & MemPcEnable & inInterruptState, '1', clk,'0',latchedEnables);
-
+    latchValuesEntity: entity work.Reg generic map(3) port map(ExPcEnable & MemPcEnable & inInterruptStateInternal, '1', clk,'0',latchedEnables);
+    inInterruptState <= latchedEnables(0);
 process (clk,reset)
     begin
         if (reset ='1') then 
@@ -53,11 +54,11 @@ process (clk,reset)
 process (InterruptS, InterruptE)
     begin
         if (InterruptS = '1') then
-            inInterruptState <= '1';
+            inInterruptStateInternal <= '1';
         elsif (InterruptE = '1') then
-            inInterruptState <= '0';
+            inInterruptStateInternal <= '0';
         else
-            inInterruptState <= inInterruptState;
+            inInterruptStateInternal <= inInterruptStateInternal;
         end if;
     end process;
 

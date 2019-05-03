@@ -47,6 +47,7 @@ BEGIN
 	IDEXBuffer(IDEXOut1) <= OutOp1;
 	IDEXBuffer(IDEXBranchOrNot1) <= BranchOrNot1;
 	IDEXBuffer(IDEXIsALUOper1) <= IsALUOper1;
+	IDEXBuffer(IDEXIsNoForward1) <= isIN1 or isLDM1;
 
 	IDEXBuffer(IDEXMR2) <= MR2;
 	IDEXBuffer(IDEXMW2) <= MW2;
@@ -57,11 +58,12 @@ BEGIN
 	IDEXBuffer(IDEXOut2) <= OutOp2;
 	IDEXBuffer(IDEXBranchOrNot2) <= BranchOrNot2;
 	IDEXBuffer(IDEXIsALUOper2) <= IsALUOper2;
+	IDEXBuffer(IDEXIsNoForward2) <= isIN2 or isLDM2;
 
 	AddToPCEnt: entity work.AddToPC port map(
 		IFIDBuffer,
 		clk, rst,AddedToPcSignal,
-		MR1, MW1, WB1, MR2, MW2
+		MR1, MW1, WB1, MR2, MW2, isLDM1, isLDM2
     );	
 
 END ARCHITECTURE;
