@@ -41,7 +41,7 @@ add wave -position 31  sim:/pipelinesystem/MemoryStageEnt/CALCMEMPARAMSENT/RTIst
 add wave -position 32  sim:/pipelinesystem/MemoryStageEnt/CALCMEMPARAMSENT/INTstate
 
 restart -f
-mem load -i C:/Users/PC-PC/Desktop/Pipeline-Processor/Assembler/testcases/Branch/mem11.mem /pipelinesystem/FetchStageEnt/CodeRamEnt/Ram
+mem load -i C:/Users/PC-PC/Desktop/Pipeline-Processor/Testbed/partsTest/testBranhces/mem.mem /pipelinesystem/FetchStageEnt/CodeRamEnt/Ram
 mem load -filltype value -filldata 0000 -fillradix hexadecimal /pipelinesystem/MemoryStageEnt/MEMENTITY/Ram(0)
 mem load -filltype value -filldata 0010 -fillradix hexadecimal /pipelinesystem/MemoryStageEnt/MEMENTITY/Ram(1)
 mem load -filltype value -filldata 0000 -fillradix hexadecimal /pipelinesystem/MemoryStageEnt/MEMENTITY/Ram(2)
@@ -54,7 +54,6 @@ force -freeze sim:/pipelinesystem/interruptSignal 0 0
 force -freeze sim:/pipelinesystem/resetSignal 0 0
 run
 force -freeze sim:/pipelinesystem/rst 0 0
-run
 force -freeze sim:/pipelinesystem/resetSignal 1 0
 run
 force -freeze sim:/pipelinesystem/resetSignal 0 0
@@ -66,13 +65,8 @@ run
 force -freeze sim:/pipelinesystem/INPort 16'h100 0
 run
 force -freeze sim:/pipelinesystem/INPort 16'h300 0
-run 300
+run 700
 force -freeze sim:/pipelinesystem/interruptSignal 1 0
 run
 force -freeze sim:/pipelinesystem/interruptSignal 0 0
-run 1400
-force -freeze sim:/pipelinesystem/INPort 16'h200 0
-run 600
-force -freeze sim:/pipelinesystem/interruptSignal 1 0
 run
-force -freeze sim:/pipelinesystem/interruptSignal 0 0

@@ -6,30 +6,24 @@
 10
 #you should ignore empty lines
 
-.ORG 2  #this is the interrupt address
-100
-
-.ORG 10
+.ORG 2  #this is the interrupt address.ORG 10
 in R1     #R1=30
 in R2     #R2=50
 in R3     #R3=100
 in R4     #R4=300
-SETC 
+NOP
+and r0,r0  
 CALL R1
 
-
 .ORG 30
-JMP R2
+JZ R2
 RET
 
 
 .ORG 50
-JMP R2
-SETC
-
+setc
 AND R5,R5 #interrupt here
 OUT R4
-
 RET
 
 .ORG 300
